@@ -36,6 +36,7 @@
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.label_target = new System.Windows.Forms.Label();
             this.field_target = new System.Windows.Forms.TextBox();
             this.button_browse = new System.Windows.Forms.Button();
@@ -61,7 +62,10 @@
             this.checkbox_multiThreading = new System.Windows.Forms.CheckBox();
             this.checkbox_output = new System.Windows.Forms.CheckBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.backgroundWorkerMain = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorkerSecondary = new System.ComponentModel.BackgroundWorker();
             this.mainWindowMenu.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.optionsTab.SuspendLayout();
             this.advancedTab.SuspendLayout();
@@ -70,6 +74,7 @@
             // 
             // mainWindowMenu
             // 
+            this.mainWindowMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.mainWindowMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpToolStripMenuItem});
             resources.ApplyResources(this.mainWindowMenu, "mainWindowMenu");
@@ -89,6 +94,7 @@
             // 
             this.contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
             resources.ApplyResources(this.contentsToolStripMenuItem, "contentsToolStripMenuItem");
+            this.contentsToolStripMenuItem.Click += new System.EventHandler(this.contentsToolStripMenuItem_Click);
             // 
             // onlineHelpToolStripMenuItem
             // 
@@ -110,9 +116,17 @@
             // 
             // statusStrip
             // 
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel});
             resources.ApplyResources(this.statusStrip, "statusStrip");
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.SizingGrip = false;
+            // 
+            // toolStripLabel
+            // 
+            this.toolStripLabel.Name = "toolStripLabel";
+            resources.ApplyResources(this.toolStripLabel, "toolStripLabel");
             // 
             // label_target
             // 
@@ -123,6 +137,7 @@
             // 
             resources.ApplyResources(this.field_target, "field_target");
             this.field_target.Name = "field_target";
+            this.field_target.TextChanged += new System.EventHandler(this.field_target_TextChanged);
             // 
             // button_browse
             // 
@@ -299,6 +314,8 @@
             this.Load += new System.EventHandler(this.Main_Load);
             this.mainWindowMenu.ResumeLayout(false);
             this.mainWindowMenu.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.tabControl.ResumeLayout(false);
             this.optionsTab.ResumeLayout(false);
             this.optionsTab.PerformLayout();
@@ -344,6 +361,9 @@
         private System.Windows.Forms.Button button_defaults;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.CheckBox checkbox_disableProgressMonitoring;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripLabel;
+        private System.ComponentModel.BackgroundWorker backgroundWorkerMain;
+        private System.ComponentModel.BackgroundWorker backgroundWorkerSecondary;
     }
 }
 

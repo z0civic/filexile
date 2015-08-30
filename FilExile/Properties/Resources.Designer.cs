@@ -79,6 +79,15 @@ namespace FilExile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click &quot;Delete&quot; to remove the target....
+        /// </summary>
+        internal static string DeleteTip {
+            get {
+                return ResourceManager.GetString("DeleteTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download.
         /// </summary>
         internal static string Download {
@@ -134,6 +143,15 @@ namespace FilExile.Properties {
         internal static string GNUTitle {
             get {
                 return ResourceManager.GetString("GNUTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The FilExile help file could not be found. Open the online help?.
+        /// </summary>
+        internal static string HelpFileNotFound {
+            get {
+                return ResourceManager.GetString("HelpFileNotFound", resourceCulture);
             }
         }
         
@@ -198,6 +216,15 @@ namespace FilExile.Properties {
         internal static string SaveFileDialogTitle {
             get {
                 return ResourceManager.GetString("SaveFileDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a directory or file to delete....
+        /// </summary>
+        internal static string SelectTip {
+            get {
+                return ResourceManager.GetString("SelectTip", resourceCulture);
             }
         }
     }

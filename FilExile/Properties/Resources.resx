@@ -163,4 +163,13 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="HelpFileNotFound" xml:space="preserve">
+    <value>The FilExile help file could not be found. Open the online help?</value>
+  </data>
+  <data name="DeleteTip" xml:space="preserve">
+    <value>Click "Delete" to remove the target...</value>
+  </data>
+  <data name="SelectTip" xml:space="preserve">
+    <value>Choose a directory or file to delete...</value>
+  </data>
 </root>

@@ -122,31 +122,31 @@
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="contentsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 22</value>
+    <value>241, 30</value>
   </data>
   <data name="contentsToolStripMenuItem.Text" xml:space="preserve">
     <value>Contents</value>
   </data>
   <data name="onlineHelpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 22</value>
+    <value>241, 30</value>
   </data>
   <data name="onlineHelpToolStripMenuItem.Text" xml:space="preserve">
     <value>Online help</value>
   </data>
   <data name="checkForUpdatesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 22</value>
+    <value>241, 30</value>
   </data>
   <data name="checkForUpdatesToolStripMenuItem.Text" xml:space="preserve">
     <value>Check for updates</value>
   </data>
   <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 22</value>
+    <value>241, 30</value>
   </data>
   <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
+    <value>61, 29</value>
   </data>
   <data name="helpToolStripMenuItem.Text" xml:space="preserve">
     <value>Help</value>
@@ -154,8 +154,12 @@
   <data name="mainWindowMenu.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="mainWindowMenu.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>9, 3, 0, 3</value>
+  </data>
   <data name="mainWindowMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>448, 24</value>
+    <value>672, 35</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="mainWindowMenu.TabIndex" type="System.Int32, mscorlib">
@@ -179,11 +183,20 @@
   <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>172, 17</value>
   </metadata>
+  <data name="toolStripLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 25</value>
+  </data>
+  <data name="toolStripLabel.Text" xml:space="preserve">
+    <value>toolStripLabel</value>
+  </data>
   <data name="statusStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 256</value>
+    <value>0, 398</value>
+  </data>
+  <data name="statusStrip.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 21, 0</value>
   </data>
   <data name="statusStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>448, 22</value>
+    <value>672, 30</value>
   </data>
   <data name="statusStrip.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -207,10 +220,13 @@
     <value>True</value>
   </data>
   <data name="label_target.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 42</value>
+    <value>18, 65</value>
+  </data>
+  <data name="label_target.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label_target.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 13</value>
+    <value>59, 20</value>
   </data>
   <data name="label_target.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -231,10 +247,13 @@
     <value>5</value>
   </data>
   <data name="field_target.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 39</value>
+    <value>87, 60</value>
+  </data>
+  <data name="field_target.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="field_target.Size" type="System.Drawing.Size, System.Drawing">
-    <value>295, 20</value>
+    <value>440, 26</value>
   </data>
   <data name="field_target.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -252,10 +271,13 @@
     <value>4</value>
   </data>
   <data name="button_browse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>359, 38</value>
+    <value>538, 58</value>
+  </data>
+  <data name="button_browse.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="button_browse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 22</value>
+    <value>112, 34</value>
   </data>
   <data name="button_browse.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -276,10 +298,13 @@
     <value>3</value>
   </data>
   <data name="progressBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 66</value>
+    <value>87, 102</value>
+  </data>
+  <data name="progressBar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="progressBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>295, 23</value>
+    <value>442, 35</value>
   </data>
   <data name="progressBar.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -300,10 +325,13 @@
     <value>2</value>
   </data>
   <data name="button_delete.Location" type="System.Drawing.Point, System.Drawing">
-    <value>359, 66</value>
+    <value>538, 102</value>
+  </data>
+  <data name="button_delete.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="button_delete.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 22</value>
+    <value>112, 34</value>
   </data>
   <data name="button_delete.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -327,10 +355,13 @@
     <value>False</value>
   </data>
   <data name="button_logToBrowse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>384, 28</value>
+    <value>576, 43</value>
+  </data>
+  <data name="button_logToBrowse.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="button_logToBrowse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 22</value>
+    <value>36, 34</value>
   </data>
   <data name="button_logToBrowse.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -354,10 +385,13 @@
     <value>True</value>
   </data>
   <data name="label_logTo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 32</value>
+    <value>60, 49</value>
+  </data>
+  <data name="label_logTo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label_logTo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
+    <value>64, 20</value>
   </data>
   <data name="label_logTo.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -378,10 +412,13 @@
     <value>1</value>
   </data>
   <data name="field_logTo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>91, 29</value>
+    <value>136, 45</value>
+  </data>
+  <data name="field_logTo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="field_logTo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>290, 20</value>
+    <value>433, 26</value>
   </data>
   <data name="field_logTo.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -402,10 +439,13 @@
     <value>True</value>
   </data>
   <data name="checkbox_forceAction.Location" type="System.Drawing.Point, System.Drawing">
-    <value>218, 81</value>
+    <value>327, 125</value>
+  </data>
+  <data name="checkbox_forceAction.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="checkbox_forceAction.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 17</value>
+    <value>76, 24</value>
   </data>
   <data name="checkbox_forceAction.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -438,10 +478,13 @@
     <value>Shutdown</value>
   </data>
   <data name="comboBox_completionAction.Location" type="System.Drawing.Point, System.Drawing">
-    <value>91, 78</value>
+    <value>136, 120</value>
+  </data>
+  <data name="comboBox_completionAction.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="comboBox_completionAction.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 21</value>
+    <value>180, 28</value>
   </data>
   <data name="comboBox_completionAction.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -462,10 +505,13 @@
     <value>True</value>
   </data>
   <data name="label_onCompletion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 81</value>
+    <value>9, 125</value>
+  </data>
+  <data name="label_onCompletion.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label_onCompletion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 13</value>
+    <value>115, 20</value>
   </data>
   <data name="label_onCompletion.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -489,10 +535,13 @@
     <value>True</value>
   </data>
   <data name="checkbox_autoUpdate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 55</value>
+    <value>10, 85</value>
+  </data>
+  <data name="checkbox_autoUpdate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="checkbox_autoUpdate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 17</value>
+    <value>241, 24</value>
   </data>
   <data name="checkbox_autoUpdate.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -516,10 +565,13 @@
     <value>True</value>
   </data>
   <data name="checkbox_logging.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 7</value>
+    <value>10, 11</value>
+  </data>
+  <data name="checkbox_logging.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="checkbox_logging.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 17</value>
+    <value>154, 24</value>
   </data>
   <data name="checkbox_logging.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -540,14 +592,16 @@
     <value>7</value>
   </data>
   <data name="optionsTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 29</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="optionsTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
   <data name="optionsTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="optionsTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>411, 122</value>
+    <value>620, 195</value>
   </data>
   <data name="optionsTab.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -571,10 +625,13 @@
     <value>True</value>
   </data>
   <data name="checkbox_disableProgressMonitoring.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 99</value>
+    <value>10, 152</value>
+  </data>
+  <data name="checkbox_disableProgressMonitoring.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="checkbox_disableProgressMonitoring.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 17</value>
+    <value>232, 24</value>
   </data>
   <data name="checkbox_disableProgressMonitoring.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -595,10 +652,13 @@
     <value>0</value>
   </data>
   <data name="button_defaults.Location" type="System.Drawing.Point, System.Drawing">
-    <value>330, 7</value>
+    <value>495, 11</value>
+  </data>
+  <data name="button_defaults.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="button_defaults.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+    <value>112, 35</value>
   </data>
   <data name="button_defaults.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -622,10 +682,13 @@
     <value>True</value>
   </data>
   <data name="checkbox_alwaysOnTop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 77</value>
+    <value>10, 118</value>
+  </data>
+  <data name="checkbox_alwaysOnTop.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="checkbox_alwaysOnTop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>92, 17</value>
+    <value>133, 24</value>
   </data>
   <data name="checkbox_alwaysOnTop.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -649,10 +712,13 @@
     <value>True</value>
   </data>
   <data name="label_threadBounds.Location" type="System.Drawing.Point, System.Drawing">
-    <value>145, 56</value>
+    <value>218, 86</value>
+  </data>
+  <data name="label_threadBounds.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label_threadBounds.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 13</value>
+    <value>58, 20</value>
   </data>
   <data name="label_threadBounds.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -673,10 +739,13 @@
     <value>3</value>
   </data>
   <data name="spinner_threadCount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>91, 53</value>
+    <value>136, 82</value>
+  </data>
+  <data name="spinner_threadCount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="spinner_threadCount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 20</value>
+    <value>72, 26</value>
   </data>
   <data name="spinner_threadCount.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -697,10 +766,13 @@
     <value>True</value>
   </data>
   <data name="label_threadCount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>36, 55</value>
+    <value>54, 85</value>
+  </data>
+  <data name="label_threadCount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="label_threadCount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 13</value>
+    <value>71, 20</value>
   </data>
   <data name="label_threadCount.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -724,10 +796,13 @@
     <value>True</value>
   </data>
   <data name="checkbox_multiThreading.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 30</value>
+    <value>10, 46</value>
+  </data>
+  <data name="checkbox_multiThreading.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="checkbox_multiThreading.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 17</value>
+    <value>270, 24</value>
   </data>
   <data name="checkbox_multiThreading.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -751,10 +826,13 @@
     <value>True</value>
   </data>
   <data name="checkbox_output.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 7</value>
+    <value>10, 11</value>
+  </data>
+  <data name="checkbox_output.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="checkbox_output.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 17</value>
+    <value>292, 24</value>
   </data>
   <data name="checkbox_output.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -775,13 +853,16 @@
     <value>7</value>
   </data>
   <data name="advancedTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 29</value>
+  </data>
+  <data name="advancedTab.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="advancedTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="advancedTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>411, 122</value>
+    <value>620, 195</value>
   </data>
   <data name="advancedTab.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -802,10 +883,13 @@
     <value>1</value>
   </data>
   <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 94</value>
+    <value>22, 145</value>
+  </data>
+  <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>419, 148</value>
+    <value>628, 228</value>
   </data>
   <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -825,14 +909,23 @@
   <metadata name="saveFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>281, 17</value>
   </metadata>
+  <metadata name="backgroundWorkerMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>459, 17</value>
+  </metadata>
+  <metadata name="backgroundWorkerSecondary.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>720, 17</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>9, 20</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>448, 278</value>
+    <value>672, 428</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>FilExile</value>
@@ -867,11 +960,29 @@
   <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripLabel.Name" xml:space="preserve">
+    <value>toolStripLabel</value>
+  </data>
+  <data name="&gt;&gt;toolStripLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;saveFileDialog.Name" xml:space="preserve">
     <value>saveFileDialog</value>
   </data>
   <data name="&gt;&gt;saveFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.SaveFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;backgroundWorkerMain.Name" xml:space="preserve">
+    <value>backgroundWorkerMain</value>
+  </data>
+  <data name="&gt;&gt;backgroundWorkerMain.Type" xml:space="preserve">
+    <value>System.ComponentModel.BackgroundWorker, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;backgroundWorkerSecondary.Name" xml:space="preserve">
+    <value>backgroundWorkerSecondary</value>
+  </data>
+  <data name="&gt;&gt;backgroundWorkerSecondary.Type" xml:space="preserve">
+    <value>System.ComponentModel.BackgroundWorker, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Main</value>

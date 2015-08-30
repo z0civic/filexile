@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace FilExile
@@ -14,6 +15,8 @@ namespace FilExile
         {
             InitializeComponent();
             this.Icon = Properties.Resources.icon;
+            this.toolStripLabel.Text = Properties.Resources.SelectTip;
+            this.button_delete.Enabled = false;
         }
 
         #endregion
@@ -308,6 +311,41 @@ namespace FilExile
             Utilities.NetworkUtils.InitiateVersionCheck(true);
         }
 
+        /// <summary>
+        /// Tries to display the local help file. If it isn't found, prompts to launch the online
+        /// help instead.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(".\\FilExile Help.chm"))
+                Help.ShowHelp(this, ".\\FilExile Help.chm");
+            else
+            {
+                if (MessageBox.Show(Properties.Resources.HelpFileNotFound, Properties.Resources.Error, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    Utilities.NetworkUtils.LaunchURL("http://filexile.sourceforge.net/help.htm");
+            }
+        }
+
+        /// <summary>
+        /// When the text in the Target box changes, change the toolstrip text to guide the user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void field_target_TextChanged(object sender, EventArgs e)
+        {
+            if (field_target.Text != "")
+            {
+                button_delete.Enabled = true;
+                toolStripLabel.Text = Properties.Resources.DeleteTip;
+            }
+            else
+            {
+                button_delete.Enabled = false;
+                toolStripLabel.Text = Properties.Resources.SelectTip;
+            }
+        }
     }
     #endregion
 }
