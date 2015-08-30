@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace FilExile
@@ -11,10 +6,14 @@ namespace FilExile
     public partial class Main : Form
     {
         #region Constructor
-
+        
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Main()
         {
             InitializeComponent();
+            this.Icon = Properties.Resources.icon;
         }
 
         #endregion
@@ -22,8 +21,6 @@ namespace FilExile
         // ------------------------------------------------------------------------------------
 
         #region Fields
-
-        private static Int32 startingSize;
 
         #endregion
 
@@ -38,30 +35,160 @@ namespace FilExile
         /// <param name="e"></param>
         private void Main_Load(object sender, EventArgs e)
         {
-            this.SetControls();
+            SetControls();
         }
 
+        /// <summary>
+        /// Based on the values read in from the app.config, set the various controls
+        /// to the user defined values.
+        /// </summary>
+        private void SetControls()
+        {
+            //Options - Logging
+            SetLogging(Properties.Settings.Default.logging);
+            field_logTo.Text = Properties.Settings.Default.logTo;
+
+            //Options - Automatically check for updates
+            checkbox_autoUpdate.Checked = Properties.Settings.Default.autoUpdate;
+
+            //Options - Completion action
+            comboBox_completionAction.Text = comboBox_completionAction.Items[Properties.Settings.Default.completionAction].ToString();
+            if (Properties.Settings.Default.completionAction > 1)
+            {
+                checkbox_forceAction.Checked = Properties.Settings.Default.forceAction;
+                checkbox_forceAction.Enabled = true;
+            }
+            else
+            {
+                checkbox_forceAction.Checked = false;
+                checkbox_forceAction.Enabled = false;
+            }
+
+            //Advanced - Output
+            checkbox_output.Checked = Properties.Settings.Default.showOutput;
+
+            //Advanced - Multithreading
+            SetMultiThreading(Properties.Settings.Default.multiThreading);
+            int tc = Properties.Settings.Default.threadCount;
+            if (tc < 1 || tc > 128)
+                tc = 8;
+            spinner_threadCount.Value = tc;
+
+            //Advanced - Always on top
+            checkbox_alwaysOnTop.Checked = Properties.Settings.Default.alwaysOnTop;
+
+            //Advaned - Progress monitor
+            checkbox_disableProgressMonitoring.Checked = Properties.Settings.Default.disableProgressMonitoring;
+        }
+
+        /// <summary>
+        /// Enables or disables logging based on the passed value
+        /// </summary>
+        /// <param name="bEnabled">If logging is enabled</param>
+        private void SetLogging(bool bEnabled)
+        {
+            checkbox_logging.Checked = bEnabled;
+            button_logToBrowse.Enabled = bEnabled;
+            field_logTo.Enabled = bEnabled;
+            if (bEnabled)
+                label_logTo.ForeColor = System.Drawing.SystemColors.ControlText;
+            else
+                label_logTo.ForeColor = System.Drawing.SystemColors.GrayText;
+        }
+
+        /// <summary>
+        /// Enables or disables multithreading based on the passed value
+        /// </summary>
+        /// <param name="bEnabled">If multithreading is enabled</param>
+        private void SetMultiThreading(bool bEnabled)
+        {
+            if (bEnabled)
+            {
+                checkbox_multiThreading.Checked = true;
+                spinner_threadCount.Enabled = true;
+                label_threadCount.ForeColor = System.Drawing.SystemColors.ControlText;
+                label_threadBounds.ForeColor = System.Drawing.SystemColors.ControlText;
+            }
+            else
+            {
+                checkbox_multiThreading.Checked = false;
+                spinner_threadCount.Enabled = false;
+                label_threadCount.ForeColor = System.Drawing.SystemColors.GrayText;
+                label_threadBounds.ForeColor = System.Drawing.SystemColors.GrayText;
+            }
+        }
+
+        /// <summary>
+        /// Changes the enabled state of all main form controls based on the passed value
+        /// </summary>
+        /// <param name="bEnabled">If the controls should be enabled</param>
+        private void ChangeControlStates(bool bEnabled)
+        {
+            //Buttons
+            button_browse.Enabled = bEnabled;
+            button_delete.Enabled = bEnabled;
+            button_logToBrowse.Enabled = bEnabled;
+            button_defaults.Enabled = bEnabled;
+
+            //Fields
+            field_target.Enabled = bEnabled;
+            field_logTo.Enabled = bEnabled;
+
+            //Checkboxes
+            checkbox_logging.Enabled = bEnabled;
+            checkbox_output.Enabled = bEnabled;
+            checkbox_forceAction.Enabled = bEnabled;
+            checkbox_alwaysOnTop.Enabled = bEnabled;
+            checkbox_autoUpdate.Enabled = bEnabled;
+            checkbox_disableProgressMonitoring.Enabled = bEnabled;
+            checkbox_multiThreading.Enabled = bEnabled;
+
+            //Misc controls
+            comboBox_completionAction.Enabled = bEnabled;
+            spinner_threadCount.Enabled = bEnabled;
+
+            //Some of the controls are cascading and should only be enabled if it's appropriate
+            if (bEnabled)
+            {
+                if (!checkbox_logging.Checked)
+                    button_logToBrowse.Enabled = false;
+                if (!checkbox_multiThreading.Checked)
+                    spinner_threadCount.Enabled = false;
+                if (comboBox_completionAction.SelectedIndex < 2)
+                    checkbox_forceAction.Enabled = false;
+            }
+        }
+
+        #endregion
+
+        // ------------------------------------------------------------------------------------
+
+        #region Events
+
+        /// <summary>
+        /// When the user clicks the delete button, disable the controls and start the
+        /// deletion operation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_delete_Click(object sender, EventArgs e)
         {
-            this.button_browse.Enabled = false;
-            this.button_delete.Visible = false;
-            this.field_target.Enabled = false;
-
-            Target target = new Target(this.field_target.Text);
+            ChangeControlStates(false);
+            Target target = new Target(field_target.Text);
 
             if (target.Exists)
             {
-                if (!this.checkbox_disableProgressMonitoring.Checked)
+                if (!checkbox_disableProgressMonitoring.Checked)
                 {
-                    this.progressBar.Visible = true;
+                    progressBar.Visible = true;
                     if (target.IsDirectory)
                     {
                         //TODO: Count files in directory
                     }
                 }
 
-                DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(this.checkbox_multiThreading.Checked, this.spinner_threadCount.Value);
-                int retval = DeletionOps.Delete(target, mt, this.checkbox_logging.Checked, this.field_logTo.Text);
+                DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(checkbox_multiThreading.Checked, spinner_threadCount.Value);
+                int retval = DeletionOps.Delete(target, mt, checkbox_logging.Checked, field_logTo.Text);
             }
             else 
             { 
@@ -70,61 +197,117 @@ namespace FilExile
 
         }
 
+        /// <summary>
+        /// Launch a special dialog that allows the user to select either a file or a folder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_browse_Click(object sender, EventArgs e)
         {
             FolderBrowser fb = new FolderBrowser();
-            fb.Description = "Select a file or directory to delete...";
+            fb.Description = Properties.Resources.FolderBrowserDialogDescription;
             fb.IncludeFiles = true;
             fb.ShowNewFolderButton = false;
-            if (fb.ShowDialog() == DialogResult.OK) 
-                this.field_target.Text = fb.SelectedPath;
+            if (fb.ShowDialog() == DialogResult.OK)
+                field_target.Text = fb.SelectedPath;
         }
+       
 
+        /// <summary>
+        /// Launch a save file dialog that allows the user to specify the log file location
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_logToBrowse_Click(object sender, EventArgs e)
         {
-            this.saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
-            this.saveFileDialog.Title = "Save FilExile log file as...";
-            this.saveFileDialog.FileName = "FilExile_output";
-            this.saveFileDialog.DefaultExt = "txt";
-            this.saveFileDialog.AddExtension = true;
-            if (this.saveFileDialog.ShowDialog() == DialogResult.OK)
-                this.field_logTo.Text = saveFileDialog.FileName;
+            saveFileDialog.Filter = Properties.Resources.SaveFileDialogFilter;
+            saveFileDialog.Title = Properties.Resources.SaveFileDialogTitle;
+            saveFileDialog.FileName = Properties.Resources.SaveFileDialogFileName;
+            saveFileDialog.DefaultExt = Properties.Resources.SaveFileDialogDefaultExt;
+            saveFileDialog.AddExtension = true;
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                field_logTo.Text = saveFileDialog.FileName;
         }
 
+        /// <summary>
+        /// Resets all settings to their default values
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_defaults_Click(object sender, EventArgs e)
         {
-            Program.DefaultSettings();
-            this.SetControls();
+            SetControls();
         }
 
+        /// <summary>
+        /// Configures the cascading logging controls
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void checkbox_logging_CheckedChanged(object sender, EventArgs e)
         {
-            this.button_logToBrowse.Enabled = this.checkbox_logging.Checked;
+            SetLogging(checkbox_logging.Checked);
         }
 
-        private void SetControls()
+        /// <summary>
+        /// Show the "About" dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.checkbox_alwaysOnTop.Checked = Program.alwaysOnTop;
-            this.checkbox_autoUpdate.Checked = Program.autoUpdate;
-            this.checkbox_forceAction.Checked = Program.forceAction;
-            if (Program.logging)
+            Dialogs.AboutBox about = new Dialogs.AboutBox();
+            about.ShowDialog();
+        }
+
+        /// <summary>
+        /// Opens a link using the default browser to the online FilExile help
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void onlineHelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utilities.NetworkUtils.LaunchURL("http://filexile.sourceforge.net/help.htm");
+        }
+
+        /// <summary>
+        /// Configures the cascading multithreading controls
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkbox_multiThreading_CheckedChanged(object sender, EventArgs e)
+        {
+            SetMultiThreading(checkbox_multiThreading.Checked);
+        }
+
+        /// <summary>
+        /// Prevents the "Force" checkbox from being enabled and checked when it isn't appropriate
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBox_completionAction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox_completionAction.SelectedIndex > 1)
             {
-                this.checkbox_logging.Checked = true;
-                this.button_logToBrowse.Enabled = true;
+                checkbox_forceAction.Enabled = true;
             }
             else
             {
-                this.checkbox_logging.Checked = false;
-                this.button_logToBrowse.Enabled = false;
+                checkbox_forceAction.Checked = false;
+                checkbox_forceAction.Enabled = false;
             }
-            this.checkbox_multiThreading.Checked = Program.multiThreading;
-            this.checkbox_output.Checked = Program.output;
-            this.field_logTo.Text = Program.logTo;
-            this.spinner_threadCount.Value = Program.threadCount;
-            this.comboBox_completionAction.Text = this.comboBox_completionAction.Items[(int)Program.completionAction].ToString();
-            this.checkbox_disableProgressMonitoring.Checked = Program.disableProgressMonitoring;
         }
 
-        #endregion
+        /// <summary>
+        /// Initiates a manual version check
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utilities.NetworkUtils.InitiateVersionCheck(true);
+        }
+
     }
+    #endregion
 }

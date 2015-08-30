@@ -1,18 +1,10 @@
-﻿using System;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using System.Web;
+﻿using System.Text.RegularExpressions;
 
 namespace FilExile
 {
     /// <summary>
     /// Contains a set of static utility methods for string manipulation
     /// </summary>
-    [ReusableAttribute(ReusableCategory.Utility, "Methods used for localization and manipulation of string.")]
     public static class StringUtils
     {
         #region Public methods
