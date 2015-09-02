@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 
-namespace FilExile
+namespace FilExile.Dialogs
 {
     public partial class Main : Form
     {
@@ -14,16 +15,36 @@ namespace FilExile
         public Main()
         {
             InitializeComponent();
-            this.Icon = Properties.Resources.icon;
-            this.toolStripLabel.Text = Properties.Resources.SelectTip;
-            this.button_delete.Enabled = false;
+
+            // If specified in the app.config file, perform an update check
+            if (Properties.Settings.Default.autoUpdate)
+                Utilities.NetworkUtils.InitiateVersionCheck(false);
         }
 
         #endregion
 
         // ------------------------------------------------------------------------------------
 
+        #region Objects
+
+        //The target that is going to be deleted
+        private Target target;
+
+        #endregion
+
+        // ------------------------------------------------------------------------------------
+
         #region Fields
+
+        // Holds the initial number of files in the target directory when tracking progress
+        private int iNumFiles;      
+
+        #endregion
+
+        // ------------------------------------------------------------------------------------
+
+        #region Enums
+        private enum CompletionActions { DO_NOTHING, PLAY_SOUND, RESTART, SHUTDOWN };
 
         #endregion
 
@@ -32,13 +53,17 @@ namespace FilExile
         #region Private methods
 
         /// <summary>
-        /// On load, set the controls based on the app.config file
+        /// On load, set the controls based on the app.config file. Also disables the delete button
+        /// and sets the toolstrip text and icon.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Main_Load(object sender, EventArgs e)
         {
             SetControls();
+            Icon = Properties.Resources.icon;
+            toolStripLabel.Text = Properties.Resources.SelectTip;
+            button_delete.Enabled = false;
         }
 
         /// <summary>
@@ -47,14 +72,14 @@ namespace FilExile
         /// </summary>
         private void SetControls()
         {
-            //Options - Logging
+            // Options - Logging
             SetLogging(Properties.Settings.Default.logging);
             field_logTo.Text = Properties.Settings.Default.logTo;
 
-            //Options - Automatically check for updates
+            // Options - Automatically check for updates
             checkbox_autoUpdate.Checked = Properties.Settings.Default.autoUpdate;
 
-            //Options - Completion action
+            // Options - Completion action
             comboBox_completionAction.Text = comboBox_completionAction.Items[Properties.Settings.Default.completionAction].ToString();
             if (Properties.Settings.Default.completionAction > 1)
             {
@@ -67,20 +92,20 @@ namespace FilExile
                 checkbox_forceAction.Enabled = false;
             }
 
-            //Advanced - Output
+            // Advanced - Output
             checkbox_output.Checked = Properties.Settings.Default.showOutput;
 
-            //Advanced - Multithreading
+            // Advanced - Multithreading
             SetMultiThreading(Properties.Settings.Default.multiThreading);
             int tc = Properties.Settings.Default.threadCount;
             if (tc < 1 || tc > 128)
                 tc = 8;
             spinner_threadCount.Value = tc;
 
-            //Advanced - Always on top
+            // Advanced - Always on top
             checkbox_alwaysOnTop.Checked = Properties.Settings.Default.alwaysOnTop;
 
-            //Advaned - Progress monitor
+            // Advaned - Progress monitor
             checkbox_disableProgressMonitoring.Checked = Properties.Settings.Default.disableProgressMonitoring;
         }
 
@@ -92,7 +117,6 @@ namespace FilExile
         {
             checkbox_logging.Checked = bEnabled;
             button_logToBrowse.Enabled = bEnabled;
-            field_logTo.Enabled = bEnabled;
             if (bEnabled)
                 label_logTo.ForeColor = System.Drawing.SystemColors.ControlText;
             else
@@ -127,17 +151,16 @@ namespace FilExile
         /// <param name="bEnabled">If the controls should be enabled</param>
         private void ChangeControlStates(bool bEnabled)
         {
-            //Buttons
+            // Buttons
             button_browse.Enabled = bEnabled;
             button_delete.Enabled = bEnabled;
             button_logToBrowse.Enabled = bEnabled;
             button_defaults.Enabled = bEnabled;
 
-            //Fields
+            // Fields
             field_target.Enabled = bEnabled;
-            field_logTo.Enabled = bEnabled;
 
-            //Checkboxes
+            // Checkboxes
             checkbox_logging.Enabled = bEnabled;
             checkbox_output.Enabled = bEnabled;
             checkbox_forceAction.Enabled = bEnabled;
@@ -146,11 +169,11 @@ namespace FilExile
             checkbox_disableProgressMonitoring.Enabled = bEnabled;
             checkbox_multiThreading.Enabled = bEnabled;
 
-            //Misc controls
+            // Misc controls
             comboBox_completionAction.Enabled = bEnabled;
             spinner_threadCount.Enabled = bEnabled;
 
-            //Some of the controls are cascading and should only be enabled if it's appropriate
+            // Some of the controls are cascading and should only be enabled if it's appropriate
             if (bEnabled)
             {
                 if (!checkbox_logging.Checked)
@@ -160,6 +183,56 @@ namespace FilExile
                 if (comboBox_completionAction.SelectedIndex < 2)
                     checkbox_forceAction.Enabled = false;
             }
+        }
+
+        /// <summary>
+        /// Continuously checks the number of files in the target directory to
+        /// display progress as they are deleted.
+        /// </summary>
+        /// <param name="worker"></param>
+        /// <param name="e"></param>
+        private void ProgressBarOperation(BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            int filesRemaining = target.NumberOfFiles;
+            if ((iNumFiles - filesRemaining) >= 0)
+                worker.ReportProgress(iNumFiles - filesRemaining);
+            if (!backgroundWorker_Deletion.IsBusy) return;
+            else ProgressBarOperation(worker, e);
+        }
+
+        /// <summary>
+        /// Runs the passed completion action (taken from the Completion Action combo box)
+        /// </summary>
+        /// <param name="action"></param>
+        private void RunCompletionEvent(CompletionActions action)
+        {
+            switch (action)
+            {
+                case CompletionActions.DO_NOTHING:
+                    break;
+                case CompletionActions.PLAY_SOUND:
+                    System.Media.SystemSounds.Asterisk.Play();
+                    MessageBox.Show(Properties.Resources.OpComplete, "FilExile", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    break;
+                case CompletionActions.RESTART:
+                    //TODO: Write restart code
+                    break;
+                case CompletionActions.SHUTDOWN:
+                    //TODO: Write shutdown code
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Sets up the Multithreading and Logging structs based on the control configurations and begins the deletion operation
+        /// </summary>
+        /// <param name="worker"></param>
+        /// <param name="e"></param>
+        private void RunDeletion(BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(checkbox_multiThreading.Checked, spinner_threadCount.Value);
+            DeletionOps.Logging log = new DeletionOps.Logging(checkbox_logging.Checked, field_logTo.Text);
+            DeletionOps.Delete(target, mt, log, checkbox_output.Checked);
         }
 
         #endregion
@@ -176,28 +249,46 @@ namespace FilExile
         /// <param name="e"></param>
         private void button_delete_Click(object sender, EventArgs e)
         {
+            // Disable the controls
             ChangeControlStates(false);
-            Target target = new Target(field_target.Text);
+
+            target = new Target(field_target.Text);
 
             if (target.Exists)
             {
-                if (!checkbox_disableProgressMonitoring.Checked)
+                try
                 {
-                    progressBar.Visible = true;
-                    if (target.IsDirectory)
+                    // If the user wants to monitor progress and the target is a directory
+                    // we need to setup the progress bar
+                    if (!checkbox_disableProgressMonitoring.Checked && target.IsDirectory)
                     {
-                        //TODO: Count files in directory
+                        iNumFiles = target.NumberOfFiles;
+                        progressBar.Maximum = iNumFiles;
+                        progressBar.Visible = true;
+                        backgroundWorker_ProgressBar.RunWorkerAsync();
                     }
+
+                    backgroundWorker_Deletion.RunWorkerAsync();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    //TODO: Write code to request elevation for a new process?
+                }
+                catch (FileNotFoundException)
+                {
+                    //TODO: Write code to handle this strange exception...
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    //TODO: Write code to handle this strange exception...
                 }
 
-                DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(checkbox_multiThreading.Checked, spinner_threadCount.Value);
-                int retval = DeletionOps.Delete(target, mt, checkbox_logging.Checked, field_logTo.Text);
             }
             else 
-            { 
-                //TODO: Throw file/directory not found exception
+            {
+                //Target doesn't exist, display an error
+                MessageBox.Show(Properties.Resources.TargetNotFound, Properties.Resources.Error);
             }
-
         }
 
         /// <summary>
@@ -259,7 +350,7 @@ namespace FilExile
         /// <param name="e"></param>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Dialogs.AboutBox about = new Dialogs.AboutBox();
+            AboutBox about = new AboutBox();
             about.ShowDialog();
         }
 
@@ -319,11 +410,11 @@ namespace FilExile
         /// <param name="e"></param>
         private void contentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (File.Exists(".\\FilExile Help.chm"))
-                Help.ShowHelp(this, ".\\FilExile Help.chm");
+            if (File.Exists(@".\FilExile Help.chm"))
+                Help.ShowHelp(this, @".\FilExile Help.chm");
             else
             {
-                if (MessageBox.Show(Properties.Resources.HelpFileNotFound, Properties.Resources.Error, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show(Properties.Resources.HelpFileNotFound, Properties.Resources.Error, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     Utilities.NetworkUtils.LaunchURL("http://filexile.sourceforge.net/help.htm");
             }
         }
@@ -345,6 +436,74 @@ namespace FilExile
                 button_delete.Enabled = false;
                 toolStripLabel.Text = Properties.Resources.SelectTip;
             }
+        }
+
+        /// <summary>
+        /// Call upon the progress bar to update itself
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker_ProgressBar_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = (BackgroundWorker) sender;
+            ProgressBarOperation(worker, e);
+        }
+
+        /// <summary>
+        /// Update the progress bar and status strip with the latest progress
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker_ProgressBar_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar.Value = e.ProgressPercentage;
+            statusStrip.Text = e.ProgressPercentage + "/" + iNumFiles;
+        }
+
+        /// <summary>
+        /// Setup the multithreading struct and call the Delete method to remove the files/directories
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker_Deletion_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = (BackgroundWorker) sender;
+            RunDeletion(worker, e);
+        }
+
+        /// <summary>
+        /// Once everything is complete, reset the form and re-enable the controls, then run the user specified
+        /// completion command
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorker_Deletion_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Re-enable the controls, reset the form
+            ChangeControlStates(true);
+            progressBar.Visible = false;
+
+            if (Directory.Exists(field_target.Text))
+                Directory.Delete(field_target.Text);
+
+            field_target.Text = "";
+
+            RunCompletionEvent((CompletionActions)comboBox_completionAction.SelectedIndex);
+        }
+
+        private void Main_DragDrop(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void spinner_threadCount_ValueChanged(object sender, EventArgs e)
+        {
+            if (spinner_threadCount.Value < 1 || spinner_threadCount.Value > 128)
+            {
+                MessageBox.Show(Properties.Resources.InvalidThreadCount, Properties.Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                spinner_threadCount.Value = 8;
+            }
+
         }
     }
     #endregion

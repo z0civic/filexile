@@ -1,4 +1,4 @@
-﻿namespace FilExile
+﻿namespace FilExile.Dialogs
 {
     partial class Main
     {
@@ -62,8 +62,8 @@
             this.checkbox_multiThreading = new System.Windows.Forms.CheckBox();
             this.checkbox_output = new System.Windows.Forms.CheckBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.backgroundWorkerMain = new System.ComponentModel.BackgroundWorker();
-            this.backgroundWorkerSecondary = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker_ProgressBar = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker_Deletion = new System.ComponentModel.BackgroundWorker();
             this.mainWindowMenu.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -74,6 +74,7 @@
             // 
             // mainWindowMenu
             // 
+            this.mainWindowMenu.BackColor = System.Drawing.SystemColors.Control;
             this.mainWindowMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.mainWindowMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpToolStripMenuItem});
@@ -276,6 +277,7 @@
             // 
             resources.ApplyResources(this.spinner_threadCount, "spinner_threadCount");
             this.spinner_threadCount.Name = "spinner_threadCount";
+            this.spinner_threadCount.ValueChanged += new System.EventHandler(this.spinner_threadCount_ValueChanged);
             // 
             // label_threadCount
             // 
@@ -296,6 +298,17 @@
             this.checkbox_output.Name = "checkbox_output";
             this.checkbox_output.UseVisualStyleBackColor = true;
             // 
+            // backgroundWorker_ProgressBar
+            // 
+            this.backgroundWorker_ProgressBar.WorkerReportsProgress = true;
+            this.backgroundWorker_ProgressBar.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_ProgressBar_DoWork);
+            this.backgroundWorker_ProgressBar.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressBar_ProgressChanged);
+            // 
+            // backgroundWorker_Deletion
+            // 
+            this.backgroundWorker_Deletion.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_Deletion_DoWork);
+            this.backgroundWorker_Deletion.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_Deletion_RunWorkerCompleted);
+            // 
             // Main
             // 
             resources.ApplyResources(this, "$this");
@@ -308,10 +321,12 @@
             this.Controls.Add(this.label_target);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.mainWindowMenu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.mainWindowMenu;
             this.MaximizeBox = false;
             this.Name = "Main";
             this.Load += new System.EventHandler(this.Main_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Main_DragDrop);
             this.mainWindowMenu.ResumeLayout(false);
             this.mainWindowMenu.PerformLayout();
             this.statusStrip.ResumeLayout(false);
@@ -362,8 +377,8 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.CheckBox checkbox_disableProgressMonitoring;
         private System.Windows.Forms.ToolStripStatusLabel toolStripLabel;
-        private System.ComponentModel.BackgroundWorker backgroundWorkerMain;
-        private System.ComponentModel.BackgroundWorker backgroundWorkerSecondary;
+        private System.ComponentModel.BackgroundWorker backgroundWorker_ProgressBar;
+        private System.ComponentModel.BackgroundWorker backgroundWorker_Deletion;
     }
 }
 

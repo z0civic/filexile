@@ -166,6 +166,15 @@ namespace FilExile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The number of threads must be greater or equal to 1 and less than or equal to 128..
+        /// </summary>
+        internal static string InvalidThreadCount {
+            get {
+                return ResourceManager.GetString("InvalidThreadCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are running the latest version of FilExile!.
         /// </summary>
         internal static string LatestVersion {
@@ -180,6 +189,15 @@ namespace FilExile.Properties {
         internal static string NewerVersion {
             get {
                 return ResourceManager.GetString("NewerVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation complete!.
+        /// </summary>
+        internal static string OpComplete {
+            get {
+                return ResourceManager.GetString("OpComplete", resourceCulture);
             }
         }
         
@@ -225,6 +243,15 @@ namespace FilExile.Properties {
         internal static string SelectTip {
             get {
                 return ResourceManager.GetString("SelectTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The target is not a valid file or directory..
+        /// </summary>
+        internal static string TargetNotFound {
+            get {
+                return ResourceManager.GetString("TargetNotFound", resourceCulture);
             }
         }
     }

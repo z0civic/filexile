@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FilExile.Utilities;
+using System;
 using System.Windows.Forms;
 
 namespace FilExile
@@ -54,7 +55,7 @@ namespace FilExile
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new Main());
+                    Application.Run(new Dialogs.Main());
                 }
             }
 

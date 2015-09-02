@@ -13,8 +13,8 @@ namespace FilExile.Dialogs
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
-            this.labelGNU.Text = global::FilExile.Properties.Resources.GNUTitle;
-            this.textBoxDescription.Text = global::FilExile.Properties.Resources.GNU;
+            this.labelGNU.Text = Properties.Resources.GNUTitle;
+            this.textBoxDescription.Text = Properties.Resources.GNU;
         }
 
         #region Assembly Attribute Accessors

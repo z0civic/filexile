@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace FilExile
@@ -67,7 +68,7 @@ namespace FilExile
 
                 foreach (string pattern in criticalDirectories)
                 {
-                    if (StringUtils.IsLike(this.path, pattern))
+                    if (Utilities.StringUtils.IsLike(this.path, pattern))
                     {
                         retval = true;
                     }
@@ -99,9 +100,71 @@ namespace FilExile
             }
         }
 
+        /// <summary>
+        /// Returns the number of files in a directory
+        /// </summary>
+        public int NumberOfFiles
+        {
+            get
+            {
+                return GetFiles(path).Count;
+            }
+        }
+
+        /// <summary>
+        /// Returns the parent directory of the path
+        /// </summary>
+        public string ParentDirectory
+        {
+            get
+            {
+                int end = path.LastIndexOf(@"\");
+                string parentDir = path.Substring(0, end);
+                if (parentDir.EndsWith(@":"))
+                    parentDir += @"\";
+                return parentDir;
+            }
+        }
+
+        /// <summary>
+        /// Returns the file name of the path
+        /// </summary>
+        public string FileName
+        {
+            get
+            {
+                int end = path.LastIndexOf(@"\");
+                return path.Substring(end + 1);
+            }
+        }
+
         #endregion
 
         // ------------------------------------------------------------------------------------
+
+        #region Private methods
+
+        /// <summary>
+        /// Recursively returns a collection of files from a path
+        /// </summary>
+        /// <param name="currentPath">The path to search from</param>
+        /// <returns>A collection of files</returns>
+        private List<string> GetFiles(string currentPath)
+        {
+            var files = new List<string>();
+
+            try
+            {
+                files.AddRange(Directory.GetFiles(currentPath, "*", SearchOption.TopDirectoryOnly));
+                foreach (var directory in Directory.GetDirectories(currentPath))
+                    files.AddRange(GetFiles(directory));
+            }
+            catch { }
+
+            return files;
+        }
+
+        #endregion
 
     }
 }

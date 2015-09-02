@@ -1,0 +1,11 @@
+C:\FilExile\filexile\FilExile Portable\obj\Debug\FilExile Portable.csprojResolveAssemblyReference.cache
+C:\FilExile\filexile\FilExile Portable\obj\Debug\FilExile_Portable.Properties.Resources.resources
+C:\FilExile\filexile\FilExile Portable\obj\Debug\FilExile Portable.csproj.GenerateResource.Cache
+C:\FilExile\filexile\FilExile Portable\bin\Debug\FilExile Portable.exe
+C:\FilExile\filexile\FilExile Portable\bin\Debug\FilExile Portable.pdb
+C:\FilExile\filexile\FilExile Portable\obj\Debug\FilExile Portable.exe
+C:\FilExile\filexile\FilExile Portable\obj\Debug\FilExile Portable.pdb
+C:\FilExile\filexile\FilExile Portable\obj\Debug\FilExile_Portable.Dialogs.AboutBox.resources
+C:\FilExile\filexile\FilExile Portable\obj\Debug\FilExile_Portable.Dialogs.Main.resources
+C:\FilExile\filexile\FilExile Portable\bin\Debug\FilExile.exe
+C:\FilExile\filexile\FilExile Portable\bin\Debug\FilExile.pdb

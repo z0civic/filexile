@@ -172,4 +172,13 @@
   <data name="SelectTip" xml:space="preserve">
     <value>Choose a directory or file to delete...</value>
   </data>
+  <data name="TargetNotFound" xml:space="preserve">
+    <value>The target is not a valid file or directory.</value>
+  </data>
+  <data name="OpComplete" xml:space="preserve">
+    <value>Operation complete!</value>
+  </data>
+  <data name="InvalidThreadCount" xml:space="preserve">
+    <value>The number of threads must be greater or equal to 1 and less than or equal to 128.</value>
+  </data>
 </root>

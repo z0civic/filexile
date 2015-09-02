@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace FilExile
+namespace FilExile.Utilities
 {
     /// <summary>
     /// Contains a set of static utility methods for string manipulation
@@ -140,7 +140,7 @@ namespace FilExile
         /// <returns>True if there's a match</returns>
         public static bool IsLike(string str, string pattern)
         {
-            return new Regex("^" + Regex.Escape(pattern).Replace(@"\*", ".*").Replace(@"\?", ".") + "$", 
+            return new Regex("^" + Regex.Escape(pattern).Replace(@"\*", ".*").Replace(@"\?", ".") + "$",
                 RegexOptions.IgnoreCase | RegexOptions.Singleline).IsMatch(str);
         }
 
