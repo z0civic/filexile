@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FilExile.Properties {
+namespace Shared {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace FilExile.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FilExile.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Shared.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -106,7 +106,7 @@ namespace FilExile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static System.Drawing.Bitmap fe_64_t {
             get {
@@ -156,7 +156,7 @@ namespace FilExile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static System.Drawing.Icon icon {
             get {
@@ -166,7 +166,7 @@ namespace FilExile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The number of threads must be greater or equal to 1 and less than or equal to 128..
+        ///   Looks up a localized string similar to The number of threads must be greater or equal to 1 and less than or equal to 128.
         /// </summary>
         internal static string InvalidThreadCount {
             get {

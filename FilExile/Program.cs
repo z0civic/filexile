@@ -1,4 +1,4 @@
-﻿using FilExile.Utilities;
+﻿using Shared;
 using System;
 using System.Windows.Forms;
 
@@ -16,14 +16,6 @@ namespace FilExile
         #region Objects
 
         private static CommandLineArgs cla;
-
-        #endregion
-
-        // ------------------------------------------------------------------------------------
-
-        #region Enums
-
-        public enum ErrorCodes {SUCCESS, NOT_FOUND};
 
         #endregion
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +14,7 @@ namespace FilExile_Portable.Dialogs
         public Main()
         {
             InitializeComponent();
-            Icon = Properties.Resources.icon;
+            Icon = Shared.Resources.icon;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

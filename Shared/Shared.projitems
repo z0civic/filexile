@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>97fefdff-4d88-44d8-b9f1-25e1d954c3be</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\DownloadDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\DownloadDlg.Designer.cs">
+      <DependentUpon>DownloadDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Dialogs\FolderBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Main\CommandLineInterface.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Main\DeletionOps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Main\ErrorCodes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Main\Target.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\Resources.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\CommandLineArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\NetworkUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\StringUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Keys\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Dialogs\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Dialogs\DownloadDlg.resx">
+      <DependentUpon>DownloadDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Resources.resx">
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <Generator>
+      </Generator>
+      <CustomToolNamespace>Shared</CustomToolNamespace>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </PRIResource>
+  </ItemGroup>
+</Project>

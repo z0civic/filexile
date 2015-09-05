@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FilExile.Dialogs
+namespace Shared
 {
 
     /// <summary>
@@ -53,7 +53,7 @@ namespace FilExile.Dialogs
     ///     ...
     ///     
     /// </remarks>
-    public class FolderBrowser : Form
+    internal class FolderBrowser : Form
     {
 
         // C# representation of the IMalloc interface.

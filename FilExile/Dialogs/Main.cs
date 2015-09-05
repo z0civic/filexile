@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
+using System.Resources;
 using System.Windows.Forms;
 
 namespace FilExile.Dialogs
@@ -18,7 +21,7 @@ namespace FilExile.Dialogs
 
             // If specified in the app.config file, perform an update check
             if (Properties.Settings.Default.autoUpdate)
-                Utilities.NetworkUtils.InitiateVersionCheck(false);
+                NetworkUtils.InitiateVersionCheck(false);
         }
 
         #endregion
@@ -60,9 +63,10 @@ namespace FilExile.Dialogs
         /// <param name="e"></param>
         private void Main_Load(object sender, EventArgs e)
         {
+
             SetControls();
-            Icon = Properties.Resources.icon;
-            toolStripLabel.Text = Properties.Resources.SelectTip;
+            Icon = Shared.Resources.icon;
+            toolStripLabel.Text = Shared.Resources.SelectTip;
             button_delete.Enabled = false;
         }
 
@@ -212,7 +216,7 @@ namespace FilExile.Dialogs
                     break;
                 case CompletionActions.PLAY_SOUND:
                     System.Media.SystemSounds.Asterisk.Play();
-                    MessageBox.Show(Properties.Resources.OpComplete, "FilExile", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    MessageBox.Show(Shared.Resources.OpComplete, "FilExile", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     break;
                 case CompletionActions.RESTART:
                     //TODO: Write restart code
@@ -287,7 +291,7 @@ namespace FilExile.Dialogs
             else 
             {
                 //Target doesn't exist, display an error
-                MessageBox.Show(Properties.Resources.TargetNotFound, Properties.Resources.Error);
+                MessageBox.Show(Shared.Resources.TargetNotFound, Shared.Resources.Error);
             }
         }
 
@@ -299,7 +303,7 @@ namespace FilExile.Dialogs
         private void button_browse_Click(object sender, EventArgs e)
         {
             FolderBrowser fb = new FolderBrowser();
-            fb.Description = Properties.Resources.FolderBrowserDialogDescription;
+            fb.Description = Shared.Resources.FolderBrowserDialogDescription;
             fb.IncludeFiles = true;
             fb.ShowNewFolderButton = false;
             if (fb.ShowDialog() == DialogResult.OK)
@@ -314,10 +318,10 @@ namespace FilExile.Dialogs
         /// <param name="e"></param>
         private void button_logToBrowse_Click(object sender, EventArgs e)
         {
-            saveFileDialog.Filter = Properties.Resources.SaveFileDialogFilter;
-            saveFileDialog.Title = Properties.Resources.SaveFileDialogTitle;
-            saveFileDialog.FileName = Properties.Resources.SaveFileDialogFileName;
-            saveFileDialog.DefaultExt = Properties.Resources.SaveFileDialogDefaultExt;
+            saveFileDialog.Filter = Shared.Resources.SaveFileDialogFilter;
+            saveFileDialog.Title = Shared.Resources.SaveFileDialogTitle;
+            saveFileDialog.FileName = Shared.Resources.SaveFileDialogFileName;
+            saveFileDialog.DefaultExt = Shared.Resources.SaveFileDialogDefaultExt;
             saveFileDialog.AddExtension = true;
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 field_logTo.Text = saveFileDialog.FileName;
@@ -361,7 +365,7 @@ namespace FilExile.Dialogs
         /// <param name="e"></param>
         private void onlineHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Utilities.NetworkUtils.LaunchURL("http://filexile.sourceforge.net/help.htm");
+            NetworkUtils.LaunchURL("http://filexile.sourceforge.net/help.htm");
         }
 
         /// <summary>
@@ -399,7 +403,7 @@ namespace FilExile.Dialogs
         /// <param name="e"></param>
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Utilities.NetworkUtils.InitiateVersionCheck(true);
+            NetworkUtils.InitiateVersionCheck(true);
         }
 
         /// <summary>
@@ -414,8 +418,8 @@ namespace FilExile.Dialogs
                 Help.ShowHelp(this, @".\FilExile Help.chm");
             else
             {
-                if (MessageBox.Show(Properties.Resources.HelpFileNotFound, Properties.Resources.Error, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                    Utilities.NetworkUtils.LaunchURL("http://filexile.sourceforge.net/help.htm");
+                if (MessageBox.Show(Shared.Resources.HelpFileNotFound, Shared.Resources.Error, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    NetworkUtils.LaunchURL("http://filexile.sourceforge.net/help.htm");
             }
         }
 
@@ -429,12 +433,12 @@ namespace FilExile.Dialogs
             if (field_target.Text != "")
             {
                 button_delete.Enabled = true;
-                toolStripLabel.Text = Properties.Resources.DeleteTip;
+                toolStripLabel.Text = Shared.Resources.DeleteTip;
             }
             else
             {
                 button_delete.Enabled = false;
-                toolStripLabel.Text = Properties.Resources.SelectTip;
+                toolStripLabel.Text = Shared.Resources.SelectTip;
             }
         }
 
@@ -500,7 +504,7 @@ namespace FilExile.Dialogs
         {
             if (spinner_threadCount.Value < 1 || spinner_threadCount.Value > 128)
             {
-                MessageBox.Show(Properties.Resources.InvalidThreadCount, Properties.Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Shared.Resources.InvalidThreadCount, Shared.Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 spinner_threadCount.Value = 8;
             }
 

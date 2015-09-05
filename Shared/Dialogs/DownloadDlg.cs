@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
-namespace FilExile.Dialogs
+namespace Shared
 {
     public partial class DownloadDlg : Form
     {
         public DownloadDlg()
         {
             InitializeComponent();
-            this.label_Download.Text = Properties.Resources.NewerVersion;
-            this.button_Cancel.Text = Properties.Resources.Cancel;
-            this.button_Download.Text = Properties.Resources.Download;
+            this.label_Download.Text = Shared.Resources.NewerVersion;
+            this.button_Cancel.Text = Shared.Resources.Cancel;
+            this.button_Download.Text = Shared.Resources.Download;
         }
 
         private void button_Download_Click(object sender, EventArgs e)
         {
-            Utilities.NetworkUtils.DownloadLatestVersion();
+            NetworkUtils.DownloadLatestVersion();
             Close();
         }
 

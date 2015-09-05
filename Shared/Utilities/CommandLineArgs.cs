@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FilExile.Utilities
+namespace Shared
 {
-    public sealed class CommandLineArgs
+    internal sealed class CommandLineArgs
     {
         /// <summary>
         /// Class for handling command line arguments

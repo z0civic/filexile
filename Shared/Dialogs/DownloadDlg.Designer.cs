@@ -1,4 +1,4 @@
-﻿namespace FilExile.Dialogs
+﻿namespace Shared
 {
     partial class DownloadDlg
     {

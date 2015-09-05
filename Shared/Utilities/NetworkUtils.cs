@@ -4,12 +4,12 @@ using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace FilExile.Utilities
+namespace Shared
 {
     /// <summary>
     /// Contains a set of static utility methods for network calls
     /// </summary>
-    class NetworkUtils
+    internal sealed class NetworkUtils
     {
         #region Constants
 
@@ -91,7 +91,7 @@ namespace FilExile.Utilities
             catch (WebException)
             {
                 //We weren't able to contact the server
-                MessageBox.Show(Properties.Resources.ConnectionError,Properties.Resources.Error);
+                MessageBox.Show(Shared.Resources.ConnectionError,Shared.Resources.Error);
                 return null;
             }
         }
@@ -107,10 +107,10 @@ namespace FilExile.Utilities
             if (e.Error == null)
             {
                 if (StringUtils.Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
-                    MessageBox.Show(Properties.Resources.LatestVersion);
+                    MessageBox.Show(Shared.Resources.LatestVersion);
                 else
                 {
-                    Dialogs.DownloadDlg dl = new Dialogs.DownloadDlg();
+                    DownloadDlg dl = new DownloadDlg();
                     dl.ShowDialog();
                 }
             }
@@ -128,7 +128,7 @@ namespace FilExile.Utilities
             {
                 if (!StringUtils.Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
                 {
-                    Dialogs.DownloadDlg dl = new Dialogs.DownloadDlg();
+                    DownloadDlg dl = new DownloadDlg();
                     dl.ShowDialog();
                 }
             }

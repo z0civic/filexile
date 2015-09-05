@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace FilExile
+namespace Shared
 {
-    public class DeletionOps
+    internal sealed class DeletionOps
     {
         /// <summary>
         /// Class for handling deletion operations within FilExile whether from the GUI or CLI
@@ -66,7 +66,7 @@ namespace FilExile
         /// <returns>An error code based on how the operation turned out</returns>
         public static int Delete(Target target, MultithreadingSetup mt, Logging log, bool output)
         {
-            int retval = (int) Program.ErrorCodes.SUCCESS;
+            int retval = (int) ErrorCodes.SUCCESS;
 
             if (target.Exists)
             {
@@ -107,7 +107,7 @@ namespace FilExile
             }
             else
             {
-                retval = (int)Program.ErrorCodes.NOT_FOUND;
+                retval = (int) ErrorCodes.NOT_FOUND;
             }
 
             return retval;

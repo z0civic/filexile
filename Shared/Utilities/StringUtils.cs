@@ -1,11 +1,11 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace FilExile.Utilities
+namespace Shared
 {
     /// <summary>
     /// Contains a set of static utility methods for string manipulation
     /// </summary>
-    public static class StringUtils
+    internal static class StringUtils
     {
         #region Public methods
 

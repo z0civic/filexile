@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace FilExile
+namespace Shared
 {
-    public class Target
+    internal sealed class Target
     {
         /// <summary>
         /// Class for hodling the "target" to be deleted. 
@@ -68,7 +68,7 @@ namespace FilExile
 
                 foreach (string pattern in criticalDirectories)
                 {
-                    if (Utilities.StringUtils.IsLike(this.path, pattern))
+                    if (StringUtils.IsLike(this.path, pattern))
                     {
                         retval = true;
                     }

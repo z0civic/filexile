@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace FilExile.Dialogs
+namespace Shared
 {
     partial class AboutBox : Form
     {
@@ -13,8 +13,8 @@ namespace FilExile.Dialogs
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
-            this.labelGNU.Text = Properties.Resources.GNUTitle;
-            this.textBoxDescription.Text = Properties.Resources.GNU;
+            this.labelGNU.Text = Shared.Resources.GNUTitle;
+            this.textBoxDescription.Text = Shared.Resources.GNU;
         }
 
         #region Assembly Attribute Accessors

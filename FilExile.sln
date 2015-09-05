@@ -7,7 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilExile", "FilExile\FilExi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilExile Portable", "FilExile Portable\FilExile Portable.csproj", "{086F3978-0FE3-40D9-8A70-2EEC9EAF564F}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{97FEFDFF-4D88-44D8-B9F1-25E1D954C3BE}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared\Shared.projitems*{d9f51a74-8472-4bd6-b541-c56c6f7e69a9}*SharedItemsImports = 4
+		Shared\Shared.projitems*{97fefdff-4d88-44d8-b9f1-25e1d954c3be}*SharedItemsImports = 13
+		Shared\Shared.projitems*{086f3978-0fe3-40d9-8a70-2eec9eaf564f}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
