@@ -13,8 +13,8 @@ namespace Shared
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
-            this.labelGNU.Text = Shared.Resources.GNUTitle;
-            this.textBoxDescription.Text = Shared.Resources.GNU;
+            this.labelGNU.Text = SharedResources.Properties.Resources.GNUTitle;
+            this.textBoxDescription.Text = SharedResources.Properties.Resources.GNU;
         }
 
         #region Assembly Attribute Accessors

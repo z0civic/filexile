@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Shared {
+namespace SharedResources.Properties {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace Shared {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace Shared {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Shared.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SharedResources.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Shared {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        internal static string Cancel {
+        public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to Could not connect to the server.
         /// </summary>
-        internal static string ConnectionError {
+        public static string ConnectionError {
             get {
                 return ResourceManager.GetString("ConnectionError", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to Click &quot;Delete&quot; to remove the target....
         /// </summary>
-        internal static string DeleteTip {
+        public static string DeleteTip {
             get {
                 return ResourceManager.GetString("DeleteTip", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to Download.
         /// </summary>
-        internal static string Download {
+        public static string Download {
             get {
                 return ResourceManager.GetString("Download", resourceCulture);
             }
@@ -99,16 +99,16 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
-        internal static string Error {
+        public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap fe_64_t {
+        public static System.Drawing.Bitmap fe_64_t {
             get {
                 object obj = ResourceManager.GetObject("fe_64_t", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -118,7 +118,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to Choose a file or directory to delete....
         /// </summary>
-        internal static string FolderBrowserDialogDescription {
+        public static string FolderBrowserDialogDescription {
             get {
                 return ResourceManager.GetString("FolderBrowserDialogDescription", resourceCulture);
             }
@@ -131,7 +131,7 @@ namespace Shared {
         ///
         ///You should have received a copy  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string GNU {
+        public static string GNU {
             get {
                 return ResourceManager.GetString("GNU", resourceCulture);
             }
@@ -140,7 +140,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to GNU General Public License, version 2.
         /// </summary>
-        internal static string GNUTitle {
+        public static string GNUTitle {
             get {
                 return ResourceManager.GetString("GNUTitle", resourceCulture);
             }
@@ -149,16 +149,16 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to The FilExile help file could not be found. Open the online help?.
         /// </summary>
-        internal static string HelpFileNotFound {
+        public static string HelpFileNotFound {
             get {
                 return ResourceManager.GetString("HelpFileNotFound", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon icon {
+        public static System.Drawing.Icon icon {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -168,7 +168,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to The number of threads must be greater or equal to 1 and less than or equal to 128.
         /// </summary>
-        internal static string InvalidThreadCount {
+        public static string InvalidThreadCount {
             get {
                 return ResourceManager.GetString("InvalidThreadCount", resourceCulture);
             }
@@ -177,7 +177,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to You are running the latest version of FilExile!.
         /// </summary>
-        internal static string LatestVersion {
+        public static string LatestVersion {
             get {
                 return ResourceManager.GetString("LatestVersion", resourceCulture);
             }
@@ -186,7 +186,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to There is a newer version of FilExile available!.
         /// </summary>
-        internal static string NewerVersion {
+        public static string NewerVersion {
             get {
                 return ResourceManager.GetString("NewerVersion", resourceCulture);
             }
@@ -195,7 +195,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to Operation complete!.
         /// </summary>
-        internal static string OpComplete {
+        public static string OpComplete {
             get {
                 return ResourceManager.GetString("OpComplete", resourceCulture);
             }
@@ -204,7 +204,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to txt.
         /// </summary>
-        internal static string SaveFileDialogDefaultExt {
+        public static string SaveFileDialogDefaultExt {
             get {
                 return ResourceManager.GetString("SaveFileDialogDefaultExt", resourceCulture);
             }
@@ -213,7 +213,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to FilExile_output.
         /// </summary>
-        internal static string SaveFileDialogFileName {
+        public static string SaveFileDialogFileName {
             get {
                 return ResourceManager.GetString("SaveFileDialogFileName", resourceCulture);
             }
@@ -222,7 +222,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to Text Files (*.txt)|*.txt.
         /// </summary>
-        internal static string SaveFileDialogFilter {
+        public static string SaveFileDialogFilter {
             get {
                 return ResourceManager.GetString("SaveFileDialogFilter", resourceCulture);
             }
@@ -231,7 +231,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to Save FilExile log file as....
         /// </summary>
-        internal static string SaveFileDialogTitle {
+        public static string SaveFileDialogTitle {
             get {
                 return ResourceManager.GetString("SaveFileDialogTitle", resourceCulture);
             }
@@ -240,7 +240,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to Choose a directory or file to delete....
         /// </summary>
-        internal static string SelectTip {
+        public static string SelectTip {
             get {
                 return ResourceManager.GetString("SelectTip", resourceCulture);
             }
@@ -249,7 +249,7 @@ namespace Shared {
         /// <summary>
         ///   Looks up a localized string similar to The target is not a valid file or directory..
         /// </summary>
-        internal static string TargetNotFound {
+        public static string TargetNotFound {
             get {
                 return ResourceManager.GetString("TargetNotFound", resourceCulture);
             }

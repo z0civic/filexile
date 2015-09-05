@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilExile Portable", "FilExi
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{97FEFDFF-4D88-44D8-B9F1-25E1D954C3BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedResources", "SharedResources\SharedResources.csproj", "{58FCE5F1-E535-4EAB-B322-4FD5C42FD451}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Shared\Shared.projitems*{d9f51a74-8472-4bd6-b541-c56c6f7e69a9}*SharedItemsImports = 4
@@ -28,6 +30,10 @@ Global
 		{086F3978-0FE3-40D9-8A70-2EEC9EAF564F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{086F3978-0FE3-40D9-8A70-2EEC9EAF564F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{086F3978-0FE3-40D9-8A70-2EEC9EAF564F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58FCE5F1-E535-4EAB-B322-4FD5C42FD451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58FCE5F1-E535-4EAB-B322-4FD5C42FD451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58FCE5F1-E535-4EAB-B322-4FD5C42FD451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58FCE5F1-E535-4EAB-B322-4FD5C42FD451}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

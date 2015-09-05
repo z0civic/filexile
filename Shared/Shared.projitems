@@ -28,7 +28,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Main\DeletionOps.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Main\ErrorCodes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Main\Target.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Resources\Resources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\CommandLineArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\NetworkUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\StringUtils.cs" />
@@ -40,13 +39,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Dialogs\DownloadDlg.resx">
       <DependentUpon>DownloadDlg.cs</DependentUpon>
     </EmbeddedResource>
-    <PRIResource Include="$(MSBuildThisFileDirectory)Resources\Resources.resx">
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <Generator>
-      </Generator>
-      <CustomToolNamespace>Shared</CustomToolNamespace>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </PRIResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Keys\filexile.pfx" />

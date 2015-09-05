@@ -14,7 +14,7 @@ namespace FilExile_Portable.Dialogs
         public Main()
         {
             InitializeComponent();
-            Icon = Shared.Resources.icon;
+            Icon = SharedResources.Properties.Resources.icon;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

@@ -91,7 +91,7 @@ namespace Shared
             catch (WebException)
             {
                 //We weren't able to contact the server
-                MessageBox.Show(Shared.Resources.ConnectionError,Shared.Resources.Error);
+                MessageBox.Show(SharedResources.Properties.Resources.ConnectionError,SharedResources.Properties.Resources.Error);
                 return null;
             }
         }
@@ -107,7 +107,7 @@ namespace Shared
             if (e.Error == null)
             {
                 if (StringUtils.Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
-                    MessageBox.Show(Shared.Resources.LatestVersion);
+                    MessageBox.Show(SharedResources.Properties.Resources.LatestVersion);
                 else
                 {
                     DownloadDlg dl = new DownloadDlg();
