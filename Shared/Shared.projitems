@@ -34,9 +34,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\StringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Keys\" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Dialogs\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -50,5 +47,8 @@
       <CustomToolNamespace>Shared</CustomToolNamespace>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </PRIResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Keys\filexile.pfx" />
   </ItemGroup>
 </Project>
