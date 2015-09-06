@@ -1,10 +1,7 @@
 ﻿using Shared;
-using SharedResources;
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Reflection;
-using System.Resources;
 using System.Windows.Forms;
 
 namespace FilExile.Dialogs
@@ -64,7 +61,6 @@ namespace FilExile.Dialogs
         /// <param name="e"></param>
         private void Main_Load(object sender, EventArgs e)
         {
-            
             SetControls();
             Icon = SharedResources.Properties.Resources.icon;
             toolStripLabel.Text = SharedResources.Properties.Resources.SelectTip;
@@ -496,11 +492,42 @@ namespace FilExile.Dialogs
             RunCompletionEvent((CompletionActions)comboBox_completionAction.SelectedIndex);
         }
 
-        private void Main_DragDrop(object sender, DragEventArgs e)
+        /// <summary>
+        /// Indicates that the drag over event will be accepted
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Main_DragOver(object sender, DragEventArgs e)
         {
-
+            e.Effect = DragDropEffects.Copy;
         }
 
+        /// <summary>
+        /// Handles the DragDrop event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Main_DragDrop(object sender, DragEventArgs e)
+        {
+            //Clear anything that might be in the target field
+            field_target.Text = "";
+
+            //Grab the filenames from the drop
+            string[] filenames = (string[]) e.Data.GetData(DataFormats.FileDrop);
+
+            //If the user tries to drop multiple items, let them know we will only process one
+            if (filenames.Length > 1)
+                MessageBox.Show(SharedResources.Properties.Resources.MultiFileError, SharedResources.Properties.Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            //Set the target to the first filename
+            field_target.Text = filenames[0];
+        }
+
+        /// <summary>
+        /// Makes sure the user is selecting a valid number of threads
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void spinner_threadCount_ValueChanged(object sender, EventArgs e)
         {
             if (spinner_threadCount.Value < 1 || spinner_threadCount.Value > 128)

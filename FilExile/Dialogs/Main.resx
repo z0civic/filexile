@@ -336,6 +336,51 @@
   <data name="&gt;&gt;button_delete.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="&gt;&gt;optionsTab.Name" xml:space="preserve">
+    <value>optionsTab</value>
+  </data>
+  <data name="&gt;&gt;optionsTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;optionsTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;optionsTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;advancedTab.Name" xml:space="preserve">
+    <value>advancedTab</value>
+  </data>
+  <data name="&gt;&gt;advancedTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;advancedTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;advancedTab.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 94</value>
+  </data>
+  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>419, 148</value>
+  </data>
+  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="&gt;&gt;button_logToBrowse.Name" xml:space="preserve">
     <value>button_logToBrowse</value>
   </data>
@@ -457,150 +502,6 @@
     <value>tabControl</value>
   </data>
   <data name="&gt;&gt;optionsTab.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;checkbox_disableProgressMonitoring.Name" xml:space="preserve">
-    <value>checkbox_disableProgressMonitoring</value>
-  </data>
-  <data name="&gt;&gt;checkbox_disableProgressMonitoring.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkbox_disableProgressMonitoring.Parent" xml:space="preserve">
-    <value>advancedTab</value>
-  </data>
-  <data name="&gt;&gt;checkbox_disableProgressMonitoring.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;button_defaults.Name" xml:space="preserve">
-    <value>button_defaults</value>
-  </data>
-  <data name="&gt;&gt;button_defaults.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;button_defaults.Parent" xml:space="preserve">
-    <value>advancedTab</value>
-  </data>
-  <data name="&gt;&gt;button_defaults.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;checkbox_alwaysOnTop.Name" xml:space="preserve">
-    <value>checkbox_alwaysOnTop</value>
-  </data>
-  <data name="&gt;&gt;checkbox_alwaysOnTop.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkbox_alwaysOnTop.Parent" xml:space="preserve">
-    <value>advancedTab</value>
-  </data>
-  <data name="&gt;&gt;checkbox_alwaysOnTop.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;label_threadBounds.Name" xml:space="preserve">
-    <value>label_threadBounds</value>
-  </data>
-  <data name="&gt;&gt;label_threadBounds.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label_threadBounds.Parent" xml:space="preserve">
-    <value>advancedTab</value>
-  </data>
-  <data name="&gt;&gt;label_threadBounds.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;spinner_threadCount.Name" xml:space="preserve">
-    <value>spinner_threadCount</value>
-  </data>
-  <data name="&gt;&gt;spinner_threadCount.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;spinner_threadCount.Parent" xml:space="preserve">
-    <value>advancedTab</value>
-  </data>
-  <data name="&gt;&gt;spinner_threadCount.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;label_threadCount.Name" xml:space="preserve">
-    <value>label_threadCount</value>
-  </data>
-  <data name="&gt;&gt;label_threadCount.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label_threadCount.Parent" xml:space="preserve">
-    <value>advancedTab</value>
-  </data>
-  <data name="&gt;&gt;label_threadCount.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;checkbox_multiThreading.Name" xml:space="preserve">
-    <value>checkbox_multiThreading</value>
-  </data>
-  <data name="&gt;&gt;checkbox_multiThreading.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkbox_multiThreading.Parent" xml:space="preserve">
-    <value>advancedTab</value>
-  </data>
-  <data name="&gt;&gt;checkbox_multiThreading.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;checkbox_output.Name" xml:space="preserve">
-    <value>checkbox_output</value>
-  </data>
-  <data name="&gt;&gt;checkbox_output.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkbox_output.Parent" xml:space="preserve">
-    <value>advancedTab</value>
-  </data>
-  <data name="&gt;&gt;checkbox_output.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="advancedTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="advancedTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="advancedTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>411, 122</value>
-  </data>
-  <data name="advancedTab.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="advancedTab.Text" xml:space="preserve">
-    <value>Advanced</value>
-  </data>
-  <data name="&gt;&gt;advancedTab.Name" xml:space="preserve">
-    <value>advancedTab</value>
-  </data>
-  <data name="&gt;&gt;advancedTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;advancedTab.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;advancedTab.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 94</value>
-  </data>
-  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>419, 148</value>
-  </data>
-  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="button_logToBrowse.Enabled" type="System.Boolean, mscorlib">
@@ -821,6 +722,129 @@
   </data>
   <data name="&gt;&gt;checkbox_logging.ZOrder" xml:space="preserve">
     <value>7</value>
+  </data>
+  <data name="&gt;&gt;checkbox_disableProgressMonitoring.Name" xml:space="preserve">
+    <value>checkbox_disableProgressMonitoring</value>
+  </data>
+  <data name="&gt;&gt;checkbox_disableProgressMonitoring.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkbox_disableProgressMonitoring.Parent" xml:space="preserve">
+    <value>advancedTab</value>
+  </data>
+  <data name="&gt;&gt;checkbox_disableProgressMonitoring.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;button_defaults.Name" xml:space="preserve">
+    <value>button_defaults</value>
+  </data>
+  <data name="&gt;&gt;button_defaults.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;button_defaults.Parent" xml:space="preserve">
+    <value>advancedTab</value>
+  </data>
+  <data name="&gt;&gt;button_defaults.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;checkbox_alwaysOnTop.Name" xml:space="preserve">
+    <value>checkbox_alwaysOnTop</value>
+  </data>
+  <data name="&gt;&gt;checkbox_alwaysOnTop.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkbox_alwaysOnTop.Parent" xml:space="preserve">
+    <value>advancedTab</value>
+  </data>
+  <data name="&gt;&gt;checkbox_alwaysOnTop.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label_threadBounds.Name" xml:space="preserve">
+    <value>label_threadBounds</value>
+  </data>
+  <data name="&gt;&gt;label_threadBounds.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label_threadBounds.Parent" xml:space="preserve">
+    <value>advancedTab</value>
+  </data>
+  <data name="&gt;&gt;label_threadBounds.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;spinner_threadCount.Name" xml:space="preserve">
+    <value>spinner_threadCount</value>
+  </data>
+  <data name="&gt;&gt;spinner_threadCount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;spinner_threadCount.Parent" xml:space="preserve">
+    <value>advancedTab</value>
+  </data>
+  <data name="&gt;&gt;spinner_threadCount.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;label_threadCount.Name" xml:space="preserve">
+    <value>label_threadCount</value>
+  </data>
+  <data name="&gt;&gt;label_threadCount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label_threadCount.Parent" xml:space="preserve">
+    <value>advancedTab</value>
+  </data>
+  <data name="&gt;&gt;label_threadCount.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;checkbox_multiThreading.Name" xml:space="preserve">
+    <value>checkbox_multiThreading</value>
+  </data>
+  <data name="&gt;&gt;checkbox_multiThreading.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkbox_multiThreading.Parent" xml:space="preserve">
+    <value>advancedTab</value>
+  </data>
+  <data name="&gt;&gt;checkbox_multiThreading.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;checkbox_output.Name" xml:space="preserve">
+    <value>checkbox_output</value>
+  </data>
+  <data name="&gt;&gt;checkbox_output.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkbox_output.Parent" xml:space="preserve">
+    <value>advancedTab</value>
+  </data>
+  <data name="&gt;&gt;checkbox_output.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="advancedTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="advancedTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="advancedTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 122</value>
+  </data>
+  <data name="advancedTab.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="advancedTab.Text" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="&gt;&gt;advancedTab.Name" xml:space="preserve">
+    <value>advancedTab</value>
+  </data>
+  <data name="&gt;&gt;advancedTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;advancedTab.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;advancedTab.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="checkbox_disableProgressMonitoring.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>

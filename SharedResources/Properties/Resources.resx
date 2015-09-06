@@ -181,4 +181,7 @@
   <data name="GNU" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\GNU.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="MultiFileError" xml:space="preserve">
+    <value>FilExile can only handle one dropped file or directory at a time.</value>
+  </data>
 </root>

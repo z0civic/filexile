@@ -184,6 +184,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FilExile can only handle one dropped file or directory at a time..
+        /// </summary>
+        public static string MultiFileError {
+            get {
+                return ResourceManager.GetString("MultiFileError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is a newer version of FilExile available!.
         /// </summary>
         public static string NewerVersion {

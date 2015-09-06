@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilExile", "FilExile\FilExile.csproj", "{D9F51A74-8472-4BD6-B541-C56C6F7E69A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilExile Portable", "FilExile Portable\FilExile Portable.csproj", "{086F3978-0FE3-40D9-8A70-2EEC9EAF564F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{58FCE5F1-E535-4EAB-B322-4FD5C42FD451} = {58FCE5F1-E535-4EAB-B322-4FD5C42FD451}
+	EndProjectSection
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{97FEFDFF-4D88-44D8-B9F1-25E1D954C3BE}"
 EndProject

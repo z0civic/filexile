@@ -311,6 +311,7 @@
             // 
             // Main
             // 
+            this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tabControl);
@@ -327,6 +328,7 @@
             this.Name = "Main";
             this.Load += new System.EventHandler(this.Main_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Main_DragDrop);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.Main_DragOver);
             this.mainWindowMenu.ResumeLayout(false);
             this.mainWindowMenu.PerformLayout();
             this.statusStrip.ResumeLayout(false);
