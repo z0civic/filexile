@@ -143,7 +143,7 @@ namespace Shared
 
             if (!string.IsNullOrEmpty(log.logTo) && log.enabled)
             {
-                retVal += @" /TEE /V /LOG+:\" + log.logTo + "\"";
+                retVal += @" /TEE /V /LOG+:" + log.logTo + "\"";
             }
 
             return retVal;

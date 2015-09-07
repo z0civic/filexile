@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilExile Portable", "FilExi
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{97FEFDFF-4D88-44D8-B9F1-25E1D954C3BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedResources", "SharedResources\SharedResources.csproj", "{58FCE5F1-E535-4EAB-B322-4FD5C42FD451}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "SharedResources\Resources.csproj", "{58FCE5F1-E535-4EAB-B322-4FD5C42FD451}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

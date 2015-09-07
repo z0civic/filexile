@@ -47,6 +47,12 @@ namespace FilExile_Portable
                 if (args.Length > 0)
                 {
                     cla = new CommandLineArgs(args);
+                    AttachConsole(ATTACH_PARENT_PROCESS);
+
+                    if (cla.HasFlag("?"))
+                        CommandLineInterface.DisplayHelp();
+                    else
+                        CommandLineInterface.Run(args[0], cla);
                 }
                 else
                 {
@@ -61,6 +67,19 @@ namespace FilExile_Portable
 
             }
         }
+
+        #endregion
+
+        // ------------------------------------------------------------------------------------
+
+        #region Private methods
+
+        // Import kernel32.dll to attach a console
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        private static extern bool AttachConsole(int dwProcessId);
+        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
+        private static extern int FreeConsole();
+        private const int ATTACH_PARENT_PROCESS = -1;
 
         #endregion
     }

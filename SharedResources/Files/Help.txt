@@ -1,0 +1,27 @@
+
+FilExile - stubborn file/folder deletion utility.
+
+Usage:
+    FilExile.exe {target | /job <jobfile>} [/q] [/l <logfile>] 
+                 [/mt <numThreads> | /mt off] [/end <cmd>] [/f]
+
+    target		The file or directory to be deleted
+    /job		Specify a jobfile to delete a series of 
+			files or directories
+    jobfile		List of files or directories (one per line)
+			to be deleted
+    /q			Enable quiet mode (no output)
+    /l			Enable logging
+    logfile		File where output should be logged
+    /mt			Change multithreading options
+    numThreads		Override the default number of threads [0-128]
+    /mt off		Disable multithreading (same as: /mt 0)
+    /end		Override default completion action that runs
+			after deletion operation
+    cmd			Completion action...
+			  0:   Do nothing
+			  2:   Shutdown
+			  3:   Restart
+			  cmd: Any command that can be run by the current user
+			  (e.g.: "C:\myBatchFile.bat")
+    /f			Attempt to force the completion action

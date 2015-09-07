@@ -38,7 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -94,9 +94,9 @@
     <None Include="filexile.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharedResources\SharedResources.csproj">
+    <ProjectReference Include="..\SharedResources\Resources.csproj">
       <Project>{58fce5f1-e535-4eab-b322-4fd5c42fd451}</Project>
-      <Name>SharedResources</Name>
+      <Name>Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />

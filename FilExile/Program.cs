@@ -1,5 +1,6 @@
 ﻿using Shared;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace FilExile
@@ -41,6 +42,12 @@ namespace FilExile
                 if (args.Length > 0)
                 {
                     cla = new CommandLineArgs(args);
+                    AttachConsole(ATTACH_PARENT_PROCESS);
+
+                    if (cla.HasFlag("?"))
+                        CommandLineInterface.DisplayHelp();
+                    else
+                        CommandLineInterface.Run(args[0], cla);
                 }
                 //Otherwise, launch the FilExile GUI
                 else
@@ -54,6 +61,7 @@ namespace FilExile
             finally
             {
                 //TODO: Save any app.config changes
+                FreeConsole();
             }
         }
 
@@ -62,6 +70,13 @@ namespace FilExile
         // ------------------------------------------------------------------------------------
 
         #region Private methods
+
+        // Import kernel32.dll to attach a console
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        private static extern bool AttachConsole(int dwProcessId);
+        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
+        private static extern int FreeConsole();
+        private const int ATTACH_PARENT_PROCESS = -1;
 
         #endregion
     }

@@ -44,13 +44,6 @@ namespace FilExile.Dialogs
 
         // ------------------------------------------------------------------------------------
 
-        #region Enums
-        private enum CompletionActions { DO_NOTHING, PLAY_SOUND, RESTART, SHUTDOWN };
-
-        #endregion
-
-        // ------------------------------------------------------------------------------------
-
         #region Private methods
 
         /// <summary>
@@ -199,29 +192,6 @@ namespace FilExile.Dialogs
                 worker.ReportProgress(iNumFiles - filesRemaining);
             if (!backgroundWorker_Deletion.IsBusy) return;
             else ProgressBarOperation(worker, e);
-        }
-
-        /// <summary>
-        /// Runs the passed completion action (taken from the Completion Action combo box)
-        /// </summary>
-        /// <param name="action"></param>
-        private void RunCompletionEvent(CompletionActions action)
-        {
-            switch (action)
-            {
-                case CompletionActions.DO_NOTHING:
-                    break;
-                case CompletionActions.PLAY_SOUND:
-                    System.Media.SystemSounds.Asterisk.Play();
-                    MessageBox.Show(SharedResources.Properties.Resources.OpComplete, "FilExile", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    break;
-                case CompletionActions.RESTART:
-                    //TODO: Write restart code
-                    break;
-                case CompletionActions.SHUTDOWN:
-                    //TODO: Write shutdown code
-                    break;
-            }
         }
 
         /// <summary>
@@ -484,12 +454,15 @@ namespace FilExile.Dialogs
             ChangeControlStates(true);
             progressBar.Visible = false;
 
+            // Remove the now empty directory
             if (Directory.Exists(field_target.Text))
                 Directory.Delete(field_target.Text);
 
+            // Set the target field back to blank
             field_target.Text = "";
 
-            RunCompletionEvent((CompletionActions)comboBox_completionAction.SelectedIndex);
+            // Run the specified completion action
+            CompletionActions.RunCompletionEvent((CompletionActions.Actions) comboBox_completionAction.SelectedIndex, true, checkbox_forceAction.Checked);
         }
 
         /// <summary>

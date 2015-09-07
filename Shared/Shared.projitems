@@ -25,12 +25,14 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Main\CommandLineInterface.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Main\CompletionActions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Main\DeletionOps.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Main\ErrorCodes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Main\Target.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\CommandLineArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\NetworkUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\StringUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\WindowsOps.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Dialogs\AboutBox.resx">

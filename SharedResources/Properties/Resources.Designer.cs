@@ -147,6 +147,30 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///FilExile - stubborn file/folder deletion utility.
+        ///
+        ///Usage:
+        ///    FilExile.exe {target | /job &lt;jobfile&gt;} [/q] [/l &lt;logfile&gt;] 
+        ///                 [/mt &lt;numThreads&gt; | /mt off] [/end &lt;cmd&gt;] [/f]
+        ///
+        ///    target		The file or directory to be deleted
+        ///    /job		Specify a jobfile to delete a series of 
+        ///			files or directories
+        ///    jobfile		List of files or directories (one per line)
+        ///			to be deleted
+        ///    /q			Enable quiet mode (no output)
+        ///    /l			Enable logging
+        ///    logfile		File where output should be logged
+        ///  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The FilExile help file could not be found. Open the online help?.
         /// </summary>
         public static string HelpFileNotFound {
@@ -171,6 +195,15 @@ namespace SharedResources.Properties {
         public static string InvalidThreadCount {
             get {
                 return ResourceManager.GetString("InvalidThreadCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job file not found.
+        /// </summary>
+        public static string JobFileNotFound {
+            get {
+                return ResourceManager.GetString("JobFileNotFound", resourceCulture);
             }
         }
         
