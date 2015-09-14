@@ -38,27 +38,31 @@ namespace FilExile.Dialogs
         #region Fields
 
         // Holds the initial number of files in the target directory when tracking progress
-        private int iNumFiles;      
+        private int iNumFiles;
 
-        #endregion
+		#endregion
 
-        // ------------------------------------------------------------------------------------
+		// ------------------------------------------------------------------------------------
 
-        #region Private methods
+		#region Private methods
 
-        /// <summary>
-        /// On load, set the controls based on the app.config file. Also disables the delete button
-        /// and sets the toolstrip text and icon.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Main_Load(object sender, EventArgs e)
-        {
-            SetControls();
-            Icon = SharedResources.Properties.Resources.icon;
-            toolStripLabel.Text = SharedResources.Properties.Resources.SelectTip;
-            button_delete.Enabled = false;
-        }
+		/// <summary>
+		/// Displays a warning message when a user attempts to delete a critical directory
+		/// </summary>
+		/// <returns>If the user wants to continue</returns>
+		private bool CriticalTargetWarning()
+		{
+			SafetyDlg dlg = new SafetyDlg();
+			dlg.ShowDialog();
+			if (dlg.DialogResult == DialogResult.Yes)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
         /// <summary>
         /// Based on the values read in from the app.config, set the various controls
@@ -206,60 +210,84 @@ namespace FilExile.Dialogs
             DeletionOps.Delete(target, mt, log, checkbox_output.Checked);
         }
 
-        #endregion
+		#endregion
 
-        // ------------------------------------------------------------------------------------
+		// ------------------------------------------------------------------------------------
 
-        #region Events
+		#region Events
 
-        /// <summary>
-        /// When the user clicks the delete button, disable the controls and start the
-        /// deletion operation
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button_delete_Click(object sender, EventArgs e)
+		/// <summary>
+		/// On load, set the controls based on the app.config file. Also disables the delete button
+		/// and sets the toolstrip text and icon.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Main_Load(object sender, EventArgs e)
+		{
+			SetControls();
+			Icon = SharedResources.Properties.Resources.icon;
+			toolStripLabel.Text = SharedResources.Properties.Resources.SelectTip;
+			button_delete.Enabled = false;
+		}
+
+		/// <summary>
+		/// When the user clicks the delete button, disable the controls and start the
+		/// deletion operation
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void button_delete_Click(object sender, EventArgs e)
         {
             // Disable the controls
             ChangeControlStates(false);
+			bool cont = true;
 
             target = new Target(field_target.Text);
 
-            if (target.Exists)
-            {
-                try
-                {
-                    // If the user wants to monitor progress and the target is a directory
-                    // we need to setup the progress bar
-                    if (!checkbox_disableProgressMonitoring.Checked && target.IsDirectory)
-                    {
-                        iNumFiles = target.NumberOfFiles;
-                        progressBar.Maximum = iNumFiles;
-                        progressBar.Visible = true;
-                        backgroundWorker_ProgressBar.RunWorkerAsync();
-                    }
+			if (target.Exists)
+			{
+				if (target.IsCritical)
+					cont = CriticalTargetWarning();
 
-                    backgroundWorker_Deletion.RunWorkerAsync();
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    //TODO: Write code to request elevation for a new process?
-                }
-                catch (FileNotFoundException)
-                {
-                    //TODO: Write code to handle this strange exception...
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    //TODO: Write code to handle this strange exception...
-                }
+				if (cont)
+				{
+					try
+					{
+						// If the user wants to monitor progress and the target is a directory
+						// we need to setup the progress bar
+						if (!checkbox_disableProgressMonitoring.Checked && target.IsDirectory)
+						{
+							iNumFiles = target.NumberOfFiles;
+							progressBar.Maximum = iNumFiles;
+							progressBar.Visible = true;
+							backgroundWorker_ProgressBar.RunWorkerAsync();
+						}
 
-            }
-            else 
-            {
-                //Target doesn't exist, display an error
-                MessageBox.Show(SharedResources.Properties.Resources.TargetNotFound, SharedResources.Properties.Resources.Error);
-            }
+						backgroundWorker_Deletion.RunWorkerAsync();
+					}
+					catch (UnauthorizedAccessException)
+					{
+						//TODO: Write code to request elevation for a new process?
+					}
+					catch (FileNotFoundException)
+					{
+						//TODO: Write code to handle this strange exception...
+					}
+					catch (DirectoryNotFoundException)
+					{
+						//TODO: Write code to handle this strange exception...
+					}
+				}
+				else
+				{
+					ChangeControlStates(true);
+				}
+			}
+			else
+			{
+				//Target doesn't exist, display an error
+				MessageBox.Show(SharedResources.Properties.Resources.TargetNotFound, SharedResources.Properties.Resources.Error);
+			}
         }
 
         /// <summary>
@@ -397,7 +425,7 @@ namespace FilExile.Dialogs
         /// <param name="e"></param>
         private void field_target_TextChanged(object sender, EventArgs e)
         {
-            if (field_target.Text != "")
+            if (!string.IsNullOrEmpty(field_target.Text))
             {
                 button_delete.Enabled = true;
                 toolStripLabel.Text = SharedResources.Properties.Resources.DeleteTip;

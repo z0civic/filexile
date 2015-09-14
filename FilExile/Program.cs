@@ -18,22 +18,30 @@ namespace FilExile
 
         private static CommandLineArgs cla;
 
-        #endregion
+		#endregion
 
-        // ------------------------------------------------------------------------------------
+		// ------------------------------------------------------------------------------------
 
-        #region Fields
+		#region Enums
 
-        #endregion
+		public enum ErrorCodes { SUCCESS, NOT_FOUND };
 
-        // ------------------------------------------------------------------------------------
+		#endregion
 
-        #region Public methods
+		// ------------------------------------------------------------------------------------
 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
+		#region Fields
+
+		#endregion
+
+		// ------------------------------------------------------------------------------------
+
+		#region Public methods
+
+		/// <summary>
+		/// The main entry point for the application.
+		/// </summary>
+		[STAThread]
         public static void Main(string[] args)
         {
             try

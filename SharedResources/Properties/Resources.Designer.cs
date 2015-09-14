@@ -79,11 +79,38 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you wish to permanently delete the target?.
+        /// </summary>
+        public static string Continue {
+            get {
+                return ResourceManager.GetString("Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The target specified could be critical to system functionality..
+        /// </summary>
+        public static string CriticalTarget {
+            get {
+                return ResourceManager.GetString("CriticalTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click &quot;Delete&quot; to remove the target....
         /// </summary>
         public static string DeleteTip {
             get {
                 return ResourceManager.GetString("DeleteTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable future warnings.
+        /// </summary>
+        public static string DisableSafety {
+            get {
+                return ResourceManager.GetString("DisableSafety", resourceCulture);
             }
         }
         
@@ -294,6 +321,25 @@ namespace SharedResources.Properties {
         public static string TargetNotFound {
             get {
                 return ResourceManager.GetString("TargetNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap warning_icon {
+            get {
+                object obj = ResourceManager.GetObject("warning_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

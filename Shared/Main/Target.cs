@@ -118,11 +118,19 @@ namespace Shared
         {
             get
             {
-                int end = path.LastIndexOf(@"\");
-                string parentDir = path.Substring(0, end);
-                if (parentDir.EndsWith(@":"))
-                    parentDir += @"\";
-                return parentDir;
+				string retVal = "";
+				DirectoryInfo di = new DirectoryInfo(path);
+				retVal = di.FullName;
+
+				int end = retVal.LastIndexOf(@"\");
+				if (end > 0)
+				{
+					retVal = retVal.Substring(0, end);
+					if (retVal.EndsWith(@":"))
+						retVal += @"\";
+				}
+
+				return retVal;
             }
         }
 

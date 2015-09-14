@@ -28,7 +28,7 @@ namespace Shared
         //Other
         private static int numThreads = 8;              // Number of threads
         private static int completionAction = 0;        // Completion action
-        private static int error = 0;
+        private static int error = 0;					// Error tracking
 
         #endregion
 
@@ -81,8 +81,10 @@ namespace Shared
             }
             else
             {
+				// If the user passed a job file and it exists, execute it
                 if (File.Exists(jobFile))
                     RunJobDeletion();
+				// Otherwise display an error
                 else
                     if (!quiet) Console.WriteLine(SharedResources.Properties.Resources.JobFileNotFound);
             }
@@ -103,7 +105,8 @@ namespace Shared
         #region Private methods
 
         /// <summary>
-        /// 
+        /// Creates a StreamReader to parse the job file. Reads in each line as a separate file or directory
+		/// to delete. 
         /// </summary>
         private static void RunJobDeletion()
         {
@@ -113,9 +116,12 @@ namespace Shared
             DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(multithreading, numThreads);
             DeletionOps.Logging log = new DeletionOps.Logging(logging, logTo);
 
-            while ((str = din.ReadLine()) != null && error == 0)
+			// While there are still more lines to read and no errors have been encountered
+            while (!string.IsNullOrEmpty((str = din.ReadLine())) && error == 0)
             {
+				// Set the target's path based on the line
                 target.path = str;
+				// Run the deletion
                 error = DeletionOps.Delete(target, mt, log, !quiet);
             }
         }

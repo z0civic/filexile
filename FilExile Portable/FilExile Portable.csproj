@@ -14,6 +14,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -63,6 +65,11 @@
     <AssemblyOriginatorKeyFile>filexile.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SharedResources, Version=3.0.5734.1661, Culture=neutral, PublicKeyToken=0b7e50a23d03b0f8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\SharedResources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -77,10 +84,28 @@
     <Compile Include="Dialogs\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SafetyDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SafetyDlg.Designer.cs">
+      <DependentUpon>SafetyDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Dialogs\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SafetyDlg.resx">
+      <DependentUpon>SafetyDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -94,18 +119,15 @@
     <None Include="filexile.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharedResources\Resources.csproj">
-      <Project>{58fce5f1-e535-4eab-b322-4fd5c42fd451}</Project>
-      <Name>Resources</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Lib\SharedResources.dll" />
   </ItemGroup>
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
   </Target>
-  -->
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(SolutionDir)\SharedResources\bin\$(ConfigurationName)\SharedResources.dll" "$(ProjectDir)\Lib" /Y</PreBuildEvent>
+  </PropertyGroup>
 </Project>

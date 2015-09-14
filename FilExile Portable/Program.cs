@@ -1,10 +1,11 @@
 ﻿using Shared;
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace FilExile_Portable
 {
-    static class Program
+    class Program
     {
         /// <summary>
         /// FilExile is a simple file and directory deletion tool that utilizes Windows'
@@ -40,33 +41,33 @@ namespace FilExile_Portable
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            try
-            {
-                if (args.Length > 0)
-                {
-                    cla = new CommandLineArgs(args);
-                    AttachConsole(ATTACH_PARENT_PROCESS);
+			try
+			{
+				if (args.Length > 0)
+				{
+					cla = new CommandLineArgs(args);
+					AttachConsole(ATTACH_PARENT_PROCESS);
 
-                    if (cla.HasFlag("?"))
-                        CommandLineInterface.DisplayHelp();
-                    else
-                        CommandLineInterface.Run(args[0], cla);
-                }
-                else
-                {
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new Dialogs.Main());
-                }
-            }
+					if (cla.HasFlag("?"))
+						CommandLineInterface.DisplayHelp();
+					else
+						CommandLineInterface.Run(args[0], cla);
+				}
+				else
+				{
+					Application.EnableVisualStyles();
+					Application.SetCompatibleTextRenderingDefault(false);
+					Application.Run(new Dialogs.Main());
+				}
+			}
 
-            finally
-            {
+			finally
+			{
 
-            }
-        }
+			}
+		}
 
         #endregion
 
@@ -81,6 +82,6 @@ namespace FilExile_Portable
         private static extern int FreeConsole();
         private const int ATTACH_PARENT_PROCESS = -1;
 
-        #endregion
-    }
+		#endregion
+	}
 }
