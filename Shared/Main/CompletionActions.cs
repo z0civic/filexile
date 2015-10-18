@@ -1,36 +1,49 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Shared
 {
-    class CompletionActions
+    internal sealed class CompletionAction
     {
-        /// <summary>
-        /// Class for hodling the various completion actions that can be performed by FilExile
-        /// </summary>
-        // ------------------------------------------------------------------------------------
+		/// <summary>
+		/// Class for holding the completion action selected by the user that can be performed by FilExile
+		/// </summary>
+		// ------------------------------------------------------------------------------------
 
-        #region Enums
+		#region Accessors
 
-        // The various completion actions available to the user
-        public enum Actions { DO_NOTHING, PLAY_SOUND, RESTART, SHUTDOWN };
+		public string Name { get; set; }
+		public int Value { get; set; }
 
-        #endregion
+		#endregion
 
-        // ------------------------------------------------------------------------------------
+		// ------------------------------------------------------------------------------------
 
-        /// <summary>
-        /// Runs the passed completion action (taken from the Completion Action combo box)
-        /// </summary>
-        /// <param name="action"></param>
-        #region Public methods
-        public static void RunCompletionEvent(Actions action, bool bGUI, bool force)
+		#region Constructor
+
+		public CompletionAction()
+		{
+		}
+
+		#endregion
+
+		// ------------------------------------------------------------------------------------
+
+		/// <summary>
+		/// Runs the passed completion action (taken from the Completion Action combo box or
+		/// /end command line parameter)
+		/// </summary>
+		/// <param name="bGUI">Whether this was called from the GUI</param>
+		/// <param name="bForce">Whether or not to force the action</param>
+		#region Public methods
+		public void Run(bool bGUI, bool bForce)
         {
-            switch (action)
+            switch (Value)
             {
-                case Actions.DO_NOTHING:
+				case 0:
                     break;
 
-                case Actions.PLAY_SOUND:
+                case 1:
                     //Playing sounds is only available if the user is running the GUI        
                     if (bGUI)
                     {
@@ -39,12 +52,12 @@ namespace Shared
                     }
                     break;
 
-                case Actions.RESTART:
-                    WindowsOps.ExitWin(WindowsOps.EWX_REBOOT, force);
+                case 2:
+                    WindowsOps.ExitWin(WindowsOps.EWX_REBOOT, bForce);
                     break;
 
-                case Actions.SHUTDOWN:
-                    WindowsOps.ExitWin(WindowsOps.EWX_SHUTDOWN, force);
+                case 3:
+                    WindowsOps.ExitWin(WindowsOps.EWX_SHUTDOWN, bForce);
                     break;
 
                 default:
@@ -52,16 +65,29 @@ namespace Shared
             }
         }
 
-        #endregion
+		/// <summary>
+		/// Checks if the passed integer successfully maps as a completion action value
+		/// </summary>
+		/// <param name="iNum">Integer value</param>
+		/// <returns>True if the integer maps to a valid completion action</returns>
+		public bool IsValidOption(int iNum)
+		{
+			return (iNum >= 0 && iNum <= 3);
+		}
 
-        // ------------------------------------------------------------------------------------
-
-        #region Private methods
-
-        private static void Shutdown()
-        {
-            
-        }
+		/// <summary>
+		/// Checks if the passed integer successfully maps to the Completion Action enum. Does
+		/// not consider '1' to be a valid option as sounds cannot be played from the CLI
+		/// </summary>
+		/// <param name="iNum">Integer value</param>
+		/// <returns>True if the integer maps to the Completion Action enum for the CLI</returns>
+		public bool IsValidOptionForCLI(int iNum)
+		{
+			if (iNum == 1)
+				return false;
+			else
+				return IsValidOption(iNum);
+		}
 
         #endregion
     }

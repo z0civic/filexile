@@ -205,4 +205,16 @@
   <data name="Continue" xml:space="preserve">
     <value>Are you sure you wish to permanently delete the target?</value>
   </data>
+  <data name="DoNothing" xml:space="preserve">
+    <value>Do nothing</value>
+  </data>
+  <data name="PlaySound" xml:space="preserve">
+    <value>Play a sound</value>
+  </data>
+  <data name="Reboot" xml:space="preserve">
+    <value>Reboot</value>
+  </data>
+  <data name="Shutdown" xml:space="preserve">
+    <value>Shutdown</value>
+  </data>
 </root>

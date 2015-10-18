@@ -40,6 +40,8 @@
 			// checkBox_DisableSafety
 			// 
 			this.checkBox_DisableSafety.AutoSize = true;
+			this.checkBox_DisableSafety.Checked = global::FilExile.Properties.Settings.Default.disableSafety;
+			this.checkBox_DisableSafety.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::FilExile.Properties.Settings.Default, "disableSafety", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.checkBox_DisableSafety.Location = new System.Drawing.Point(12, 81);
 			this.checkBox_DisableSafety.Name = "checkBox_DisableSafety";
 			this.checkBox_DisableSafety.Size = new System.Drawing.Size(136, 17);
@@ -59,7 +61,6 @@
 			// button_Yes
 			// 
 			this.button_Yes.DialogResult = System.Windows.Forms.DialogResult.Yes;
-			this.button_Yes.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
 			this.button_Yes.Location = new System.Drawing.Point(230, 77);
 			this.button_Yes.Name = "button_Yes";
 			this.button_Yes.Size = new System.Drawing.Size(75, 23);
@@ -71,7 +72,6 @@
 			// button_No
 			// 
 			this.button_No.DialogResult = System.Windows.Forms.DialogResult.No;
-			this.button_No.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
 			this.button_No.Location = new System.Drawing.Point(311, 77);
 			this.button_No.Name = "button_No";
 			this.button_No.Size = new System.Drawing.Size(75, 23);
@@ -117,6 +117,7 @@
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "SafetyDlg";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SafetyDlg_Closing);
 			this.Load += new System.EventHandler(this.SafetyDlg_Load);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_WarningIcon)).EndInit();
 			this.ResumeLayout(false);

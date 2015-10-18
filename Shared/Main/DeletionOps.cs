@@ -53,18 +53,21 @@ namespace Shared
         private static string systemDrive = Environment.GetEnvironmentVariable("systemdrive");      //Windows %SYSTEMDRIVE% system variable
         private static string robocopyCommand = string.Empty;
 
-        #endregion
+		#endregion
 
-        // ------------------------------------------------------------------------------------
+		// ------------------------------------------------------------------------------------
 
-        #region Public methods
+		#region Public methods
 
-        /// <summary>
-        /// Handles the deletion of the passed target
-        /// </summary>
-        /// <param name="target">The file or directory to be deleted</param>
-        /// <returns>An error code based on how the operation turned out</returns>
-        public static int Delete(Target target, MultithreadingSetup mt, Logging log, bool output)
+		/// <summary>
+		/// Handles the deletion of the passed target
+		/// </summary>
+		/// <param name="target">The file or directory to be deleted</param>
+		/// <param name="mt">Multithreading configuration</param>
+		/// <param name="log">Logging configuration</param>
+		/// <param name="output">Output enabled</param>
+		/// <returns>An error code based on how the operation turned out</returns>
+		public static int Delete(Target target, MultithreadingSetup mt, Logging log, bool output)
         {
             int retval = (int) ErrorCodes.SUCCESS;
 
@@ -85,7 +88,7 @@ namespace Shared
                 }
                 else
                 {
-                    // For files there is an extra step we have to take...
+                    // For single files there is an extra step we have to take...
                     // We need to create another temporary directory. We are going to use Robocopy
                     // to place the file in this temporary directory by itself. This is to
                     // prevent the actual diretory mirror command from wiping out everything else

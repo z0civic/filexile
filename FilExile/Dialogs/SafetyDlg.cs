@@ -21,14 +21,6 @@ namespace FilExile.Dialogs
 
 		#region Private methods
 
-		/// <summary>
-		/// Saves the disable safety option to the app.config file
-		/// </summary>
-		private void SaveOption()
-		{
-
-		}
-
 		// ------------------------------------------------------------------------------------
 
 		#region Events
@@ -47,25 +39,35 @@ namespace FilExile.Dialogs
 		}
 
 		/// <summary>
-		/// Saves the option and closes the dialog
+		/// Sets the dialog result and closes the dialog
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void button_No_Click(object sender, EventArgs e)
 		{
-			SaveOption();
+			DialogResult = DialogResult.No;
 			Close();
 		}
 
 		/// <summary>
-		/// Saves the option and closes the dialog
+		/// Sets the dialog result and closes the dialog
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void button_Yes_Click(object sender, EventArgs e)
 		{
-			SaveOption();
+			DialogResult = DialogResult.Yes;
 			Close();
+		}
+		
+		/// <summary>
+		/// Save any changes to the user.config
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void SafetyDlg_Closing(object sender, FormClosingEventArgs e)
+		{
+			Properties.Settings.Default.Save();
 		}
 	}
 	#endregion

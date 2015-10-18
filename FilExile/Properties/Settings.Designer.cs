@@ -94,18 +94,6 @@ namespace FilExile.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int completionAction {
-            get {
-                return ((int)(this["completionAction"]));
-            }
-            set {
-                this["completionAction"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool forceAction {
             get {
@@ -125,18 +113,6 @@ namespace FilExile.Properties {
             }
             set {
                 this["multiThreading"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public int threadCount {
-            get {
-                return ((int)(this["threadCount"]));
-            }
-            set {
-                this["threadCount"] = value;
             }
         }
         
@@ -173,6 +149,18 @@ namespace FilExile.Properties {
             }
             set {
                 this["disableProgressMonitoring"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public decimal threadCount {
+            get {
+                return ((decimal)(this["threadCount"]));
+            }
+            set {
+                this["threadCount"] = value;
             }
         }
     }

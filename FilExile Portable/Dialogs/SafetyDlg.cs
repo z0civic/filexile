@@ -45,6 +45,7 @@ namespace FilExile_Portable.Dialogs
 		/// <param name="e"></param>
 		private void button_No_Click(object sender, EventArgs e)
 		{
+			DialogResult = DialogResult.No;
 			Close();
 		}
 
@@ -55,6 +56,7 @@ namespace FilExile_Portable.Dialogs
 		/// <param name="e"></param>
 		private void button_Yes_Click(object sender, EventArgs e)
 		{
+			DialogResult = DialogResult.Yes;
 			Close();
 		}
 	}

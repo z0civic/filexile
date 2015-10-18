@@ -20,17 +20,11 @@
     <Setting Name="showOutput" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="completionAction" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="forceAction" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="multiThreading" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="threadCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="disableRobocopyCheck" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -40,6 +34,9 @@
     </Setting>
     <Setting Name="disableProgressMonitoring" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="threadCount" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">8</Value>
     </Setting>
   </Settings>
 </SettingsFile>

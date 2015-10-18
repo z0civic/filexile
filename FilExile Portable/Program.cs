@@ -22,14 +22,6 @@ namespace FilExile_Portable
 
         // ------------------------------------------------------------------------------------
 
-        #region Enums
-
-        public enum ErrorCodes { SUCCESS, NOT_FOUND };
-
-        #endregion
-
-        // ------------------------------------------------------------------------------------
-
         #region Fields
 
         #endregion
@@ -50,7 +42,7 @@ namespace FilExile_Portable
 					cla = new CommandLineArgs(args);
 					AttachConsole(ATTACH_PARENT_PROCESS);
 
-					if (cla.HasFlag("?"))
+					if (cla.HelpFlag)
 						CommandLineInterface.DisplayHelp();
 					else
 						CommandLineInterface.Run(args[0], cla);

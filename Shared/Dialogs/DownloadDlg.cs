@@ -8,9 +8,9 @@ namespace Shared
         public DownloadDlg()
         {
             InitializeComponent();
-            this.label_Download.Text = SharedResources.Properties.Resources.NewerVersion;
-            this.button_Cancel.Text = SharedResources.Properties.Resources.Cancel;
-            this.button_Download.Text = SharedResources.Properties.Resources.Download;
+            label_Download.Text = SharedResources.Properties.Resources.NewerVersion;
+            button_Cancel.Text = SharedResources.Properties.Resources.Cancel;
+            button_Download.Text = SharedResources.Properties.Resources.Download;
         }
 
         private void button_Download_Click(object sender, EventArgs e)

@@ -153,7 +153,8 @@ namespace Shared
         #region Private methods
 
         /// <summary>
-        /// Recursively returns a collection of files from a path
+        /// Recursively returns a collection of files from a path. This is used for counting
+		/// the number of files in a directory for progress operations
         /// </summary>
         /// <param name="currentPath">The path to search from</param>
         /// <returns>A collection of files</returns>

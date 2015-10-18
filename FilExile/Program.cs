@@ -22,14 +22,6 @@ namespace FilExile
 
 		// ------------------------------------------------------------------------------------
 
-		#region Enums
-
-		public enum ErrorCodes { SUCCESS, NOT_FOUND };
-
-		#endregion
-
-		// ------------------------------------------------------------------------------------
-
 		#region Fields
 
 		#endregion
@@ -52,7 +44,7 @@ namespace FilExile
                     cla = new CommandLineArgs(args);
                     AttachConsole(ATTACH_PARENT_PROCESS);
 
-                    if (cla.HasFlag("?"))
+                    if (cla.HelpFlag)
                         CommandLineInterface.DisplayHelp();
                     else
                         CommandLineInterface.Run(args[0], cla);
@@ -68,7 +60,6 @@ namespace FilExile
 
             finally
             {
-                //TODO: Save any app.config changes
                 FreeConsole();
             }
         }

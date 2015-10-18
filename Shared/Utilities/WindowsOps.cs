@@ -5,7 +5,10 @@ namespace Shared
 {
     internal sealed class WindowsOps
     {
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+		/// <summary>Class for handling Windows shutdown/reboot options</summary>
+		// ------------------------------------------------------------------------------------
+
+		[StructLayout(LayoutKind.Sequential, Pack = 1)]
         internal struct TokPriv1Luid
         {
             public int Count;
@@ -42,6 +45,11 @@ namespace Shared
         internal const int EWX_POWEROFF = 0x00000008;
         internal const int EWX_FORCEIFHUNG = 0x00000010;
 
+		/// <summary>
+		/// Statically available method for shutting down or rebooting Windows
+		/// </summary>
+		/// <param name="flg">What operation (e.x.: EWX_SHUTDOWN)</param>
+		/// <param name="force">Whether to force the operation</param>
         public static void ExitWin(int flg, bool force)
         {
             bool ok;

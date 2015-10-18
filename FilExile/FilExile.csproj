@@ -80,11 +80,6 @@
     <Compile Include="Dialogs\SafetyDlg.Designer.cs">
       <DependentUpon>SafetyDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Dialogs\Main.cs">
       <SubType>Form</SubType>
@@ -100,12 +95,9 @@
     <EmbeddedResource Include="Dialogs\SafetyDlg.resx">
       <DependentUpon>SafetyDlg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="filexile.pfx" />
+    <None Include="Properties\DataSources\Shared.CompletionActions.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

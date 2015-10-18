@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
 namespace Shared
 {
@@ -39,13 +37,6 @@ namespace Shared
         public CommandLineArgs(string[] args)
         {
             m_args = args;
-        }
-
-        /// <summary>Constructor</summary>
-        /// <param name="strArgs">Command line arguments as a string</param>
-        public CommandLineArgs(string strArgs)
-        {
-            m_args = strArgs.Split(' ');
         }
 
         #endregion
@@ -123,34 +114,6 @@ namespace Shared
             string arg2 = "";
             string arg3 = "";
             return GetFlagAndArguments(flag, ref argument1, ref arg2, ref arg3);
-        }
-
-        /// <summary>Determines if a flag is set to a particular value</summary>
-        /// <param name="flag">The flag to check</param>
-        /// <param name="trueString">The value that indicates "true"</param>
-        /// <returns>True if flag is set to the trueString value.</returns>
-        public bool GetFlagArgumentAsBool(string flag, string trueString)
-        {
-            bool retval = false;
-
-            string value = "";
-            if (GetFlagAndArguments(flag, ref value))
-            {
-                retval = (string.Compare(value.Trim(), trueString.Trim(), true) == 0);
-            }
-
-            return retval;
-        }
-
-        /// <summary>Gets whether a flag is set and the argument values that follow</summary>
-        /// <param name="flag">The flag to check</param>
-        /// <param name="argument1">The argument following the flag (if any)</param>
-        /// <param name="argument2">The second argument following the flag (if any)</param>
-        /// <returns>True if the flag is set</returns>
-        public bool GetFlagAndArguments(string flag, ref string argument1, ref string argument2)
-        {
-            string arg3 = "";
-            return GetFlagAndArguments(flag, ref argument1, ref argument2, ref arg3);
         }
 
         /// <summary>Gets whether a flag is set and the argument values that follow</summary>

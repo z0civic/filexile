@@ -11,15 +11,6 @@ namespace Shared
     /// </summary>
     internal sealed class NetworkUtils
     {
-        #region Constants
-
-        //A remote string that tells FilExile what the current version is
-        private const string VERSION_URL = "http://filexile.sourceforge.net/version.txt";
-        //A remote string that tells FilExile where the latest version can be downloaded
-        private const string DOWNLOAD_URL = "http://filexile.sourceforge.net/downloadURL.txt";
-
-        #endregion
-
         // ------------------------------------------------------------------------------------
 
         #region Public methods
@@ -38,13 +29,13 @@ namespace Shared
         /// <summary>
         /// Initiates a version check to determine if the user is using the current version or not
         /// </summary>
-        public static void InitiateVersionCheck(bool UserInitiated)
+        public static void InitiateVersionCheck(bool bUserInitiated)
         {
             WebClient webClient = new WebClient();
-            Uri filExileVersionSite = new Uri(VERSION_URL);
+            Uri filExileVersionSite = new Uri(CommonStrings.VersionUrl);
             try
             {
-                if (UserInitiated)
+                if (bUserInitiated)
                     webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(manualVersionCheckComplete);
                 else
                     webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(automatedVersionCheckComplete);
@@ -81,7 +72,7 @@ namespace Shared
             try
             {
                 WebClient webClient = new WebClient();
-                Uri filExileDownloadSite = new Uri(DOWNLOAD_URL);
+                Uri filExileDownloadSite = new Uri(CommonStrings.DownloadUrl);
                 Stream urlStream = webClient.OpenRead(filExileDownloadSite);
                 StreamReader sr = new StreamReader(urlStream);
                 string retVal = sr.ReadToEnd();

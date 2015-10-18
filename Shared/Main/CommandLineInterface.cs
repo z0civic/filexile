@@ -22,13 +22,13 @@ namespace Shared
         private static string jobFile = string.Empty;   // Job file
         private static string logTo = string.Empty;     // Logfile
         private static string mtOptions = string.Empty; // Multithreading options
-        private static string acOptions = string.Empty; // Completion action options
-        private static string command = string.Empty;   // Custom command
+        private static string command = string.Empty;   // Completion command
 
         //Other
         private static int numThreads = 8;              // Number of threads
-        private static int completionAction = 0;        // Completion action
-        private static int error = 0;					// Error tracking
+        private static int error = 0;                   // Error tracking
+
+		private static CompletionAction ca;				// Completion action
 
         #endregion
 
@@ -37,11 +37,15 @@ namespace Shared
         #region Public methods
 
         /// <summary>
-        /// Runs the main deletion operation
-        /// </summary>
-        /// <param name="cla"></param>
+		/// Parses the passed command line arguments, handles if a batch job was specified,
+		/// runs the deletion operation. Main entry point for the class.
+		/// </summary>
+		/// <param name="path">0th argument passed in (file or folder to delete)</param>
+		/// <param name="cla">The structured command line arguments</param>
         public static void Run(string path, CommandLineArgs cla)
         {
+			ca = new CompletionAction();
+
             // First, parse the command line arguments and assign them to varibles
             ParseArgs(cla);
 
@@ -49,6 +53,7 @@ namespace Shared
             if (!batch)
             {
                 Target target = new Target(path);
+
                 // If the target exists
                 if (target.Exists)
                 {
@@ -64,12 +69,13 @@ namespace Shared
                         // If the user specifies quiet mode, don't display exception
                         if (!quiet)
                             Console.WriteLine(ex.ToString());
+						error = 1;
                     }
                     finally
                     {
                         // If it was a success and no command is specified, run the completion action
                         if (error == 0 && string.IsNullOrEmpty(command))
-                            CompletionActions.RunCompletionEvent((CompletionActions.Actions)completionAction, false, forceAction);
+                            ca.Run(false, forceAction);
                         // Otherwise, run the custom command
                         else if (error == 0 && !string.IsNullOrEmpty(command))
                             RunCommand();
@@ -166,19 +172,17 @@ namespace Shared
             // Completion action
             if (cla.HasFlag("end"))
             {
+				int iCompletionAction = 0;
                 // Grab the arguments passed with the flag
-                cla.GetFlagAndArguments("end", ref acOptions);
+                cla.GetFlagAndArguments("end", ref command);
                 // If the user entered a number, they were trying to choose a predetermined completion action
-                if (int.TryParse(acOptions, out completionAction))
+                if (int.TryParse(command, out iCompletionAction))
                 {
-                    // If they didn't choose properly, select the default
-                    if (completionAction != 0 && completionAction != 2 && completionAction != 3)
-                        completionAction = 0;
-                }
-                else
-                {
-                    // Otherwise, accept the string they passed as a valid command which will run at completion
-                    command = acOptions;
+					// If they didn't choose properly, select the default
+					if (!ca.IsValidOptionForCLI(iCompletionAction))
+						ca.Value = 0;
+					else
+						ca.Value = iCompletionAction;
                 }
 
                 //Check for the force flag (we only care about this if they have specified a completion action)

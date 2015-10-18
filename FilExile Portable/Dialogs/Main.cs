@@ -308,7 +308,7 @@ namespace FilExile_Portable.Dialogs
 			field_target.Text = "";
 
 			// Run the specified completion action
-			CompletionActions.RunCompletionEvent(CompletionActions.Actions.PLAY_SOUND, true, false);
+			
 		}
 
 		/// <summary>
