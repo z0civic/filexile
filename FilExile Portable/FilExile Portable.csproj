@@ -62,7 +62,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>filexile.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Keys\FilExile.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SharedResources, Version=3.0.5734.1661, Culture=neutral, PublicKeyToken=0b7e50a23d03b0f8, processorArchitecture=MSIL">
@@ -116,7 +116,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="filexile.pfx" />
+    <None Include="Keys\FilExile.pfx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Lib\SharedResources.dll" />

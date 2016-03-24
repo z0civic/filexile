@@ -1,0 +1,48 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {37D0B08A-2D0E-4A2E-8C8D-B2CB52BA81AC} = s 'FilExileShlExt Class'
+		{
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{E97E1020-BB63-480C-B37D-CD513C437388}'
+			Version = s '1.0'
+		}
+	}
+
+	NoRemove *
+	{
+		NoRmove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove FilExileShlExt = s '{37D0B08A-2D0E-4A2E-8C8D-B2CB52BA81AC}'
+			}
+		}
+	}
+
+	NoRemove Directory
+	{
+		NoRmove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove FilExileShlExt = s '{37D0B08A-2D0E-4A2E-8C8D-B2CB52BA81AC}'
+			}
+		}
+	}
+
+	NoRemove Folder
+	{
+		NoRmove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove FilExileShlExt = s '{37D0B08A-2D0E-4A2E-8C8D-B2CB52BA81AC}'
+			}
+		}
+	}
+}

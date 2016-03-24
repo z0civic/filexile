@@ -226,7 +226,7 @@ namespace FilExile_Portable.Dialogs
 		/// <param name="e"></param>
 		private void onlineHelpToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			NetworkUtils.LaunchURL("http://filexile.sourceforge.net/help.htm");
+			NetworkUtils.LaunchURL(CommonStrings.HelpUrl);
 		}
 
 		/// <summary>

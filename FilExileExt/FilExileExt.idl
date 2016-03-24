@@ -1,0 +1,34 @@
+// FilExileExt.idl : IDL source for FilExileExt
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (FilExileExt.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(26D5242B-CC95-4374-A216-09F2A62A731E),
+	pointer_default(unique)
+]
+
+interface IFilExileShlExt : IUnknown{
+};
+[
+	uuid(E97E1020-BB63-480C-B37D-CD513C437388),
+	version(1.0),
+]
+
+library FilExileExtLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(37D0B08A-2D0E-4A2E-8C8D-B2CB52BA81AC)		
+	]
+	coclass FilExileShlExt
+	{
+		[default] interface IFilExileShlExt;
+	};
+};
+

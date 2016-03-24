@@ -14,6 +14,7 @@ namespace Shared
         #region Fields
 
         public string path = string.Empty;
+        // Directories considered system critical and probably shouldn't be deleted without careful thought
         private string[] criticalDirectories = { "*:\\", "*:\\Users", "*:\\Windows\\*", "*:\\Program*", 
                                                  "*:\\Users\\*\\AppData", "*:\\ProgramData", "*:\\Windows", "*:\\Documents" };
 
@@ -23,10 +24,17 @@ namespace Shared
 
         #region Constructors
 
+        /// <summary>
+        /// Default contructor
+        /// </summary>
         public Target()
         {
         }
 
+        /// <summary>
+        /// Constructor with full-qualified path
+        /// </summary>
+        /// <param name="path">String to the fully-qualified path</param>
         public Target(string path)
         {
             this.path = path;
@@ -87,7 +95,7 @@ namespace Shared
             {
                 bool retval = false;
 
-                if (this.IsDirectory)
+                if (IsDirectory)
                 {
                     retval = Directory.Exists(path);
                 }
@@ -157,7 +165,7 @@ namespace Shared
 		/// the number of files in a directory for progress operations
         /// </summary>
         /// <param name="currentPath">The path to search from</param>
-        /// <returns>A collection of files</returns>
+        /// <returns>A strongly-typed collection of files (as string paths)</returns>
         private List<string> GetFiles(string currentPath)
         {
             var files = new List<string>();
@@ -168,6 +176,8 @@ namespace Shared
                 foreach (var directory in Directory.GetDirectories(currentPath))
                     files.AddRange(GetFiles(directory));
             }
+            // If an error occurs during counting, we don't especially care as it's just for
+            // displaying deletion progress - wouldn't want to crash or throw exception
             catch { }
 
             return files;

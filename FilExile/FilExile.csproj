@@ -62,7 +62,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>filexile.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Keys\FilExile.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -96,7 +96,7 @@
       <DependentUpon>SafetyDlg.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="filexile.pfx" />
+    <None Include="Keys\FilExile.pfx" />
     <None Include="Properties\DataSources\Shared.CompletionActions.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

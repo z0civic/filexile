@@ -496,7 +496,7 @@ namespace FilExile.Dialogs
         private void Main_DragDrop(object sender, DragEventArgs e)
         {
             //Clear anything that might be in the target field
-            Target = "";
+            Target = string.Empty;
 
 			//TODO: In the future, it'd be nice to be able to handle multiple files at once
 

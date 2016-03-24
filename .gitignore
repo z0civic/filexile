@@ -1,0 +1,17 @@
+bin
+Keys
+obj
+Lib
+Debug
+Release
+*.dll
+*.aps
+*.exe
+*.idb
+*.ipch
+*.user
+/FilExileExt/FilExileExt_i.c
+/FilExileExt/FilExileExt_i.h
+*.pfx
+*.suo
+/FilExileExt/FilExileExt_p.c

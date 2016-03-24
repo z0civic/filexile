@@ -22,7 +22,7 @@ namespace Shared
         public static void LaunchURL(string url)
         {
             //Make sure the string isn't null or empty and looks like an actual URL
-            if (!string.IsNullOrEmpty(url) && StringUtils.Equals(StringUtils.Left(url,4),"http"))
+            if (!string.IsNullOrEmpty(url) && Equals(StringUtils.Left(url,4),"http"))
                 System.Diagnostics.Process.Start(url);
         }
 
@@ -93,11 +93,11 @@ namespace Shared
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void manualVersionCheckComplete(Object sender, DownloadStringCompletedEventArgs e)
+        private static void manualVersionCheckComplete(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error == null)
             {
-                if (StringUtils.Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
+                if (Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
                     MessageBox.Show(SharedResources.Properties.Resources.LatestVersion);
                 else
                 {
@@ -113,11 +113,11 @@ namespace Shared
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void automatedVersionCheckComplete(Object sender, DownloadStringCompletedEventArgs e)
+        private static void automatedVersionCheckComplete(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error == null)
             {
-                if (!StringUtils.Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
+                if (!Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
                 {
                     DownloadDlg dl = new DownloadDlg();
                     dl.ShowDialog();

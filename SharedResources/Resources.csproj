@@ -34,7 +34,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>filexile.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Keys\FilExile.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Files\fe_64_t.png" />
-    <None Include="filexile.pfx" />
+    <None Include="Keys\FilExile.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Files\icon.ico" />
