@@ -56,7 +56,7 @@
     </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>FilExile_Portable.Program</StartupObject>
+    <StartupObject>FilExile.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

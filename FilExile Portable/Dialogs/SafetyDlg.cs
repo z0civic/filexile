@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace FilExile_Portable.Dialogs
+namespace FilExile.Dialogs
 {
 	public partial class SafetyDlg : Form
 	{

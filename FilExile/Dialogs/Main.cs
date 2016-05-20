@@ -23,23 +23,16 @@ namespace FilExile.Dialogs
                 NetworkUtils.InitiateVersionCheck(false);
         }
 
-        #endregion
+		#endregion
 
-        // ------------------------------------------------------------------------------------
+		// ------------------------------------------------------------------------------------
 
-        #region Objects
+		#region Fields
 
-        //The target that is going to be deleted
-        private Target target;
-
-        #endregion
-
-        // ------------------------------------------------------------------------------------
-
-        #region Fields
-
-        // Holds the initial number of files in the target directory when tracking progress
-        private int iNumFiles;
+		//The target that is going to be deleted
+		private Target _target;
+		// Holds the initial number of files in the target directory when tracking progress
+		private int _iNumFiles;
 
 		#endregion
 
@@ -48,57 +41,36 @@ namespace FilExile.Dialogs
 		#region Properties
 
 		/// <summary>
-		/// If FilExile should check for updates on startup
-		/// </summary>
-		public bool AutoUpdate
-		{
-			get { return checkbox_autoUpdate.Checked; }
-			set { checkbox_autoUpdate.Checked = value; }
-		}
-
-		/// <summary>
 		/// If verbose output should be displayed in the console
 		/// </summary>
-		public bool ShowOutput
-		{
-			get { return checkbox_output.Checked; }
-			set { checkbox_output.Checked = value; }
-		}
+		private bool ShowOutput => checkbox_output.Checked;
 
-		/// <summary>
+	    /// <summary>
 		/// If logging to a file is enabled
 		/// </summary>
-		public bool LoggingEnabled
+		private bool LoggingEnabled
 		{
 			get { return checkbox_logging.Checked; }
-			set { panel_LogFile.Enabled = value; }
+			set { EnableDisableLogFilePanel(value); }
 		}
 
 		/// <summary>
 		/// File (including path) to log to
 		/// </summary>
-		public string LogTo
-		{
-			get { return field_logTo.Text; }
-			set { field_logTo.Text = value; }
-		}
+		private string LogTo => field_logTo.Text;
 
-		/// <summary>
+	    /// <summary>
 		/// If multithreaded Robocopy operations are enabled
 		/// </summary>
-		public bool MultiThreadingEnabled
+		private bool MultiThreadingEnabled
 		{
 			get { return checkbox_multiThreading.Checked; }
-			set	{ panel_Multithreading.Enabled = value;	}
+			set	{ EnableDisableMultithreadingPanel(value);	}
 		}
 
-		public decimal ThreadCount
-		{
-			get { return spinner_threadCount.Value; }
-			set { spinner_threadCount.Value = value; }
-		}
+	    private decimal ThreadCount => spinner_threadCount.Value;
 
-		/// <summary>
+	    /// <summary>
 		/// If FilExile should remain on top of other applications
 		/// </summary>
 		public bool AlwaysOnTop
@@ -110,16 +82,12 @@ namespace FilExile.Dialogs
 		/// <summary>
 		/// If progress monitoring should be disabled (enhances performance)
 		/// </summary>
-		public bool DisableProgressMonitoring
-		{
-			get { return checkbox_disableProgressMonitoring.Checked; }
-			set { checkbox_disableProgressMonitoring.Checked = value; }
-		}
+		private bool DisableProgressMonitoring => checkbox_disableProgressMonitoring.Checked;
 
-		/// <summary>
+	    /// <summary>
 		/// String value of the target to be deleted
 		/// </summary>
-		public string Target
+		private string Target
 		{
 			get { return field_target.Text; }
 			set { field_target.Text = value; }
@@ -128,9 +96,8 @@ namespace FilExile.Dialogs
 		/// <summary>
 		/// Tooltip displayed in the bottom-left corner
 		/// </summary>
-		public string Tooltip
+		private string Tooltip
 		{
-			get { return toolStripLabel.Text; }
 			set { toolStripLabel.Text = value; }
 		}
 
@@ -144,18 +111,11 @@ namespace FilExile.Dialogs
 		/// Displays a warning message when a user attempts to delete a critical directory
 		/// </summary>
 		/// <returns>If the user wants to continue</returns>
-		private bool CriticalTargetWarning()
+		private static bool CriticalTargetWarning()
 		{
-			SafetyDlg dlg = new SafetyDlg();
+			var dlg = new SafetyDlg();
 			dlg.ShowDialog();
-			if (dlg.DialogResult == DialogResult.Yes)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return dlg.DialogResult == DialogResult.Yes;
 		}
 
 		/// <summary>
@@ -163,11 +123,13 @@ namespace FilExile.Dialogs
 		/// </summary>
 		private void InitiateComboBox()
 		{
-			var dataSource = new List<CompletionAction>();
-			dataSource.Add(new CompletionAction() { Name = SharedResources.Properties.Resources.DoNothing, Value = 0 });
-			dataSource.Add(new CompletionAction() { Name = SharedResources.Properties.Resources.PlaySound, Value = 1 });
-			dataSource.Add(new CompletionAction() { Name = SharedResources.Properties.Resources.Reboot, Value = 2 });
-			dataSource.Add(new CompletionAction() { Name = SharedResources.Properties.Resources.Shutdown, Value = 3 });
+			var dataSource = new List<CompletionAction>
+			{
+				new CompletionAction() {Name = SharedResources.Properties.Resources.DoNothing, Value = 0},
+				new CompletionAction() {Name = SharedResources.Properties.Resources.PlaySound, Value = 1},
+				new CompletionAction() {Name = SharedResources.Properties.Resources.Reboot, Value = 2},
+				new CompletionAction() {Name = SharedResources.Properties.Resources.Shutdown, Value = 3}
+			};
 
 			comboBox_completionAction.DataSource = dataSource;
 			comboBox_completionAction.DisplayMember = "Name";
@@ -176,31 +138,30 @@ namespace FilExile.Dialogs
 			comboBox_completionAction.DropDownStyle = ComboBoxStyle.DropDownList;
 		}
 
-        /// <summary>
-        /// Continuously checks the number of files in the target directory to
-        /// display progress as they are deleted.
-        /// </summary>
-        /// <param name="worker"></param>
-        /// <param name="e"></param>
-        private void ProgressBarOperation(BackgroundWorker worker, DoWorkEventArgs e)
-        {
-            int filesRemaining = target.NumberOfFiles;
-            if ((iNumFiles - filesRemaining) >= 0)
-                worker.ReportProgress(iNumFiles - filesRemaining);
-            if (!backgroundWorker_Deletion.IsBusy) return;
-            else ProgressBarOperation(worker, e);
-        }
+	    /// <summary>
+	    /// Continuously checks the number of files in the target directory to
+	    /// display progress as they are deleted.
+	    /// </summary>
+	    /// <param name="worker"></param>
+	    private void ProgressBarOperation(BackgroundWorker worker)
+	    {
+		    while (true)
+		    {
+			    var filesRemaining = _target.NumberOfFiles;
+			    if ((_iNumFiles - filesRemaining) >= 0)
+				    worker.ReportProgress(_iNumFiles - filesRemaining);
+			    if (!backgroundWorker_Deletion.IsBusy) return;
+		    }
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Sets up the Multithreading and Logging structs based on the control configurations and begins the deletion operation
         /// </summary>
-        /// <param name="worker"></param>
-        /// <param name="e"></param>
-        private void RunDeletion(BackgroundWorker worker, DoWorkEventArgs e)
+        private void RunDeletion()
         {
-            DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(MultiThreadingEnabled, ThreadCount);
-            DeletionOps.Logging log = new DeletionOps.Logging(LoggingEnabled, LogTo);
-            DeletionOps.Delete(target, mt, log, ShowOutput);
+            var mt = new DeletionOps.MultithreadingSetup(MultiThreadingEnabled, ThreadCount);
+            var log = new DeletionOps.Logging(LoggingEnabled, LogTo);
+            DeletionOps.Delete(_target, mt, log, ShowOutput);
         }
 
 		#endregion
@@ -236,11 +197,11 @@ namespace FilExile.Dialogs
 			Enabled = false;
 			bool cont = true;
 
-            target = new Target(Target);
+            _target = new Target(Target);
 
-			if (target.Exists)
+			if (_target.Exists)
 			{
-				if (target.IsCritical && !Properties.Settings.Default.disableSafety)
+				if (_target.IsCritical && !Properties.Settings.Default.disableSafety)
 					cont = CriticalTargetWarning();
 
 				if (cont)
@@ -249,10 +210,10 @@ namespace FilExile.Dialogs
 					{
 						// If the user wants to monitor progress and the target is a directory
 						// we need to setup the progress bar
-						if (!DisableProgressMonitoring && target.IsDirectory)
+						if (!DisableProgressMonitoring && _target.IsDirectory)
 						{
-							iNumFiles = target.NumberOfFiles;
-							progressBar.Maximum = iNumFiles;
+							_iNumFiles = _target.NumberOfFiles;
+							progressBar.Maximum = _iNumFiles;
 							progressBar.Visible = true;
 							backgroundWorker_ProgressBar.RunWorkerAsync();
 						}
@@ -291,11 +252,13 @@ namespace FilExile.Dialogs
         /// <param name="e"></param>
         private void button_browse_Click(object sender, EventArgs e)
         {
-            FolderBrowser fb = new FolderBrowser();
-				fb.Description = SharedResources.Properties.Resources.FolderBrowserDialogDescription;
-				fb.IncludeFiles = true;
-				fb.ShowNewFolderButton = false;
-            if (fb.ShowDialog() == DialogResult.OK)
+	        var fb = new FolderBrowser
+	        {
+		        Description = SharedResources.Properties.Resources.FolderBrowserDialogDescription,
+		        IncludeFiles = true,
+		        ShowNewFolderButton = false
+	        };
+	        if (fb.ShowDialog() == DialogResult.OK)
                 field_target.Text = fb.SelectedPath;
         }
        
@@ -323,7 +286,8 @@ namespace FilExile.Dialogs
         /// <param name="e"></param>
         private void button_defaults_Click(object sender, EventArgs e)
         {
-			Properties.Settings.Default.Reset();
+			if (MessageBox.Show(this, SharedResources.Properties.Resources.ResetToDefaults, SharedResources.Properties.Resources.Confirm, MessageBoxButtons.YesNo) == DialogResult.Yes)
+				Properties.Settings.Default.Reset();
         }
 
         /// <summary>
@@ -344,7 +308,7 @@ namespace FilExile.Dialogs
         /// <param name="e"></param>
         private void onlineHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NetworkUtils.LaunchURL(CommonStrings.HelpUrl);
+            NetworkUtils.LaunchUrl(CommonStrings.HelpUrl);
         }
 
         /// <summary>
@@ -398,7 +362,7 @@ namespace FilExile.Dialogs
             else
             {
                 if (MessageBox.Show(SharedResources.Properties.Resources.HelpFileNotFound, SharedResources.Properties.Resources.Error, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                    NetworkUtils.LaunchURL(CommonStrings.HelpUrl);
+                    NetworkUtils.LaunchUrl(CommonStrings.HelpUrl);
             }
         }
 
@@ -426,10 +390,10 @@ namespace FilExile.Dialogs
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void backgroundWorker_ProgressBar_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void backgroundWorker_ProgressBar_DoWork(object sender, DoWorkEventArgs e)
         {
-            BackgroundWorker worker = (BackgroundWorker) sender;
-            ProgressBarOperation(worker, e);
+            var worker = (BackgroundWorker) sender;
+            ProgressBarOperation(worker);
         }
 
         /// <summary>
@@ -440,7 +404,7 @@ namespace FilExile.Dialogs
         private void backgroundWorker_ProgressBar_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar.Value = e.ProgressPercentage;
-            statusStrip.Text = e.ProgressPercentage + "/" + iNumFiles;
+            statusStrip.Text = e.ProgressPercentage + "/" + _iNumFiles;
         }
 
         /// <summary>
@@ -450,8 +414,7 @@ namespace FilExile.Dialogs
         /// <param name="e"></param>
         private void backgroundWorker_Deletion_DoWork(object sender, DoWorkEventArgs e)
         {
-            BackgroundWorker worker = (BackgroundWorker) sender;
-            RunDeletion(worker, e);
+            RunDeletion();
         }
 
         /// <summary>
@@ -474,8 +437,8 @@ namespace FilExile.Dialogs
             Target = "";
 
 			// Run the specified completion action
-			CompletionAction ca = comboBox_completionAction.SelectedItem as CompletionAction;
-			ca.Run(true, checkbox_forceAction.Checked);
+			var ca = comboBox_completionAction.SelectedItem as CompletionAction;
+	        ca?.Run(true, checkbox_forceAction.Checked);
         }
 
         /// <summary>
@@ -501,7 +464,7 @@ namespace FilExile.Dialogs
 			//TODO: In the future, it'd be nice to be able to handle multiple files at once
 
             //Grab the filenames from the drop
-            string[] filenames = (string[]) e.Data.GetData(DataFormats.FileDrop);
+            var filenames = (string[]) e.Data.GetData(DataFormats.FileDrop);
 
             //If the user tries to drop multiple items, let them know we will only process one
             if (filenames.Length > 1)
@@ -522,21 +485,32 @@ namespace FilExile.Dialogs
 		}
 
 		/// <summary>
-		/// Called whenever a panel's "Enabled" state changes so it can pass
-		/// the state onto child controls
+		/// Enables or disables the log file panel based on the passed value
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void panel_EnabledChanged(object sender, EventArgs e)
+		/// <param name="enable">True to enable the panel and all contained controls</param>
+		private void EnableDisableLogFilePanel(bool enable)
+	    {
+		    foreach (Control c in panel_LogFile.Controls)
+		    {
+			    c.Enabled = enable;
+			    var box = c as TextBox;
+			    if (box != null)
+				    box.ReadOnly = !box.Parent.Enabled;
+			}
+	    }
+
+		/// <summary>
+		/// Enables or disables the log multithreading panel based on the passed value
+		/// </summary>
+		/// <param name="enable">True to enable the panel and all contained controls</param>
+		private void EnableDisableMultithreadingPanel(bool enable)
 		{
-			Panel p = sender as Panel;
-			foreach (Control c in p.Controls)
+			foreach (Control c in panel_Multithreading.Controls)
 			{
-				c.Enabled = c.Parent.Enabled;
-				if (c is TextBox)
-					((TextBox)c).ReadOnly = !c.Parent.Enabled;
-				else if (c is NumericUpDown)
-					((NumericUpDown)c).ReadOnly = !c.Parent.Enabled;
+				c.Enabled = enable;
+				var down = c as NumericUpDown;
+				if (down != null)
+					down.ReadOnly = !down.Parent.Enabled;
 			}
 		}
 

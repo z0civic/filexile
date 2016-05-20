@@ -70,6 +70,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not connect to the server.
         /// </summary>
         public static string ConnectionError {
@@ -294,6 +303,15 @@ namespace SharedResources.Properties {
         public static string Reboot {
             get {
                 return ResourceManager.GetString("Reboot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset all settings to default values?.
+        /// </summary>
+        public static string ResetToDefaults {
+            get {
+                return ResourceManager.GetString("ResetToDefaults", resourceCulture);
             }
         }
         

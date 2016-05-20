@@ -1,79 +1,53 @@
-﻿using Shared;
-using System;
-using System.Reflection;
+﻿using System;
 using System.Windows.Forms;
+using Shared;
 
-namespace FilExile_Portable
+namespace FilExile
 {
-    class Program
+	internal static class Program
     {
-        /// <summary>
-        /// FilExile is a simple file and directory deletion tool that utilizes Windows'
-        /// "Robocopy" to help delete stubborn files and directories that otherwise can't
-        /// be removed by normal methods.
-        /// </summary>
-        // ------------------------------------------------------------------------------------
+		/// <summary>
+		/// FilExile Portable is a simple file and directory deletion tool that utilizes Windows'
+		/// "Robocopy" to help delete stubborn files and directories that otherwise can't
+		/// be removed by normal methods. FilExile Portable does not have all the features
+		/// that FilExile has.
+		/// </summary>
+		// ------------------------------------------------------------------------------------
 
-        #region Objects
+		#region Fields
 
-        private static CommandLineArgs cla;
-
-        #endregion
-
-        // ------------------------------------------------------------------------------------
-
-        #region Fields
-
-        #endregion
-
-        // ------------------------------------------------------------------------------------
-
-        #region Public methods
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        public static void Main(string[] args)
-        {
-			try
-			{
-				if (args.Length > 0)
-				{
-					cla = new CommandLineArgs(args);
-					AttachConsole(ATTACH_PARENT_PROCESS);
-
-					if (cla.HelpFlag)
-						CommandLineInterface.DisplayHelp();
-					else
-						CommandLineInterface.Run(args[0], cla);
-				}
-				else
-				{
-					Application.EnableVisualStyles();
-					Application.SetCompatibleTextRenderingDefault(false);
-					Application.Run(new Dialogs.Main());
-				}
-			}
-
-			finally
-			{
-
-			}
-		}
-
-        #endregion
-
-        // ------------------------------------------------------------------------------------
-
-        #region Private methods
-
-        // Import kernel32.dll to attach a console
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-        private static extern bool AttachConsole(int dwProcessId);
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
-        private static extern int FreeConsole();
-        private const int ATTACH_PARENT_PROCESS = -1;
+		private static CommandLineArgs _cla;
 
 		#endregion
+
+		// ------------------------------------------------------------------------------------
+
+		#region Public methods
+		/// <summary>
+		/// The main entry point for the application.
+		/// </summary>
+		[STAThread]
+        public static void Main(string[] args)
+        {
+	        if (args.Length > 0)
+	        {
+		        _cla = new CommandLineArgs(args);
+
+		        if (_cla.HelpFlag)
+			        CommandLineInterface.DisplayHelp();
+		        else
+			        CommandLineInterface.Run(args[0], _cla);
+	        }
+	        else
+	        {
+		        Application.EnableVisualStyles();
+		        Application.SetCompatibleTextRenderingDefault(false);
+		        Application.Run(new Dialogs.Main());
+	        }
+        }
+
+		#endregion
+
+        // ------------------------------------------------------------------------------------
 	}
 }

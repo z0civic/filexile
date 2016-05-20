@@ -20,11 +20,7 @@ namespace Shared
 
         #region Fields
 
-        private readonly string[] m_args;
-
-        // These flags are standard launch flags.
-        // The standard flags are for logging, quiet mode, and job file processing
-        private static readonly string[] m_standardLaunchFlags = { "l", "q", "job"};
+        private readonly string[] _args;
 
         #endregion
 
@@ -36,7 +32,7 @@ namespace Shared
         /// <param name="args">Command line arguments</param>
         public CommandLineArgs(string[] args)
         {
-            m_args = args;
+			_args = args;
         }
 
         #endregion
@@ -45,12 +41,9 @@ namespace Shared
 
         #region Properties
 
-        public bool HelpFlag
-        {
-            get { return HasFlag("?"); }
-        }
+        public bool HelpFlag => HasFlag("?");
 
-        #endregion
+	    #endregion
 
         // ------------------------------------------------------------------------------------
 
@@ -59,12 +52,12 @@ namespace Shared
         public override string ToString()
         {
             //Check if we got any command line arguments
-            if ((m_args == null) || m_args.Length == 0)
+            if ((_args == null) || _args.Length == 0)
                 return "Not set";
 
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
 
-            foreach (string arg in m_args)
+            foreach (var arg in _args)
             {
                 result.Append(arg);
                 result.Append(" ");
@@ -81,74 +74,39 @@ namespace Shared
             return (IndexOfFlag(flag) != -1);
         }
 
-        /// <summary>Gets whether the command-line includes any arguments other than logging, quiet mode,
-        ///          jobfile mode, or debugging.
-        /// </summary>
-        /// <returns>True if any other flags are present</returns>
-        public bool HasCommandsOtherThanStandardLaunchCommands()
+	    /// <summary>Gets whether a flag is set and the argument value that follows</summary>
+	    /// <param name="flag">The flag to check</param>
+	    /// <param name="argument1">The argument following the flag (if any)</param>
+	    /// <returns>True if the flag is set</returns>
+	    public void GetFlagAndArguments(string flag, ref string argument1)
         {
-            bool retval = false;
-
-            if (m_args != null)
-            {
-                for (int i = 0; i < m_args.Length; i++)
-                {
-                    // Check all flags, and also always check the first argument
-                    if (((i == 0) || IsAFlag(m_args[i])) && !IsStandardLaunchCommand(m_args[i]))
-                    {
-                        retval = true;
-                        break;
-                    }
-                }
-            }
-
-            return retval;
+            var arg2 = "";
+            var arg3 = "";
+		    GetFlagAndArguments(flag, ref argument1, ref arg2, ref arg3);
         }
 
-        /// <summary>Gets whether a flag is set and the argument value that follows</summary>
-        /// <param name="flag">The flag to check</param>
-        /// <param name="argument1">The argument following the flag (if any)</param>
-        /// <returns>True if the flag is set</returns>
-        public bool GetFlagAndArguments(string flag, ref string argument1)
+	    /// <summary>Gets whether a flag is set and the argument values that follow</summary>
+	    /// <param name="flag">The flag to check</param>
+	    /// <param name="argument1">The argument following the flag (if any)</param>
+	    /// <param name="argument2">The second argument following the flag (if any)</param>
+	    /// <param name="argument3">The third argument following the flag (if any)</param>
+	    /// <returns>True if the flag is set</returns>
+	    private void GetFlagAndArguments(string flag, ref string argument1, ref string argument2, ref string argument3)
         {
-            string arg2 = "";
-            string arg3 = "";
-            return GetFlagAndArguments(flag, ref argument1, ref arg2, ref arg3);
-        }
-
-        /// <summary>Gets whether a flag is set and the argument values that follow</summary>
-        /// <param name="flag">The flag to check</param>
-        /// <param name="argument1">The argument following the flag (if any)</param>
-        /// <param name="argument2">The second argument following the flag (if any)</param>
-        /// <param name="argument3">The third argument following the flag (if any)</param>
-        /// <returns>True if the flag is set</returns>
-        public bool GetFlagAndArguments(string flag, ref string argument1, ref string argument2, ref string argument3)
-        {
-            bool retval = false;
-
-            // Gets arguments until runs out or hits another flag
-            int pos = IndexOfFlag(flag);
-            if (pos >= 0)
-            {
-                retval = true;
-                pos++;
-                if ((pos < m_args.Length) && !IsAFlag(m_args[pos]))
-                {
-                    argument1 = m_args[pos].Trim();
-                    pos++;
-                    if ((pos < m_args.Length) && !IsAFlag(m_args[pos]))
-                    {
-                        argument2 = m_args[pos].Trim();
-                        pos++;
-                        if ((pos < m_args.Length) && !IsAFlag(m_args[pos]))
-                        {
-                            argument3 = m_args[pos].Trim();
-                        }
-                    }
-                }
-            }
-
-            return retval;
+		    // Gets arguments until runs out or hits another flag
+            var pos = IndexOfFlag(flag);
+		    if (pos < 0) return;
+		    pos++;
+		    if ((pos >= _args.Length) || IsAFlag(_args[pos])) return;
+		    argument1 = _args[pos].Trim();
+		    pos++;
+		    if ((pos >= _args.Length) || IsAFlag(_args[pos])) return;
+		    argument2 = _args[pos].Trim();
+		    pos++;
+		    if ((pos < _args.Length) && !IsAFlag(_args[pos]))
+		    {
+			    argument3 = _args[pos].Trim();
+		    }
         }
 
         #endregion
@@ -167,34 +125,30 @@ namespace Shared
         /// <param name="flag">Flag to find</param>
         private int IndexOfFlag(string flag)
         {
-            int retval = -1;
+            var retval = -1;
 
             // If caller put in / or - in front of flag, remove it
             flag = flag.Trim();
             if ((flag.Length > 1) && ((flag[0] == '/') || (flag[0] == '-')))
                 flag = flag.Substring(1);
 
-            if (m_args != null)
-            {
-                for (int i = 0; i < m_args.Length; i++)
-                {
-                    if (IsFlag(m_args[i], flag))
-                    {
-                        retval = i;
-                        break;
-                    }
-                }
-            }
+	        if (_args == null) return retval;
+	        for (var i = 0; i < _args.Length; i++)
+	        {
+		        if (!IsFlag(_args[i], flag)) continue;
+		        retval = i;
+		        break;
+	        }
 
-            return retval;
+	        return retval;
         }
 
         /// <summary>Returns true if the passed flag has the passed value</summary>
         /// <param name="flagToCheck">The flag to check for</param>
         /// <param name="value">The value to check for</param>
-        private bool IsFlag(string flagToCheck, string value)
+        private static bool IsFlag(string flagToCheck, string value)
         {
-            bool retval = false;
+            var retval = false;
 
             // Must be the length of the flag plus one for the / or -
             if (flagToCheck.Trim().Length == (value.Length + 1))
@@ -208,30 +162,9 @@ namespace Shared
 
         /// <summary>Checks to see if a passed value is a flag (starts with / or - )</summary>
         /// <param name="flag">Flag to check</param>
-        private bool IsAFlag(string flag)
+        private static bool IsAFlag(string flag)
         {
-            bool retval = ((flag.Length > 0) && ((flag[0] == '/') || (flag[0] == '-')));
-
-            return retval;
-        }
-
-        /// <summary>Checks to see if the passed argument is one of the standard launch commands</summary>
-        /// <param name="argument">Argument to check</param>
-        /// <returns>True if in the standard list</returns>
-        private bool IsStandardLaunchCommand(string argument)
-        {
-            bool bStandard = false;
-
-            foreach (string strFlag in m_standardLaunchFlags)
-            {
-                if (IsFlag(argument, strFlag))
-                {
-                    bStandard = true;
-                    break;
-                }
-            }
-
-            return bStandard;
+            return ((flag.Length > 0) && ((flag[0] == '/') || (flag[0] == '-')));
         }
 
         #endregion

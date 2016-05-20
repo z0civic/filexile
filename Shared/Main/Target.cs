@@ -13,9 +13,9 @@ namespace Shared
 
         #region Fields
 
-        public string path = string.Empty;
+        public string Path = string.Empty;
         // Directories considered system critical and probably shouldn't be deleted without careful thought
-        private string[] criticalDirectories = { "*:\\", "*:\\Users", "*:\\Windows\\*", "*:\\Program*", 
+        private readonly string[] _criticalDirectories = { "*:\\", "*:\\Users", "*:\\Windows\\*", "*:\\Program*", 
                                                  "*:\\Users\\*\\AppData", "*:\\ProgramData", "*:\\Windows", "*:\\Documents" };
 
         #endregion
@@ -37,7 +37,7 @@ namespace Shared
         /// <param name="path">String to the fully-qualified path</param>
         public Target(string path)
         {
-            this.path = path;
+            Path = path;
         }
 
         #endregion
@@ -55,7 +55,7 @@ namespace Shared
             {
                 try
                 {
-                    bool retVal = ((File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory);
+                    bool retVal = ((File.GetAttributes(Path) & FileAttributes.Directory) == FileAttributes.Directory);
                     return retVal;
                 }
                 catch (Exception)
@@ -72,11 +72,11 @@ namespace Shared
         {
             get
             {
-                bool retval = false;
+                var retval = false;
 
-                foreach (string pattern in criticalDirectories)
+                foreach (var pattern in _criticalDirectories)
                 {
-                    if (StringUtils.IsLike(this.path, pattern))
+                    if (StringUtils.IsLike(Path, pattern))
                     {
                         retval = true;
                     }
@@ -89,56 +89,30 @@ namespace Shared
         /// <summary>
         /// If the Target exists, regardless of whether or not the Target is a directory or file
         /// </summary>
-        public bool Exists
-        {
-            get
-            {
-                bool retval = false;
+        public bool Exists => IsDirectory ? Directory.Exists(Path) : File.Exists(Path);
 
-                if (IsDirectory)
-                {
-                    retval = Directory.Exists(path);
-                }
-                else
-                {
-                    retval = File.Exists(path);
-                }
-
-                return retval;
-            }
-        }
-
-        /// <summary>
+	    /// <summary>
         /// Returns the number of files in a directory
         /// </summary>
-        public int NumberOfFiles
-        {
-            get
-            {
-                return GetFiles(path).Count;
-            }
-        }
+        public int NumberOfFiles => GetFiles(Path).Count;
 
-        /// <summary>
+	    /// <summary>
         /// Returns the parent directory of the path
         /// </summary>
         public string ParentDirectory
         {
             get
             {
-				string retVal = "";
-				DirectoryInfo di = new DirectoryInfo(path);
-				retVal = di.FullName;
+	            var di = new DirectoryInfo(Path);
+				var retVal = di.FullName;
 
-				int end = retVal.LastIndexOf(@"\");
-				if (end > 0)
-				{
-					retVal = retVal.Substring(0, end);
-					if (retVal.EndsWith(@":"))
-						retVal += @"\";
-				}
+				var end = retVal.LastIndexOf(@"\", StringComparison.Ordinal);
+	            if (end <= 0) return retVal;
+	            retVal = retVal.Substring(0, end);
+	            if (retVal.EndsWith(@":"))
+		            retVal += @"\";
 
-				return retVal;
+	            return retVal;
             }
         }
 
@@ -149,8 +123,8 @@ namespace Shared
         {
             get
             {
-                int end = path.LastIndexOf(@"\");
-                return path.Substring(end + 1);
+                var end = Path.LastIndexOf(@"\", StringComparison.Ordinal);
+                return Path.Substring(end + 1);
             }
         }
 
@@ -166,7 +140,7 @@ namespace Shared
         /// </summary>
         /// <param name="currentPath">The path to search from</param>
         /// <returns>A strongly-typed collection of files (as string paths)</returns>
-        private List<string> GetFiles(string currentPath)
+        private static List<string> GetFiles(string currentPath)
         {
             var files = new List<string>();
 
@@ -178,9 +152,12 @@ namespace Shared
             }
             // If an error occurs during counting, we don't especially care as it's just for
             // displaying deletion progress - wouldn't want to crash or throw exception
-            catch { }
+            catch
+            {
+	            // ignored
+            }
 
-            return files;
+	        return files;
         }
 
         #endregion

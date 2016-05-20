@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Shared
 {
-    internal sealed class DeletionOps
+    internal static class DeletionOps
     {
         /// <summary>
         /// Class for handling deletion operations within FilExile whether from the GUI or CLI
@@ -18,13 +18,13 @@ namespace Shared
         /// </summary>
         public struct MultithreadingSetup
         {
-            public bool threadingEnabled;
-            public decimal numThreads;
+            public readonly bool ThreadingEnabled;
+            public decimal NumThreads;
 
             public MultithreadingSetup(bool threadingEnabled, decimal numThreads)
             {
-                this.threadingEnabled = threadingEnabled;
-                this.numThreads = numThreads;
+                ThreadingEnabled = threadingEnabled;
+                NumThreads = numThreads;
             }
         }
 
@@ -33,13 +33,13 @@ namespace Shared
         /// </summary>
         public struct Logging
         {
-            public bool enabled;
-            public string logTo;
+            public readonly bool Enabled;
+            public readonly string LogTo;
 
             public Logging(bool enabled, string logTo)
             {
-                this.enabled = enabled;
-                this.logTo = logTo;
+                Enabled = enabled;
+                LogTo = logTo;
             }
         }
 
@@ -49,9 +49,8 @@ namespace Shared
 
         #region Fields
 
-        private static string systemTempDir = Environment.GetEnvironmentVariable("temp");           //Windows %TEMP% system variable
-        private static string systemDrive = Environment.GetEnvironmentVariable("systemdrive");      //Windows %SYSTEMDRIVE% system variable
-        private static string robocopyCommand = string.Empty;
+        private static readonly string SystemTempDir = Environment.GetEnvironmentVariable("temp");           //Windows %TEMP% system variable
+        private static string _robocopyCommand;
 
 		#endregion
 
@@ -69,22 +68,22 @@ namespace Shared
 		/// <returns>An error code based on how the operation turned out</returns>
 		public static int Delete(Target target, MultithreadingSetup mt, Logging log, bool output)
         {
-            int retval = (int) ErrorCodes.SUCCESS;
+            int retval = (int) ErrorCodes.Success;
 
             if (target.Exists)
             {
                 // Create empty directory for mirroring
-                string emptyDir = systemTempDir + @"\FilExile_temp$";
+                string emptyDir = SystemTempDir + @"\FilExile_temp$";
                 Directory.CreateDirectory(emptyDir);
 
                 // Sometimes there's an extra backslash on the end of the path
                 // and we need to trim it off
-                if (target.path.EndsWith(@"\"))
-                    target.path = target.path.TrimEnd('\\');
+                if (target.Path.EndsWith(@"\"))
+                    target.Path = target.Path.TrimEnd('\\');
 
                 if (target.IsDirectory)
                 {
-                    robocopyCommand = PrepareRobocopyCommand(mt, log, emptyDir, target.path);
+                    _robocopyCommand = PrepareRobocopyCommand(mt, log, emptyDir, target.Path);
                 }
                 else
                 {
@@ -93,24 +92,24 @@ namespace Shared
                     // to place the file in this temporary directory by itself. This is to
                     // prevent the actual diretory mirror command from wiping out everything else
                     // where the file was found.
-                    string secondEmptyDir = systemTempDir + @"\FilExile_singleFile_temp$";
+                    string secondEmptyDir = SystemTempDir + @"\FilExile_singleFile_temp$";
                     Directory.CreateDirectory(secondEmptyDir);
 
                     string fileCopyCmd = PrepareFileCopyCommand(target.ParentDirectory, secondEmptyDir, target.FileName);
                     RunRobocopy(fileCopyCmd, output);
 
-                    robocopyCommand = PrepareRobocopyCommand(mt, log, emptyDir, secondEmptyDir);
+                    _robocopyCommand = PrepareRobocopyCommand(mt, log, emptyDir, secondEmptyDir);
                 }
 
                 // This is where the main deletion operation occurs - Uses Robocopy to mirror
                 // the empty directory we created onto the target. This will make any files within
                 // the target appear as "extra files" and forcibly remove them via Robocopy which
                 // can handle all sorts of nasty files that Windows will sometimes choke on
-                RunRobocopy(robocopyCommand, output);
+                RunRobocopy(_robocopyCommand, output);
             }
             else
             {
-                retval = (int) ErrorCodes.NOT_FOUND;
+                retval = (int) ErrorCodes.NotFound;
             }
 
             return retval;
@@ -137,16 +136,16 @@ namespace Shared
 
             retVal += "\"" + emptyDir + "\" \"" + targetDir + "\" /MIR /NJH /NP";
 
-            if (mt.threadingEnabled)
+            if (mt.ThreadingEnabled)
             {
-                if (mt.numThreads < 1 || mt.numThreads > 128)
-                    mt.numThreads = 8;
-                retVal += " /MT:" + mt.numThreads;
+                if (mt.NumThreads < 1 || mt.NumThreads > 128)
+                    mt.NumThreads = 8;
+                retVal += " /MT:" + mt.NumThreads;
             }
 
-            if (!string.IsNullOrEmpty(log.logTo) && log.enabled)
+            if (!string.IsNullOrEmpty(log.LogTo) && log.Enabled)
             {
-                retVal += @" /TEE /V /LOG+:" + log.logTo + "\"";
+                retVal += @" /TEE /V /LOG+:" + log.LogTo + "\"";
             }
 
             return retVal;
@@ -161,25 +160,30 @@ namespace Shared
         /// <returns>Prepared Robocopy arguments to move a file from the source to the destination</returns>
         private static string PrepareFileCopyCommand(string source, string destination, string filename)
         {
-            string retval = "\"" + source + "\" \"" + destination + "\" /MOV /NJH /NP /IF \"" + filename + "\"";
+            var retval = "\"" + source + "\" \"" + destination + "\" /MOV /NJH /NP /IF \"" + filename + "\"";
             return retval;
         }
 
-        /// <summary>
-        /// Creates a new Robocopy process and runs the passed arguements
-        /// </summary>
-        /// <param name="arguments">Command line arguments to pass to the process</param>
-        /// <param name="output">Whether or not to display output</param>
-        private static bool RunRobocopy(string arguments, bool output)
+	    /// <summary>
+	    /// Creates a new Robocopy process and runs the passed arguements
+	    /// </summary>
+	    /// <param name="arguments">Command line arguments to pass to the process</param>
+	    /// <param name="output">Whether or not to display output</param>
+	    private static void RunRobocopy(string arguments, bool output)
         {
             try
             {
-                Process p = new Process();
-                p.StartInfo.FileName = "robocopy.exe";
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.RedirectStandardOutput = true;
-                if (output)
-                    p.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+	            var p = new Process
+	            {
+		            StartInfo =
+		            {
+			            FileName = "robocopy.exe",
+			            UseShellExecute = false,
+			            RedirectStandardOutput = true
+		            }
+	            };
+	            if (output)
+                    p.OutputDataReceived += OutputHandler;
                 p.StartInfo.CreateNoWindow = true;
                 p.StartInfo.Arguments = arguments;
 
@@ -187,11 +191,10 @@ namespace Shared
                 p.BeginOutputReadLine();
                 p.WaitForExit();
                 p.Close();
-                return true;
             }
             catch
             {
-                return false;
+	            // ignored
             }
         }
 

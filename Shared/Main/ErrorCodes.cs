@@ -1,4 +1,4 @@
 ﻿namespace Shared
 {
-    internal enum ErrorCodes {SUCCESS, NOT_FOUND };
+    internal enum ErrorCodes {Success, NotFound };
 }

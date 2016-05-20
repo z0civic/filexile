@@ -4,6 +4,8 @@
 #include "resource.h"
 #include "FilExileExt_i.h"
 #include "dllmain.h"
+#include "atlstr.h"
+#include <string.h>
 
 using namespace ATL;
 
@@ -116,12 +118,14 @@ HRESULT CFilExileShlExt::QueryContextMenu(
 	UINT uidLastCmd, UINT uFlags)
 {
 	//TODO: Set icon
+	CString contextLbl;
+	contextLbl.LoadString(IDS_CONTEXTLBL);
 
 	if (uFlags & CMF_DEFAULTONLY)
 		return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, 0);
 
 	InsertMenu(hMenu, uMenuIndex, MF_BYPOSITION,
-		uidFirstCmd, _T("Delete with FilExile"));
+		uidFirstCmd, contextLbl);
 
 	return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, 1);
 }
@@ -138,15 +142,16 @@ HRESULT CFilExileShlExt::GetCommandString(
 
 	if (uFlags & GCS_HELPTEXT)
 	{
-		LPCTSTR szText = _T("Permanently delete the selected file with FilExile.");
+		CString strMyString;
+		strMyString.LoadString(IDS_HELPSTRING);
 
 		if (uFlags & GCS_UNICODE)
 		{
-			lstrcpynW((LPWSTR)pszName, T2CW(szText), cchMax);
+			lstrcpynW((LPWSTR)pszName, T2CW(strMyString), cchMax);
 		}
 		else
 		{
-			lstrcpynA(pszName, T2CA(szText), cchMax);
+			lstrcpynA(pszName, T2CA(strMyString), cchMax);
 		}
 
 		return S_OK;
@@ -168,10 +173,49 @@ HRESULT CFilExileShlExt::InvokeCommand(
 	{
 		TCHAR szMsg[MAX_PATH + 32];
 
-		wsprintf(szMsg, _T("The selected file was:\n\n%s"), m_szFile);
+		STARTUPINFO si;
+		PROCESS_INFORMATION pi;
+		ZeroMemory(&si, sizeof(si));
+		si.cb = sizeof(si);
+		ZeroMemory(&pi, sizeof(pi));
 
-		MessageBox(pCmdInfo->hwnd, szMsg, _T("FilExile"),
-			MB_ICONINFORMATION);
+		// Get the installation path for FilExile
+		WCHAR* value; HKEY hKey = 0; WCHAR szBuffer[512];
+		DWORD dwType = REG_SZ; DWORD dwBufSize = sizeof(szBuffer);
+		if (RegOpenKey(HKEY_LOCAL_MACHINE, L"SOFTWARE\\FilExile", &hKey) == ERROR_SUCCESS)
+		{
+			if (RegQueryValueEx(hKey, L"Path", NULL, &dwType, (LPBYTE) szBuffer, &dwBufSize) == ERROR_SUCCESS)
+			{
+				value = szBuffer;
+			}
+			RegCloseKey(hKey);
+		}
+
+		WCHAR cmdPath[255];
+
+		wsprintf(szMsg, L"", m_szFile);
+
+		if 
+		(
+			!CreateProcess(NULL,
+				szMsg,		// Command line
+				NULL,		// Process handle not inheritable
+				NULL,		// Thread handle not inheritable
+				FALSE,		// Set handle inheritance to FALSE
+				0,			// No creation flags
+				NULL,		// Use parent's environment block
+				NULL,		// Use parent's starting directory
+				&si,		// Pointer to STARTUPINFO structure
+				&pi)		// Pointer to PROCESS_INFORMATION structure
+		)
+		{
+			return S_FALSE;
+		}
+		
+		WaitForSingleObject(pi.hProcess, INFINITE);
+
+		CloseHandle(pi.hProcess);
+		CloseHandle(pi.hThread);
 
 		return S_OK;
 	}

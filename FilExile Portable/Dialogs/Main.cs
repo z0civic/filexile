@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace FilExile_Portable.Dialogs
+namespace FilExile.Dialogs
 {
     public partial class Main : Form
     {
@@ -21,12 +21,13 @@ namespace FilExile_Portable.Dialogs
 			// the assembly to be loaded without throwing a null reference error
 			AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
 			{
-				string resourceName = new AssemblyName(args.Name).Name + ".dll";
-				string resource = Array.Find(this.GetType().Assembly.GetManifestResourceNames(), element => element.EndsWith(resourceName));
+				var resourceName = new AssemblyName(args.Name).Name + ".dll";
+				var resource = Array.Find(GetType().Assembly.GetManifestResourceNames(), element => element.EndsWith(resourceName));
 
 				using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resource))
 				{
-					Byte[] assemblyData = new Byte[stream.Length];
+					if (stream == null) return null;
+					var assemblyData = new byte[stream.Length];
 					stream.Read(assemblyData, 0, assemblyData.Length);
 					return Assembly.Load(assemblyData);
 				}
@@ -39,19 +40,12 @@ namespace FilExile_Portable.Dialogs
 
 		// ------------------------------------------------------------------------------------
 
-		#region Objects
-
-		// The target that is going to be deleted
-		private Target target;
-
-		#endregion
-
-		// ------------------------------------------------------------------------------------
-
 		#region Fields
 
 		// Holds the initial number of files in the target directory
-		private int iNumFiles;
+		private int _iNumFiles;
+		// The target that is going to be deleted
+		private Target _target;
 
 		#endregion
 
@@ -63,18 +57,11 @@ namespace FilExile_Portable.Dialogs
 		/// Displays a warning message when a user attempts to delete a critical directory
 		/// </summary>
 		/// <returns>If the user wants to continue</returns>
-		private bool CriticalTargetWarning()
+		private static bool CriticalTargetWarning()
 		{
-			SafetyDlg dlg = new SafetyDlg();
+			var dlg = new SafetyDlg();
 			dlg.ShowDialog();
-			if (dlg.DialogResult == DialogResult.Yes)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return dlg.DialogResult == DialogResult.Yes;
 		}
 
 		/// <summary>
@@ -91,31 +78,30 @@ namespace FilExile_Portable.Dialogs
 			field_target.Enabled = bEnabled;
 		}
 
-		/// <summary>
-		/// Continuously checks the number of files in the target directory to
-		/// display progress as they are deleted.
-		/// </summary>
-		/// <param name="worker"></param>
-		/// <param name="e"></param>
-		private void ProgressBarOperation(BackgroundWorker worker, DoWorkEventArgs e)
-		{
-			int filesRemaining = target.NumberOfFiles;
-			if ((iNumFiles - filesRemaining) >= 0)
-				worker.ReportProgress(iNumFiles - filesRemaining);
-			if (!backgroundWorker_Deletion.IsBusy) return;
-			else ProgressBarOperation(worker, e);
-		}
+	    /// <summary>
+	    /// Continuously checks the number of files in the target directory to
+	    /// display progress as they are deleted.
+	    /// </summary>
+	    /// <param name="worker"></param>
+	    private void ProgressBarOperation(BackgroundWorker worker)
+	    {
+		    while (true)
+		    {
+			    var filesRemaining = _target.NumberOfFiles;
+			    if ((_iNumFiles - filesRemaining) >= 0)
+				    worker.ReportProgress(_iNumFiles - filesRemaining);
+			    if (!backgroundWorker_Deletion.IsBusy) return;
+		    }
+	    }
 
-		/// <summary>
+	    /// <summary>
 		/// Sets up the Multithreading and Logging structs based on the control configurations and begins the deletion operation
 		/// </summary>
-		/// <param name="worker"></param>
-		/// <param name="e"></param>
-		private void RunDeletion(BackgroundWorker worker, DoWorkEventArgs e)
+		private void RunDeletion()
 		{
-			DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(true, 8);
-			DeletionOps.Logging log = new DeletionOps.Logging(false, "");
-			DeletionOps.Delete(target, mt, log, false);
+			var mt = new DeletionOps.MultithreadingSetup(true, 8);
+			var log = new DeletionOps.Logging(false, "");
+			DeletionOps.Delete(_target, mt, log, false);
 		}
 
 		// ------------------------------------------------------------------------------------
@@ -151,10 +137,12 @@ namespace FilExile_Portable.Dialogs
 		/// <param name="e"></param>
 		private void button_browse_Click(object sender, EventArgs e)
 		{
-			FolderBrowser fb = new FolderBrowser();
-			fb.Description = SharedResources.Properties.Resources.FolderBrowserDialogDescription;
-			fb.IncludeFiles = true;
-			fb.ShowNewFolderButton = false;
+			var fb = new FolderBrowser
+			{
+				Description = SharedResources.Properties.Resources.FolderBrowserDialogDescription,
+				IncludeFiles = true,
+				ShowNewFolderButton = false
+			};
 			if (fb.ShowDialog() == DialogResult.OK)
 				field_target.Text = fb.SelectedPath;
 		}
@@ -171,11 +159,11 @@ namespace FilExile_Portable.Dialogs
 			ChangeControlStates(false);
 			bool cont = true;
 
-			target = new Target(field_target.Text);
+			_target = new Target(field_target.Text);
 
-			if (target.Exists)
+			if (_target.Exists)
 			{
-				if (target.IsCritical)
+				if (_target.IsCritical)
 					cont = CriticalTargetWarning();
 
 				if (cont)
@@ -184,10 +172,10 @@ namespace FilExile_Portable.Dialogs
 					{
 						// If the user wants to monitor progress and the target is a directory
 						// we need to setup the progress bar
-						if (target.IsDirectory)
+						if (_target.IsDirectory)
 						{
-							iNumFiles = target.NumberOfFiles;
-							progressBar.Maximum = iNumFiles;
+							_iNumFiles = _target.NumberOfFiles;
+							progressBar.Maximum = _iNumFiles;
 							progressBar.Visible = true;
 							backgroundWorker_ProgressBar.RunWorkerAsync();
 						}
@@ -226,7 +214,7 @@ namespace FilExile_Portable.Dialogs
 		/// <param name="e"></param>
 		private void onlineHelpToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			NetworkUtils.LaunchURL(CommonStrings.HelpUrl);
+			NetworkUtils.LaunchUrl(CommonStrings.HelpUrl);
 		}
 
 		/// <summary>
@@ -246,17 +234,10 @@ namespace FilExile_Portable.Dialogs
 		/// <param name="e"></param>
 		private void field_target_TextChanged(object sender, EventArgs e)
 		{
-			if (!string.IsNullOrEmpty(field_target.Text))
-			{
-				button_delete.Enabled = true;
-			}
-			else
-			{
-				button_delete.Enabled = false;
-			}
+			button_delete.Enabled = !string.IsNullOrEmpty(field_target.Text);
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Call upon the progress bar to update itself
 		/// </summary>
 		/// <param name="sender"></param>
@@ -264,7 +245,7 @@ namespace FilExile_Portable.Dialogs
 		private void backgroundWorker_ProgressBar_DoWork(object sender, DoWorkEventArgs e)
 		{
 			BackgroundWorker worker = (BackgroundWorker)sender;
-			ProgressBarOperation(worker, e);
+			ProgressBarOperation(worker);
 		}
 
 		/// <summary>
@@ -284,8 +265,7 @@ namespace FilExile_Portable.Dialogs
 		/// <param name="e"></param>
 		private void backgroundWorker_Deletion_DoWork(object sender, DoWorkEventArgs e)
 		{
-			BackgroundWorker worker = (BackgroundWorker)sender;
-			RunDeletion(worker, e);
+			RunDeletion();
 		}
 
 		/// <summary>

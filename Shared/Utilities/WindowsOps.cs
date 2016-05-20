@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Shared
 {
-    internal sealed class WindowsOps
+    internal static class WindowsOps
     {
 		/// <summary>Class for handling Windows shutdown/reboot options</summary>
 		// ------------------------------------------------------------------------------------
@@ -17,33 +17,30 @@ namespace Shared
         }
 
         [DllImport("kernel32.dll", ExactSpelling = true)]
-        internal static extern IntPtr GetCurrentProcess();
+        private static extern IntPtr GetCurrentProcess();
 
         [DllImport("advapi32.dll", ExactSpelling = true, SetLastError = true)]
-        internal static extern bool OpenProcessToken(IntPtr h, int acc, ref IntPtr
+        private static extern bool OpenProcessToken(IntPtr h, int acc, ref IntPtr
         phtok);
 
         [DllImport("advapi32.dll", SetLastError = true)]
-        internal static extern bool LookupPrivilegeValue(string host, string name,
+        private static extern bool LookupPrivilegeValue(string host, string name,
         ref long pluid);
 
         [DllImport("advapi32.dll", ExactSpelling = true, SetLastError = true)]
-        internal static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall,
+        private static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall,
         ref TokPriv1Luid newst, int len, IntPtr prev, IntPtr relen);
 
         [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
-        internal static extern bool ExitWindowsEx(int flg, int rea);
+        private static extern bool ExitWindowsEx(int flg, int rea);
 
-        internal const int SE_PRIVILEGE_ENABLED = 0x00000002;
-        internal const int TOKEN_QUERY = 0x00000008;
-        internal const int TOKEN_ADJUST_PRIVILEGES = 0x00000020;
-        internal const string SE_SHUTDOWN_NAME = "SeShutdownPrivilege";
-        internal const int EWX_LOGOFF = 0x00000000;
-        internal const int EWX_SHUTDOWN = 0x00000001;
-        internal const int EWX_REBOOT = 0x00000002;
-        internal const int EWX_FORCE = 0x00000004;
-        internal const int EWX_POWEROFF = 0x00000008;
-        internal const int EWX_FORCEIFHUNG = 0x00000010;
+	    private const int SePrivilegeEnabled = 0x00000002;
+	    private const int TokenQuery = 0x00000008;
+	    private const int TokenAdjustPrivileges = 0x00000020;
+	    private const string SeShutdownName = "SeShutdownPrivilege";
+        internal const int EwxShutdown = 0x00000001;
+        internal const int EwxReboot = 0x00000002;
+	    private const int EwxForce = 0x00000004;
 
 		/// <summary>
 		/// Statically available method for shutting down or rebooting Windows
@@ -52,20 +49,19 @@ namespace Shared
 		/// <param name="force">Whether to force the operation</param>
         public static void ExitWin(int flg, bool force)
         {
-            bool ok;
-            TokPriv1Luid tp;
-            IntPtr hproc = GetCurrentProcess();
-            IntPtr htok = IntPtr.Zero;
-            ok = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);
+			TokPriv1Luid tp;
+            var hproc = GetCurrentProcess();
+            var htok = IntPtr.Zero;
+            OpenProcessToken(hproc, TokenAdjustPrivileges | TokenQuery, ref htok);
             tp.Count = 1;
             tp.Luid = 0;
-            tp.Attr = SE_PRIVILEGE_ENABLED;
-            ok = LookupPrivilegeValue(null, SE_SHUTDOWN_NAME, ref tp.Luid);
-            ok = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);
+            tp.Attr = SePrivilegeEnabled;
+            LookupPrivilegeValue(null, SeShutdownName, ref tp.Luid);
+            AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);
             if (force)
-                ok = ExitWindowsEx(flg | EWX_FORCE, 0);
+                ExitWindowsEx(flg | EwxForce, 0);
             else
-                ok = ExitWindowsEx(flg, 0);
+                ExitWindowsEx(flg, 0);
         }
     }
 }

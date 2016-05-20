@@ -1,11 +1,10 @@
 ﻿using Shared;
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace FilExile
 {
-    class Program
+	internal static class Program
     {
         /// <summary>
         /// FilExile is a simple file and directory deletion tool that utilizes Windows'
@@ -16,7 +15,7 @@ namespace FilExile
 
         #region Objects
 
-        private static CommandLineArgs cla;
+        private static CommandLineArgs _cla;
 
 		#endregion
 
@@ -41,13 +40,13 @@ namespace FilExile
                 //If any command line arguments pass, prepare them for parsing
                 if (args.Length > 0)
                 {
-                    cla = new CommandLineArgs(args);
-                    AttachConsole(ATTACH_PARENT_PROCESS);
+                    _cla = new CommandLineArgs(args);
+                    AttachConsole(AttachParentProcess);
 
-                    if (cla.HelpFlag)
+                    if (_cla.HelpFlag)
                         CommandLineInterface.DisplayHelp();
                     else
-                        CommandLineInterface.Run(args[0], cla);
+                        CommandLineInterface.Run(args[0], _cla);
                 }
                 //Otherwise, launch the FilExile GUI
                 else
@@ -75,7 +74,7 @@ namespace FilExile
         private static extern bool AttachConsole(int dwProcessId);
         [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
         private static extern int FreeConsole();
-        private const int ATTACH_PARENT_PROCESS = -1;
+        private const int AttachParentProcess = -1;
 
         #endregion
     }

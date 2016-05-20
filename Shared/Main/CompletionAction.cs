@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Shared
 {
@@ -19,24 +18,14 @@ namespace Shared
 
 		// ------------------------------------------------------------------------------------
 
-		#region Constructor
-
-		public CompletionAction()
-		{
-		}
-
-		#endregion
-
-		// ------------------------------------------------------------------------------------
-
 		/// <summary>
 		/// Runs the passed completion action (taken from the Completion Action combo box or
 		/// /end command line parameter)
 		/// </summary>
-		/// <param name="bGUI">Whether this was called from the GUI</param>
+		/// <param name="bGui">Whether this was called from the GUI</param>
 		/// <param name="bForce">Whether or not to force the action</param>
 		#region Public methods
-		public void Run(bool bGUI, bool bForce)
+		public void Run(bool bGui, bool bForce)
         {
             switch (Value)
             {
@@ -45,7 +34,7 @@ namespace Shared
 
                 case 1:
                     //Playing sounds is only available if the user is running the GUI        
-                    if (bGUI)
+                    if (bGui)
                     {
                         System.Media.SystemSounds.Asterisk.Play();
                         MessageBox.Show(SharedResources.Properties.Resources.OpComplete, "FilExile", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -53,14 +42,11 @@ namespace Shared
                     break;
 
                 case 2:
-                    WindowsOps.ExitWin(WindowsOps.EWX_REBOOT, bForce);
+                    WindowsOps.ExitWin(WindowsOps.EwxReboot, bForce);
                     break;
 
                 case 3:
-                    WindowsOps.ExitWin(WindowsOps.EWX_SHUTDOWN, bForce);
-                    break;
-
-                default:
+                    WindowsOps.ExitWin(WindowsOps.EwxShutdown, bForce);
                     break;
             }
         }
@@ -70,7 +56,7 @@ namespace Shared
 		/// </summary>
 		/// <param name="iNum">Integer value</param>
 		/// <returns>True if the integer maps to a valid completion action</returns>
-		public bool IsValidOption(int iNum)
+		private static bool IsValidOption(int iNum)
 		{
 			return (iNum >= 0 && iNum <= 3);
 		}
@@ -81,14 +67,11 @@ namespace Shared
 		/// </summary>
 		/// <param name="iNum">Integer value</param>
 		/// <returns>True if the integer maps to the Completion Action enum for the CLI</returns>
-		public bool IsValidOptionForCLI(int iNum)
+		public bool IsValidOptionForCli(int iNum)
 		{
-			if (iNum == 1)
-				return false;
-			else
-				return IsValidOption(iNum);
+			return iNum != 1 && IsValidOption(iNum);
 		}
 
-        #endregion
+	    #endregion
     }
 }

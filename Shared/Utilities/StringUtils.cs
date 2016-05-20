@@ -20,7 +20,7 @@ namespace Shared
         /// <summary>Returns the right X characters of a string</summary>
         /// <param name="str">The string</param>
         /// <param name="nCharacters">Number of characters</param>
-        public static string Right(string str, int nCharacters)
+        private static string Right(string str, int nCharacters)
         {
             return str.Substring(str.Length - nCharacters);
         }
@@ -40,29 +40,6 @@ namespace Shared
                 bRetval = (string.Compare(Right(str2, str1.Length), str1, bIgnoreCase) == 0);
 
             return bRetval;
-        }
-
-        /// <summary>If the string is quoted, removes the quotes (single or double). If not, does nothing</summary>
-        /// <param name="str">The string</param>
-        /// <returns>The string without quotes</returns>
-        public static string RemoveQuotes(string str)
-        {
-            if (str == null)
-                str = "";
-
-            str = str.Trim();
-
-            if (str.Length > 1)
-            {
-                if (((str[0] == '"') && (str[str.Length - 1] == '"')) ||
-                    ((str[0] == '\'') && (str[str.Length - 1] == '\'')))
-                {
-                    str = str.Substring(1, str.Length - 2);
-                }
-
-            }
-
-            return str;
         }
 
         /// <summary>

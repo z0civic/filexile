@@ -1,4 +1,4 @@
-﻿namespace FilExile_Portable.Dialogs
+﻿namespace FilExile.Dialogs
 {
 	partial class SafetyDlg
 	{

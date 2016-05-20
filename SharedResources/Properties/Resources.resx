@@ -217,4 +217,10 @@
   <data name="Shutdown" xml:space="preserve">
     <value>Shutdown</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ResetToDefaults" xml:space="preserve">
+    <value>Reset all settings to default values?</value>
+  </data>
 </root>

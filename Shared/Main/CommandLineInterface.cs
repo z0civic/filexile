@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Shared
 {
-    internal sealed class CommandLineInterface
+    internal static class CommandLineInterface
     {
         /// <summary>Class for running FilExile operations from the CLI rather than the GUI</summary>
         // ------------------------------------------------------------------------------------
@@ -12,23 +12,23 @@ namespace Shared
         #region Fields
 
         //Booleans
-        private static bool bBatch = false;              // If this is a batch job
-        private static bool bQuiet = false;              // Quiet mode - no output
-        private static bool bLogging = false;            // Logging enabled
-        private static bool bMultithreading = true;      // Multithreading enabled
-        private static bool bForceAction = false;        // Force completion action
+        private static bool _batch;						 // If this is a batch job
+        private static bool _quiet;						 // Quiet mode - no output
+        private static bool _logging;					 // Logging enabled
+        private static bool _multithreading = true;		 // Multithreading enabled
+        private static bool _forceAction;				 // Force completion action
 
         //Strings
-        private static string strJobFile = string.Empty;   // Job file
-        private static string strLogTo = string.Empty;     // Logfile
-        private static string strMTOptions = string.Empty; // Multithreading options
-        private static string strCommand = string.Empty;   // Completion command
+        private static string _jobFile;					 // Job file
+        private static string _logTo;					 // Logfile
+        private static string _mtOptions;				 // Multithreading options
+        private static string _command;					 // Completion command
 
         //Other
-        private static int intNumThreads = 8;              // Number of threads
-        private static int error = 0;                   // Error tracking
+        private static int _numThreads = 8;              // Number of threads
+        private static int _error;						 // Error tracking
 
-		private static CompletionAction ca;				// Completion action
+		private static CompletionAction _ca;			 // Completion action
 
         #endregion
 
@@ -44,13 +44,13 @@ namespace Shared
 		/// <param name="cla">The structured command line arguments</param>
         public static void Run(string path, CommandLineArgs cla)
         {
-			ca = new CompletionAction();
+			_ca = new CompletionAction();
 
             // First, parse the command line arguments and assign them to varibles
             ParseArgs(cla);
 
             // If we aren't running a batch job...
-            if (!bBatch)
+            if (!_batch)
             {
                 Target target = new Target(path);
 
@@ -60,39 +60,39 @@ namespace Shared
                     // Try deleting the target
                     try
                     {
-                        DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(bMultithreading, intNumThreads);
-                        DeletionOps.Logging log = new DeletionOps.Logging(bLogging, strLogTo);
-                        error = DeletionOps.Delete(target, mt, log, !bQuiet);
+                        DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(_multithreading, _numThreads);
+                        DeletionOps.Logging log = new DeletionOps.Logging(_logging, _logTo);
+                        _error = DeletionOps.Delete(target, mt, log, !_quiet);
                     }
                     catch (Exception ex)
                     {
                         // If the user specifies quiet mode, don't display exception
-                        if (!bQuiet)
+                        if (!_quiet)
                             Console.WriteLine(ex.ToString());
-						error = 1;
+						_error = 1;
                     }
                     finally
                     {
                         // If it was a success and no command is specified, run the completion action
-                        if (error == 0 && string.IsNullOrEmpty(strCommand))
-                            ca.Run(false, bForceAction);
+                        if (_error == 0 && string.IsNullOrEmpty(_command))
+							_ca.Run(false, _forceAction);
                         // Otherwise, run the custom command
-                        else if (error == 0 && !string.IsNullOrEmpty(strCommand))
+                        else if (_error == 0 && !string.IsNullOrEmpty(_command))
                             RunCommand();
                     }
                 }
                 // If the target doesn't exist and we're not in quiet mode, write the error
-                else if (!target.Exists && !bQuiet)
+                else if (!target.Exists && !_quiet)
                     Console.WriteLine(SharedResources.Properties.Resources.TargetNotFound);
             }
             else
             {
 				// If the user passed a job file and it exists, execute it
-                if (File.Exists(strJobFile))
+                if (File.Exists(_jobFile))
                     RunJobDeletion();
 				// Otherwise display an error
                 else
-                    if (!bQuiet) Console.WriteLine(SharedResources.Properties.Resources.JobFileNotFound);
+                    if (!_quiet) Console.WriteLine(SharedResources.Properties.Resources.JobFileNotFound);
             }
         }
 
@@ -116,19 +116,19 @@ namespace Shared
         /// </summary>
         private static void RunJobDeletion()
         {
-            StreamReader din = File.OpenText(strJobFile);
-            string str = string.Empty;
+            StreamReader din = File.OpenText(_jobFile);
+            string str;
             Target target = new Target();
-            DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(bMultithreading, intNumThreads);
-            DeletionOps.Logging log = new DeletionOps.Logging(bLogging, strLogTo);
+            DeletionOps.MultithreadingSetup mt = new DeletionOps.MultithreadingSetup(_multithreading, _numThreads);
+            DeletionOps.Logging log = new DeletionOps.Logging(_logging, _logTo);
 
 			// While there are still more lines to read and no errors have been encountered
-            while (!string.IsNullOrEmpty((str = din.ReadLine())) && error == 0)
+            while (!string.IsNullOrEmpty((str = din.ReadLine())) && _error == 0)
             {
 				// Set the target's path based on the line
-                target.path = str;
+                target.Path = str;
 				// Run the deletion
-                error = DeletionOps.Delete(target, mt, log, !bQuiet);
+                _error = DeletionOps.Delete(target, mt, log, !_quiet);
             }
         }
 
@@ -139,55 +139,47 @@ namespace Shared
         private static void ParseArgs(CommandLineArgs cla)
         {
             // Job file
-            bBatch = cla.HasFlag("job");
-            if (bBatch)
-                cla.GetFlagAndArguments("job", ref strJobFile);
+            _batch = cla.HasFlag("job");
+            if (_batch)
+                cla.GetFlagAndArguments("job", ref _jobFile);
 
             // Quiet mode
-            bQuiet = cla.HasFlag("q");
+            _quiet = cla.HasFlag("q");
 
             // Logging
-            bLogging = cla.HasFlag("l");
-            if (bLogging)
-                cla.GetFlagAndArguments("l", ref strLogTo);
+            _logging = cla.HasFlag("l");
+            if (_logging)
+                cla.GetFlagAndArguments("l", ref _logTo);
 
             // Multithreading
             if (cla.HasFlag("mt"))
             {
-                cla.GetFlagAndArguments("mt", ref strMTOptions);
+                cla.GetFlagAndArguments("mt", ref _mtOptions);
 
-                if (int.TryParse(strMTOptions, out intNumThreads))
+                if (int.TryParse(_mtOptions, out _numThreads))
                 {
-                    if (intNumThreads > 0)
-                        bMultithreading = true;
-                    else
-                        bMultithreading = false;
-                    if (intNumThreads > 128)
-                        intNumThreads = 8;
+	                _multithreading = _numThreads > 0;
+	                if (_numThreads > 128)
+                        _numThreads = 8;
                 }
-                else if (string.Equals(strMTOptions, "off"))
-                    bMultithreading = false;
+                else if (string.Equals(_mtOptions, "off"))
+                    _multithreading = false;
             }
 
             // Completion action
-            if (cla.HasFlag("end"))
-            {
-				int iCompletionAction = 0;
-                // Grab the arguments passed with the flag
-                cla.GetFlagAndArguments("end", ref strCommand);
-                // If the user entered a number, they were trying to choose a predetermined completion action
-                if (int.TryParse(strCommand, out iCompletionAction))
-                {
-					// If they didn't choose properly, select the default
-					if (!ca.IsValidOptionForCLI(iCompletionAction))
-						ca.Value = 0;
-					else
-						ca.Value = iCompletionAction;
-                }
+	        if (!cla.HasFlag("end")) return;
+	        int iCompletionAction;
+	        // Grab the arguments passed with the flag
+	        cla.GetFlagAndArguments("end", ref _command);
+	        // If the user entered a number, they were trying to choose a predetermined completion action
+	        if (int.TryParse(_command, out iCompletionAction))
+	        {
+		        // If they didn't choose properly, select the default
+		        _ca.Value = !_ca.IsValidOptionForCli(iCompletionAction) ? 0 : iCompletionAction;
+	        }
 
-                //Check for the force flag (we only care about this if they have specified a completion action)
-                bForceAction = cla.HasFlag("f");
-            }
+	        //Check for the force flag (we only care about this if they have specified a completion action)
+	        _forceAction = cla.HasFlag("f");
         }
 
         /// <summary>
@@ -198,7 +190,7 @@ namespace Shared
             // Try to run the user's custom command
             try
             {
-                Process.Start("CMD.exe", strCommand);
+                Process.Start("CMD.exe", _command);
             }
             // If it fails, write the exception, regardless of quiet mode
             catch (Exception ex)

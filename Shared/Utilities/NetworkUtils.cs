@@ -9,7 +9,7 @@ namespace Shared
     /// <summary>
     /// Contains a set of static utility methods for network calls
     /// </summary>
-    internal sealed class NetworkUtils
+    internal static class NetworkUtils
     {
         // ------------------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ namespace Shared
         /// Verifies a string and the opens the URL in the user's default browser
         /// </summary>
         /// <param name="url">The URL to launch</param>
-        public static void LaunchURL(string url)
+        public static void LaunchUrl(string url)
         {
             //Make sure the string isn't null or empty and looks like an actual URL
             if (!string.IsNullOrEmpty(url) && Equals(StringUtils.Left(url,4),"http"))
@@ -31,14 +31,14 @@ namespace Shared
         /// </summary>
         public static void InitiateVersionCheck(bool bUserInitiated)
         {
-            WebClient webClient = new WebClient();
-            Uri filExileVersionSite = new Uri(CommonStrings.VersionUrl);
+            var webClient = new WebClient();
+            var filExileVersionSite = new Uri(CommonStrings.VersionUrl);
             try
             {
                 if (bUserInitiated)
-                    webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(manualVersionCheckComplete);
+                    webClient.DownloadStringCompleted += ManualVersionCheckComplete;
                 else
-                    webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(automatedVersionCheckComplete);
+                    webClient.DownloadStringCompleted += AutomatedVersionCheckComplete;
 
                 webClient.DownloadStringAsync(filExileVersionSite);
             }
@@ -54,7 +54,7 @@ namespace Shared
         /// </summary>
         public static void DownloadLatestVersion()
         {
-            LaunchURL(GetDownloadURL());
+            LaunchUrl(GetDownloadUrl());
         }
 
         #endregion
@@ -67,16 +67,21 @@ namespace Shared
         /// Retrieves the download URL from the SourceForge server
         /// </summary>
         /// <returns></returns>
-        private static string GetDownloadURL()
+        private static string GetDownloadUrl()
         {
             try
             {
-                WebClient webClient = new WebClient();
-                Uri filExileDownloadSite = new Uri(CommonStrings.DownloadUrl);
-                Stream urlStream = webClient.OpenRead(filExileDownloadSite);
-                StreamReader sr = new StreamReader(urlStream);
-                string retVal = sr.ReadToEnd();
-                urlStream.Close();
+	            var retVal = string.Empty;
+                var webClient = new WebClient();
+                var filExileDownloadSite = new Uri(CommonStrings.DownloadUrl);
+                var urlStream = webClient.OpenRead(filExileDownloadSite);
+	            if (urlStream != null)
+	            {
+					var sr = new StreamReader(urlStream);
+					retVal = sr.ReadToEnd();
+					urlStream.Close();
+				}
+
                 return retVal;
             }
             catch (WebException)
@@ -93,36 +98,30 @@ namespace Shared
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void manualVersionCheckComplete(object sender, DownloadStringCompletedEventArgs e)
+        private static void ManualVersionCheckComplete(object sender, DownloadStringCompletedEventArgs e)
         {
-            if (e.Error == null)
-            {
-                if (Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
-                    MessageBox.Show(SharedResources.Properties.Resources.LatestVersion);
-                else
-                {
-                    DownloadDlg dl = new DownloadDlg();
-                    dl.ShowDialog();
-                }
-            }
+	        if (e.Error != null) return;
+	        if (Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
+		        MessageBox.Show(SharedResources.Properties.Resources.LatestVersion);
+	        else
+	        {
+		        var dl = new DownloadDlg();
+		        dl.ShowDialog();
+	        }
         }
 
-        /// <summary>
+	    /// <summary>
         /// When an automated version check completes, only prompt the user for download. We don't want to
         /// annoy the user by always telling them they're using the latest version
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void automatedVersionCheckComplete(object sender, DownloadStringCompletedEventArgs e)
+        private static void AutomatedVersionCheckComplete(object sender, DownloadStringCompletedEventArgs e)
         {
-            if (e.Error == null)
-            {
-                if (!Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
-                {
-                    DownloadDlg dl = new DownloadDlg();
-                    dl.ShowDialog();
-                }
-            }
+		    if (e.Error != null) return;
+		    if (Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString())) return;
+		    var dl = new DownloadDlg();
+		    dl.ShowDialog();
         }
 
         #endregion 

@@ -411,6 +411,9 @@
   <data name="label_logTo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label_logTo.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="label_logTo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
