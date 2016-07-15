@@ -21,6 +21,9 @@ namespace FilExile.Dialogs
             // If specified in the app.config file, perform an update check
             if (Properties.Settings.Default.autoUpdate)
                 NetworkUtils.InitiateVersionCheck(false);
+			// If specified in the app.config file, place FilExile always on top
+	        if (Properties.Settings.Default.alwaysOnTop)
+		        TopMost = true;
         }
 
 		#endregion
@@ -522,6 +525,16 @@ namespace FilExile.Dialogs
 		private void Main_Closing(object sender, FormClosingEventArgs e)
 		{
 			Properties.Settings.Default.Save();
+		}
+
+		/// <summary>
+		/// When the value of the Always On Top checkbox changes
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void checkbox_alwaysOnTop_CheckedChanged(object sender, EventArgs e)
+		{
+			TopMost = checkbox_alwaysOnTop.Checked;
 		}
 	}
     #endregion

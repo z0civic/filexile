@@ -74,6 +74,7 @@ namespace Shared
             {
                 // Create empty directory for mirroring
                 string emptyDir = SystemTempDir + @"\FilExile_temp$";
+	            string secondEmptyDir = "";
                 Directory.CreateDirectory(emptyDir);
 
                 // Sometimes there's an extra backslash on the end of the path
@@ -92,7 +93,7 @@ namespace Shared
                     // to place the file in this temporary directory by itself. This is to
                     // prevent the actual diretory mirror command from wiping out everything else
                     // where the file was found.
-                    string secondEmptyDir = SystemTempDir + @"\FilExile_singleFile_temp$";
+                    secondEmptyDir = SystemTempDir + @"\FilExile_singleFile_temp$";
                     Directory.CreateDirectory(secondEmptyDir);
 
                     string fileCopyCmd = PrepareFileCopyCommand(target.ParentDirectory, secondEmptyDir, target.FileName);
@@ -106,6 +107,16 @@ namespace Shared
                 // the target appear as "extra files" and forcibly remove them via Robocopy which
                 // can handle all sorts of nasty files that Windows will sometimes choke on
                 RunRobocopy(_robocopyCommand, output);
+
+				// Delete the temporary directory/directories created
+	            if (Directory.Exists(emptyDir))
+	            {
+		            Directory.Delete(emptyDir);
+	            }
+				if (Directory.Exists(secondEmptyDir))
+	            {
+		            Directory.Delete(secondEmptyDir);
+	            }
             }
             else
             {

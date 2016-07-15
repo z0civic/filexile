@@ -73,12 +73,18 @@ namespace Shared
                     }
                     finally
                     {
-                        // If it was a success and no command is specified, run the completion action
-                        if (_error == 0 && string.IsNullOrEmpty(_command))
-							_ca.Run(false, _forceAction);
-                        // Otherwise, run the custom command
-                        else if (_error == 0 && !string.IsNullOrEmpty(_command))
-                            RunCommand();
+						// If it was a success
+	                    if (_error == 0)
+	                    {
+							CleanupDirectory(target);
+
+							// No command is specified, run the completion action
+							if (string.IsNullOrEmpty(_command))
+								_ca.Run(false, _forceAction);
+							// Otherwise, run the custom command
+							else if (!string.IsNullOrEmpty(_command))
+								RunCommand();
+						}
                     }
                 }
                 // If the target doesn't exist and we're not in quiet mode, write the error
@@ -131,6 +137,18 @@ namespace Shared
                 _error = DeletionOps.Delete(target, mt, log, !_quiet);
             }
         }
+
+		/// <summary>
+		/// Deletes the original target directory (if it's still there)
+		/// </summary>
+		/// <param name="target">The original <see cref="Target"/></param>
+	    private static void CleanupDirectory(Target target)
+	    {
+			if (target.IsDirectory && target.Exists)
+			{
+				Directory.Delete(target.Path);
+			}
+		}
 
         /// <summary>
         /// Parses the CommandLineArgs and assigns their arguments to variables

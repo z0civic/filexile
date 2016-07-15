@@ -13,6 +13,10 @@ namespace FilExile.Dialogs
 		public SafetyDlg()
 		{
 			InitializeComponent();
+
+			// Place safety dialog on top if specified by the settings
+			if (Properties.Settings.Default.alwaysOnTop)
+				TopMost = true;
 		}
 
 		#endregion

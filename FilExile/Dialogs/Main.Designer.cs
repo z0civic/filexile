@@ -329,6 +329,7 @@
 			this.checkbox_alwaysOnTop.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::FilExile.Properties.Settings.Default, "alwaysOnTop", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.checkbox_alwaysOnTop.Name = "checkbox_alwaysOnTop";
 			this.checkbox_alwaysOnTop.UseVisualStyleBackColor = true;
+			this.checkbox_alwaysOnTop.CheckedChanged += new System.EventHandler(this.checkbox_alwaysOnTop_CheckedChanged);
 			// 
 			// checkbox_multiThreading
 			// 

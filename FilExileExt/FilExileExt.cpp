@@ -5,9 +5,10 @@
 #include "FilExileExt_i.h"
 #include "dllmain.h"
 #include "atlstr.h"
-#include <string.h>
+#include <string>
 
 using namespace ATL;
+using namespace std;
 
 // Used to determine whether the DLL can be unloaded by OLE.
 STDAPI DllCanUnloadNow(void)
@@ -67,6 +68,28 @@ STDAPI DllInstall(BOOL bInstall, _In_opt_  LPCWSTR pszCmdLine)
 	return hr;
 }
 
+string wstrToStr(const wstring &wstr)
+{
+	string strTo;
+	char *szTo = new char[wstr.length() + 1];
+	szTo[wstr.size()] = '\0';
+	WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, szTo, (int)wstr.length(), NULL, NULL);
+	strTo = szTo;
+	delete[] szTo;
+	return strTo;
+}
+
+wstring strToWstr(const string &str)
+{
+	wstring wstrTo;
+	wchar_t *wszTo = new wchar_t[str.length() + 1];
+	wszTo[str.size()] = L'\0';
+	MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, wszTo, (int)str.length());
+	wstrTo = wszTo;
+	delete[] wszTo;
+	return wstrTo;
+}
+
 // FilExileExt.cpp : Implementation of CFilExileShlExt
 
 #include "stdafx.h"
@@ -117,8 +140,7 @@ HRESULT CFilExileShlExt::QueryContextMenu(
 	HMENU hMenu, UINT uMenuIndex, UINT uidFirstCmd,
 	UINT uidLastCmd, UINT uFlags)
 {
-	//TODO: Set icon
-	CString contextLbl;
+	ATL::CString contextLbl;
 	contextLbl.LoadString(IDS_CONTEXTLBL);
 
 	if (uFlags & CMF_DEFAULTONLY)
@@ -126,6 +148,10 @@ HRESULT CFilExileShlExt::QueryContextMenu(
 
 	InsertMenu(hMenu, uMenuIndex, MF_BYPOSITION,
 		uidFirstCmd, contextLbl);
+
+	HBITMAP hBitmap = (HBITMAP)LoadImage(GetModuleHandle(L"FilExileExt"), MAKEINTRESOURCE(BITMAP_MAIN), 
+		IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADTRANSPARENT | LR_LOADMAP3DCOLORS);
+	SetMenuItemBitmaps(hMenu, uMenuIndex, MF_BYPOSITION, hBitmap, hBitmap);
 
 	return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, 1);
 }
@@ -142,7 +168,7 @@ HRESULT CFilExileShlExt::GetCommandString(
 
 	if (uFlags & GCS_HELPTEXT)
 	{
-		CString strMyString;
+		ATL::CString strMyString;
 		strMyString.LoadString(IDS_HELPSTRING);
 
 		if (uFlags & GCS_UNICODE)
@@ -171,7 +197,8 @@ HRESULT CFilExileShlExt::InvokeCommand(
 	{
 	case 0:
 	{
-		TCHAR szMsg[MAX_PATH + 32];
+		WCHAR cmdPath[MAX_PATH];
+		WCHAR szMsg[MAX_PATH];
 
 		STARTUPINFO si;
 		PROCESS_INFORMATION pi;
@@ -180,25 +207,39 @@ HRESULT CFilExileShlExt::InvokeCommand(
 		ZeroMemory(&pi, sizeof(pi));
 
 		// Get the installation path for FilExile
-		WCHAR* value; HKEY hKey = 0; WCHAR szBuffer[512];
+		string exePath; HKEY hKey = 0; WCHAR szBuffer[512];
 		DWORD dwType = REG_SZ; DWORD dwBufSize = sizeof(szBuffer);
 		if (RegOpenKey(HKEY_LOCAL_MACHINE, L"SOFTWARE\\FilExile", &hKey) == ERROR_SUCCESS)
 		{
-			if (RegQueryValueEx(hKey, L"Path", NULL, &dwType, (LPBYTE) szBuffer, &dwBufSize) == ERROR_SUCCESS)
+			if (RegQueryValueEx(hKey, L"Path", NULL, &dwType, (LPBYTE)szBuffer, &dwBufSize) == ERROR_SUCCESS)
 			{
-				value = szBuffer;
+				exePath = wstrToStr(szBuffer);
 			}
+
+			RegCloseKey(hKey);
+		}
+		// Figure out if we're supposed to show a dialog after deleting the file
+		int showDialog = 1; unsigned long type = REG_DWORD, size = 1024; DWORD dwBuffer;
+		if (RegOpenKey(HKEY_LOCAL_MACHINE, L"SOFTWARE\\FilExile", &hKey) == ERROR_SUCCESS)
+		{
+			if (RegQueryValueEx(hKey, L"ShowDialog", NULL, &type, (LPBYTE)&dwBuffer, &size) == ERROR_SUCCESS)
+			{
+				showDialog = dwBuffer;
+			}
+
 			RegCloseKey(hKey);
 		}
 
-		WCHAR cmdPath[255];
-
-		wsprintf(szMsg, L"", m_szFile);
+		// Need to concatenate the path (value) and file (m_szFile)
+		// e.g.: "C:\\filexile\\FilExile\\bin\\Debug\\FilExile.exe C:\\file_to_delete.txt"
+		string filePath = wstrToStr(m_szFile);
+		string combined = exePath + " \"" + filePath + "\"";
+		wcscpy_s(cmdPath, strToWstr(combined).c_str());
 
 		if 
 		(
 			!CreateProcess(NULL,
-				szMsg,		// Command line
+				cmdPath,	// Command line
 				NULL,		// Process handle not inheritable
 				NULL,		// Thread handle not inheritable
 				FALSE,		// Set handle inheritance to FALSE
@@ -216,6 +257,16 @@ HRESULT CFilExileShlExt::InvokeCommand(
 
 		CloseHandle(pi.hProcess);
 		CloseHandle(pi.hThread);
+
+		// If permitted by the registry key "ShowDialog" - display a message saying the file was deleted
+		if (showDialog != 0)
+		{
+			ATL::CString deletedString;
+			deletedString.LoadString(IDS_DELETED);
+			wcscpy_s(szMsg, m_szFile + deletedString);
+			MessageBox(pCmdInfo->hwnd, szMsg, _T("FilExile"),
+				MB_ICONINFORMATION);
+		}
 
 		return S_OK;
 	}
