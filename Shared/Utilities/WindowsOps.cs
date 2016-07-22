@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace Shared
 {
@@ -63,5 +65,41 @@ namespace Shared
             else
                 ExitWindowsEx(flg, 0);
         }
+
+		/// <summary>
+		/// Verifies that Robocopy is present on the system.
+		/// </summary>
+		/// <returns>True, if Robocopy is present</returns>
+	    public static bool VerifyRobocopy()
+		{
+			bool retVal = true;
+
+			string winDir = System.Environment.ExpandEnvironmentVariables("%WINDIR%");
+			string progDir = System.Environment.ExpandEnvironmentVariables("%PROGRAMFILES%");
+
+			if (!File.Exists(winDir + "\\System32\\robocopy.exe") && !File.Exists(progDir + "\\Windows Resource Kits\\Tools\\robocopy.exe"))
+			{
+				retVal = false;
+			}
+
+			return retVal;
+		}
+
+		/// <summary>
+		/// Returns whether or not the current operating system is XP or earlier
+		/// </summary>
+		/// <returns>True, if the OS version is XP or earlier</returns>
+	    public static bool WindowsXpOrLower()
+	    {
+		    bool retVal = false;
+		    OperatingSystem os = Environment.OSVersion;
+
+			if (os.Version.Major < 6)
+			{
+				retVal = true;
+			}
+
+			return retVal;
+	    }
     }
 }

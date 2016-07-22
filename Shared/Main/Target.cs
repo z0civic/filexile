@@ -55,7 +55,7 @@ namespace Shared
             {
                 try
                 {
-                    bool retVal = ((File.GetAttributes(Path) & FileAttributes.Directory) == FileAttributes.Directory);
+                    var retVal = ((File.GetAttributes(Path) & FileAttributes.Directory) == FileAttributes.Directory);
                     return retVal;
                 }
                 catch (Exception)

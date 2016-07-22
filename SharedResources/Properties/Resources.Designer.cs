@@ -70,6 +70,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         public static string Confirm {
@@ -147,6 +156,16 @@ namespace SharedResources.Properties {
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap error_icon {
+            get {
+                object obj = ResourceManager.GetObject("error_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -235,6 +254,15 @@ namespace SharedResources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignore.
+        /// </summary>
+        public static string Ignore {
+            get {
+                return ResourceManager.GetString("Ignore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The number of threads must be greater or equal to 1 and less than or equal to 128.
         /// </summary>
         public static string InvalidThreadCount {
@@ -312,6 +340,20 @@ namespace SharedResources.Properties {
         public static string ResetToDefaults {
             get {
                 return ResourceManager.GetString("ResetToDefaults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FilExile was unable to find Robocopy installed on this system. However, if you
+        ///are sure it is included in the PATH environment variable, click &quot;Ignore&quot; to continue.
+        ///
+        ///Robocopy.exe is typically included in Windows Vista/7/8/10  but not in older versions (like Windows XP)
+        ///
+        ///Robocopy is part of the &apos;Windows Server 2003 Resource Kit Tools&apos; and can be downloaded at:.
+        /// </summary>
+        public static string RobocopyNotFound {
+            get {
+                return ResourceManager.GetString("RobocopyNotFound", resourceCulture);
             }
         }
         

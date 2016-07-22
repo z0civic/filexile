@@ -76,13 +76,9 @@ namespace FilExile.Dialogs
 	    /// <summary>
 		/// If FilExile should remain on top of other applications
 		/// </summary>
-		public bool AlwaysOnTop
-		{
-			get { return checkbox_alwaysOnTop.Checked; }
-			set { checkbox_alwaysOnTop.Checked = value; }
-		}
+	    private bool AlwaysOnTop => checkbox_alwaysOnTop.Checked;
 
-		/// <summary>
+	    /// <summary>
 		/// If progress monitoring should be disabled (enhances performance)
 		/// </summary>
 		private bool DisableProgressMonitoring => checkbox_disableProgressMonitoring.Checked;
@@ -182,6 +178,13 @@ namespace FilExile.Dialogs
 		private void Main_Load(object sender, EventArgs e)
 		{
 			InitiateComboBox();
+
+			if (WindowsOps.WindowsXpOrLower())
+			{
+				checkbox_multiThreading.Checked = false;
+				checkbox_multiThreading.Enabled = false;
+				EnableDisableMultithreadingPanel(false);
+			}
 
 			Icon = SharedResources.Properties.Resources.icon;
 			Tooltip = SharedResources.Properties.Resources.SelectTip;
@@ -534,7 +537,7 @@ namespace FilExile.Dialogs
 		/// <param name="e"></param>
 		private void checkbox_alwaysOnTop_CheckedChanged(object sender, EventArgs e)
 		{
-			TopMost = checkbox_alwaysOnTop.Checked;
+			TopMost = AlwaysOnTop;
 		}
 	}
     #endregion

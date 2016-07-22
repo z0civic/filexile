@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
+using SharedResources.Properties;
 
 namespace Shared
 {
@@ -31,7 +32,7 @@ namespace Shared
         /// </summary>
         public static void InitiateVersionCheck(bool bUserInitiated)
         {
-            var webClient = new WebClient();
+			var webClient = new WebClient();
             var filExileVersionSite = new Uri(CommonStrings.VersionUrl);
             try
             {
@@ -44,8 +45,8 @@ namespace Shared
             }
             catch (WebException)
             {
-                //TODO: Handle exception
-            }
+				MessageBox.Show(Resources.ConnectionError, Resources.Error);
+			}
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace Shared
             catch (WebException)
             {
                 //We weren't able to contact the server
-                MessageBox.Show(SharedResources.Properties.Resources.ConnectionError,SharedResources.Properties.Resources.Error);
+                MessageBox.Show(Resources.ConnectionError, Resources.Error);
                 return null;
             }
         }
@@ -102,7 +103,7 @@ namespace Shared
         {
 	        if (e.Error != null) return;
 	        if (Equals(e.Result, Assembly.GetExecutingAssembly().GetName().Version.ToString()))
-		        MessageBox.Show(SharedResources.Properties.Resources.LatestVersion);
+		        MessageBox.Show(Resources.LatestVersion);
 	        else
 	        {
 		        var dl = new DownloadDlg();

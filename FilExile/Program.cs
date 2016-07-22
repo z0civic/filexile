@@ -1,6 +1,8 @@
 ﻿using Shared;
 using System;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using FilExile.Dialogs;
 
 namespace FilExile
 {
@@ -35,9 +37,27 @@ namespace FilExile
 		[STAThread]
         public static void Main(string[] args)
         {
-            try
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
+
+			// Verify that robocopy is present on the system
+			if (!Properties.Settings.Default.disableRobocopyCheck && !WindowsOps.VerifyRobocopy())
+			{
+				// Display error message if Robocopy isn't found
+				var dlg = new RobocopyDlg();
+				dlg.ShowDialog();
+
+				// If the user didn't choose to ignore, close FilExile
+				if (dlg.DialogResult != DialogResult.Ignore)
+				{
+					Application.Exit();
+					Environment.Exit(1);
+				}
+			}
+
+			try
             {
-                //If any command line arguments pass, prepare them for parsing
+                // If any command line arguments are passed, prepare them for parsing
                 if (args.Length > 0)
                 {
                     _cla = new CommandLineArgs(args);
@@ -48,11 +68,9 @@ namespace FilExile
                     else
                         CommandLineInterface.Run(args[0], _cla);
                 }
-                //Otherwise, launch the FilExile GUI
+                // Otherwise, launch the FilExile GUI
                 else
                 {
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(new Dialogs.Main());
                 }
             }

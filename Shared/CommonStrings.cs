@@ -13,5 +13,7 @@
 		public const string VersionUrl = "http://filexile.sourceforge.net/version.txt";
 		/// <summary>Where the latest version of FilExile can be downloaded</summary>
 		public const string DownloadUrl = "http://filexile.sourceforge.net/downloadURL.txt";
+		/// <summary>Where Robocopy can be downloaded from</summary>
+		public const string RobocopyUrl = "https://www.microsoft.com/en-us/download/details.aspx?id=17657";
     }
 }

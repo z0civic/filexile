@@ -43,13 +43,14 @@ namespace Shared
             }
         }
 
-        #endregion
+		#endregion
 
-        // ------------------------------------------------------------------------------------
+		// ------------------------------------------------------------------------------------
 
-        #region Fields
+		#region Fields
 
-        private static readonly string SystemTempDir = Environment.GetEnvironmentVariable("temp");           //Windows %TEMP% system variable
+		// Windows %TEMP% system variable
+		private static readonly string SystemTempDir = Environment.GetEnvironmentVariable("TEMP");           
         private static string _robocopyCommand;
 
 		#endregion
@@ -214,7 +215,7 @@ namespace Shared
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="outLine"></param>
-        private static void OutputHandler(Object sender, DataReceivedEventArgs outLine)
+        private static void OutputHandler(object sender, DataReceivedEventArgs outLine)
         {
             if (!string.IsNullOrEmpty(outLine.Data))
             {

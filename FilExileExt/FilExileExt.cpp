@@ -218,9 +218,30 @@ HRESULT CFilExileShlExt::InvokeCommand(
 
 			RegCloseKey(hKey);
 		}
+		// Check the alternative path that it can also be found at
+		else if (RegOpenKey(HKEY_LOCAL_MACHINE, L"SOFTWARE\\WOW6432Node\\FilExile", &hKey) == ERROR_SUCCESS)
+		{
+			if (RegQueryValueEx(hKey, L"Path", NULL, &dwType, (LPBYTE)szBuffer, &dwBufSize) == ERROR_SUCCESS)
+			{
+				exePath = wstrToStr(szBuffer);
+			}
+
+			RegCloseKey(hKey);
+		}
+
 		// Figure out if we're supposed to show a dialog after deleting the file
 		int showDialog = 1; unsigned long type = REG_DWORD, size = 1024; DWORD dwBuffer;
 		if (RegOpenKey(HKEY_LOCAL_MACHINE, L"SOFTWARE\\FilExile", &hKey) == ERROR_SUCCESS)
+		{
+			if (RegQueryValueEx(hKey, L"ShowDialog", NULL, &type, (LPBYTE)&dwBuffer, &size) == ERROR_SUCCESS)
+			{
+				showDialog = dwBuffer;
+			}
+
+			RegCloseKey(hKey);
+		}
+		// Check the alternative path that it can also be found at
+		else if (RegOpenKey(HKEY_LOCAL_MACHINE, L"SOFTWARE\\WOW6432Node\\FilExile", &hKey) == ERROR_SUCCESS)
 		{
 			if (RegQueryValueEx(hKey, L"ShowDialog", NULL, &type, (LPBYTE)&dwBuffer, &size) == ERROR_SUCCESS)
 			{
@@ -233,7 +254,7 @@ HRESULT CFilExileShlExt::InvokeCommand(
 		// Need to concatenate the path (value) and file (m_szFile)
 		// e.g.: "C:\\filexile\\FilExile\\bin\\Debug\\FilExile.exe C:\\file_to_delete.txt"
 		string filePath = wstrToStr(m_szFile);
-		string combined = exePath + " \"" + filePath + "\"";
+		string combined = "\"" + exePath + "\" \"" + filePath + "\"";
 		wcscpy_s(cmdPath, strToWstr(combined).c_str());
 
 		if 

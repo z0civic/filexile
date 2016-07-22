@@ -28,26 +28,14 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.checkBox_DisableSafety = new System.Windows.Forms.CheckBox();
 			this.label_SafetyWarning = new System.Windows.Forms.Label();
 			this.button_Yes = new System.Windows.Forms.Button();
 			this.button_No = new System.Windows.Forms.Button();
 			this.pictureBox_WarningIcon = new System.Windows.Forms.PictureBox();
 			this.label_Continue = new System.Windows.Forms.Label();
+			this.checkBox_DisableSafety = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_WarningIcon)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// checkBox_DisableSafety
-			// 
-			this.checkBox_DisableSafety.AutoSize = true;
-			this.checkBox_DisableSafety.Checked = global::FilExile.Properties.Settings.Default.disableSafety;
-			this.checkBox_DisableSafety.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::FilExile.Properties.Settings.Default, "disableSafety", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-			this.checkBox_DisableSafety.Location = new System.Drawing.Point(12, 81);
-			this.checkBox_DisableSafety.Name = "checkBox_DisableSafety";
-			this.checkBox_DisableSafety.Size = new System.Drawing.Size(136, 17);
-			this.checkBox_DisableSafety.TabIndex = 0;
-			this.checkBox_DisableSafety.Text = "&Disable future warnings";
-			this.checkBox_DisableSafety.UseVisualStyleBackColor = true;
 			// 
 			// label_SafetyWarning
 			// 
@@ -98,12 +86,25 @@
 			this.label_Continue.Text = "label1";
 			this.label_Continue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
+			// checkBox_DisableSafety
+			// 
+			this.checkBox_DisableSafety.AutoSize = true;
+			this.checkBox_DisableSafety.Checked = global::FilExile.Properties.Settings.Default.disableSafety;
+			this.checkBox_DisableSafety.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::FilExile.Properties.Settings.Default, "disableSafety", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.checkBox_DisableSafety.Location = new System.Drawing.Point(12, 81);
+			this.checkBox_DisableSafety.Name = "checkBox_DisableSafety";
+			this.checkBox_DisableSafety.Size = new System.Drawing.Size(136, 17);
+			this.checkBox_DisableSafety.TabIndex = 0;
+			this.checkBox_DisableSafety.Text = "&Disable future warnings";
+			this.checkBox_DisableSafety.UseVisualStyleBackColor = true;
+			// 
 			// SafetyDlg
 			// 
 			this.AcceptButton = this.button_No;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(398, 110);
+			this.ControlBox = false;
 			this.Controls.Add(this.label_Continue);
 			this.Controls.Add(this.pictureBox_WarningIcon);
 			this.Controls.Add(this.button_No);
@@ -116,6 +117,7 @@
 			this.Name = "SafetyDlg";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.Text = "SafetyDlg";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SafetyDlg_Closing);
 			this.Load += new System.EventHandler(this.SafetyDlg_Load);
