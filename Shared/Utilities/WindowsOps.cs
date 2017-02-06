@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 
 namespace Shared
 {
@@ -11,7 +10,7 @@ namespace Shared
 		// ------------------------------------------------------------------------------------
 
 		[StructLayout(LayoutKind.Sequential, Pack = 1)]
-        internal struct TokPriv1Luid
+        private struct TokPriv1Luid
         {
             public int Count;
             public long Luid;
@@ -74,8 +73,8 @@ namespace Shared
 		{
 			bool retVal = true;
 
-			string winDir = System.Environment.ExpandEnvironmentVariables("%WINDIR%");
-			string progDir = System.Environment.ExpandEnvironmentVariables("%PROGRAMFILES%");
+			string winDir = Environment.ExpandEnvironmentVariables("%WINDIR%");
+			string progDir = Environment.ExpandEnvironmentVariables("%PROGRAMFILES%");
 
 			if (!File.Exists(winDir + "\\System32\\robocopy.exe") && !File.Exists(progDir + "\\Windows Resource Kits\\Tools\\robocopy.exe"))
 			{

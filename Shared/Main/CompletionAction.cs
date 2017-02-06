@@ -4,9 +4,7 @@ namespace Shared
 {
     internal sealed class CompletionAction
     {
-		/// <summary>
-		/// Class for holding the completion action selected by the user that can be performed by FilExile
-		/// </summary>
+		/// <summary>Class for holding the completion action selected by the user that can be performed by FilExile</summary>
 		// ------------------------------------------------------------------------------------
 
 		#region Accessors

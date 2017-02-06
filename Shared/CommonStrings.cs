@@ -1,8 +1,6 @@
 ﻿namespace Shared
 {
-	/// <summary>
-	/// Common strings that are used throughout the application
-	/// </summary>
+	/// <summary>Common strings that are used throughout the application</summary>
     public static class CommonStrings
     {
 		/// <summary>Path to online help</summary>

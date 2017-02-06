@@ -7,9 +7,7 @@ namespace FilExile.Dialogs
 	{
 		#region Constructor
 
-		/// <summary>
-		/// Default constructor
-		/// </summary>
+		/// <summary>Default constructor</summary>
 		public SafetyDlg()
 		{
 			InitializeComponent();
@@ -29,9 +27,7 @@ namespace FilExile.Dialogs
 
 		#region Events
 
-		/// <summary>
-		/// Sets the labels, etc. based on resources
-		/// </summary>
+		/// <summary>Sets the labels, etc. based on resources.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void SafetyDlg_Load(object sender, EventArgs e)
@@ -42,9 +38,7 @@ namespace FilExile.Dialogs
 			label_Continue.Text = SharedResources.Properties.Resources.Continue;
 		}
 
-		/// <summary>
-		/// Sets the dialog result and closes the dialog
-		/// </summary>
+		/// <summary>Sets the dialog result and closes the dialog.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void button_No_Click(object sender, EventArgs e)
@@ -53,9 +47,7 @@ namespace FilExile.Dialogs
 			Close();
 		}
 
-		/// <summary>
-		/// Sets the dialog result and closes the dialog
-		/// </summary>
+		/// <summary>Sets the dialog result and closes the dialog.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void button_Yes_Click(object sender, EventArgs e)
@@ -64,16 +56,18 @@ namespace FilExile.Dialogs
 			Close();
 		}
 		
-		/// <summary>
-		/// Save any changes to the user.config
-		/// </summary>
+		/// <summary>Save any changes to the user.config.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void SafetyDlg_Closing(object sender, FormClosingEventArgs e)
 		{
 			Properties.Settings.Default.Save();
 		}
+
+		#endregion
+
 	}
+
 	#endregion
-	#endregion
+
 }

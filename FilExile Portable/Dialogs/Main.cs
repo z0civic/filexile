@@ -11,9 +11,7 @@ namespace FilExile.Dialogs
     {
 		#region Constructor
 
-		/// <summary>
-		/// Default constructor
-		/// </summary>
+		/// <summary>Default constructor</summary>
 		public Main()
         {
 			// Hooking in an assembly resolve event handler because SharedResources.dll (which holds the
@@ -43,9 +41,9 @@ namespace FilExile.Dialogs
 		#region Fields
 
 		// Holds the initial number of files in the target directory
-		private int _iNumFiles;
+		private int m_iNumFiles;
 		// The target that is going to be deleted
-		private Target _target;
+		private Target m_target;
 
 		#endregion
 
@@ -53,9 +51,7 @@ namespace FilExile.Dialogs
 
 		#region Private methods
 
-		/// <summary>
-		/// Displays a warning message when a user attempts to delete a critical directory
-		/// </summary>
+		/// <summary>Displays a warning message when a user attempts to delete a critical directory.</summary>
 		/// <returns>If the user wants to continue</returns>
 		private static bool CriticalTargetWarning()
 		{
@@ -64,9 +60,7 @@ namespace FilExile.Dialogs
 			return dlg.DialogResult == DialogResult.Yes;
 		}
 
-		/// <summary>
-		/// Changes the enabled state of all main form controls based on the passed value
-		/// </summary>
+		/// <summary>Changes the enabled state of all main form controls based on the passed value.</summary>
 		/// <param name="bEnabled">If the controls should be enabled</param>
 		private void ChangeControlStates(bool bEnabled)
 		{
@@ -87,30 +81,28 @@ namespace FilExile.Dialogs
 	    {
 		    while (true)
 		    {
-			    var filesRemaining = _target.NumberOfFiles;
-			    if ((_iNumFiles - filesRemaining) >= 0)
-				    worker.ReportProgress(_iNumFiles - filesRemaining);
+			    var filesRemaining = m_target.NumberOfFiles;
+			    if ((m_iNumFiles - filesRemaining) >= 0)
+				    worker.ReportProgress(m_iNumFiles - filesRemaining);
 			    if (!backgroundWorker_Deletion.IsBusy) return;
 		    }
 	    }
 
 	    /// <summary>
-		/// Sets up the Multithreading and Logging structs based on the control configurations and begins the deletion operation
+		/// Sets up the Multithreading and Logging structs based on the control configurations and begins the deletion operation.
 		/// </summary>
 		private void RunDeletion()
 		{
 			var mt = new DeletionOps.MultithreadingSetup(true, 8);
 			var log = new DeletionOps.Logging(false, "");
-			DeletionOps.Delete(_target, mt, log, false);
+			DeletionOps.Delete(m_target, mt, log, false);
 		}
 
 		// ------------------------------------------------------------------------------------
 
 		#region Events
 
-		/// <summary>
-		/// Show the "About" dialog
-		/// </summary>
+		/// <summary>Show the "About" dialog.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -119,9 +111,7 @@ namespace FilExile.Dialogs
 			about.ShowDialog();
 		}
 
-		/// <summary>
-		/// On load, sets the icon and disables the Delete button
-		/// </summary>
+		/// <summary>On load, sets the icon and disables the Delete button.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void Main_Load(object sender, EventArgs e)
@@ -130,9 +120,7 @@ namespace FilExile.Dialogs
 			button_delete.Enabled = false;
 		}
 
-		/// <summary>
-		/// Launch a special dialog that allows the user to select either a file or a folder
-		/// </summary>
+		/// <summary>Launch a special dialog that allows the user to select either a file or a folder.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void button_browse_Click(object sender, EventArgs e)
@@ -149,7 +137,7 @@ namespace FilExile.Dialogs
 
 		/// <summary>
 		/// When the user clicks the delete button, disable the controls and start the
-		/// deletion operation
+		/// deletion operation.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -157,13 +145,13 @@ namespace FilExile.Dialogs
 		{
 			// Disable the controls
 			ChangeControlStates(false);
-			bool cont = true;
 
-			_target = new Target(field_target.Text);
+			m_target = new Target(field_target.Text);
 
-			if (_target.Exists)
+			if (m_target.Exists)
 			{
-				if (_target.IsCritical)
+				bool cont = true;
+				if (m_target.IsCritical)
 					cont = CriticalTargetWarning();
 
 				if (cont)
@@ -172,10 +160,10 @@ namespace FilExile.Dialogs
 					{
 						// If the user wants to monitor progress and the target is a directory
 						// we need to setup the progress bar
-						if (_target.IsDirectory)
+						if (m_target.IsDirectory)
 						{
-							_iNumFiles = _target.NumberOfFiles;
-							progressBar.Maximum = _iNumFiles;
+							m_iNumFiles = m_target.NumberOfFiles;
+							progressBar.Maximum = m_iNumFiles;
 							progressBar.Visible = true;
 							backgroundWorker_ProgressBar.RunWorkerAsync();
 						}
@@ -194,6 +182,10 @@ namespace FilExile.Dialogs
 					{
 						//TODO: Write code to handle this strange exception...
 					}
+					finally
+					{
+						ChangeControlStates(true);
+					}
 				}
 				else
 				{
@@ -202,14 +194,12 @@ namespace FilExile.Dialogs
 			}
 			else
 			{
-				//Target doesn't exist, display an error
+				// Target doesn't exist, display an error
 				MessageBox.Show(SharedResources.Properties.Resources.TargetNotFound, SharedResources.Properties.Resources.Error);
 			}
 		}
 
-		/// <summary>
-		/// Opens a link using the default browser to the online FilExile help
-		/// </summary>
+		/// <summary>Opens a link using the default browser to the online FilExile help.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void onlineHelpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -217,9 +207,7 @@ namespace FilExile.Dialogs
 			NetworkUtils.LaunchUrl(CommonStrings.HelpUrl);
 		}
 
-		/// <summary>
-		/// Initiates a manual version check
-		/// </summary>
+		/// <summary>Initiates a manual version check.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -227,9 +215,7 @@ namespace FilExile.Dialogs
 			NetworkUtils.InitiateVersionCheck(true);
 		}
 
-		/// <summary>
-		/// When the text in the Target box changes, enables/disables the Delete button
-		/// </summary>
+		/// <summary>When the text in the Target box changes, enables/disables the Delete button.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void field_target_TextChanged(object sender, EventArgs e)
@@ -237,9 +223,7 @@ namespace FilExile.Dialogs
 			button_delete.Enabled = !string.IsNullOrEmpty(field_target.Text);
 		}
 
-	    /// <summary>
-		/// Call upon the progress bar to update itself
-		/// </summary>
+	    /// <summary>Call upon the progress bar to update itself.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void backgroundWorker_ProgressBar_DoWork(object sender, DoWorkEventArgs e)
@@ -248,9 +232,7 @@ namespace FilExile.Dialogs
 			ProgressBarOperation(worker);
 		}
 
-		/// <summary>
-		/// Update the progress bar and status strip with the latest progress
-		/// </summary>
+		/// <summary>Update the progress bar and status strip with the latest progress.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void backgroundWorker_ProgressBar_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -258,9 +240,7 @@ namespace FilExile.Dialogs
 			progressBar.Value = e.ProgressPercentage;
 		}
 
-		/// <summary>
-		/// Setup the multithreading struct and call the Delete method to remove the files/directories
-		/// </summary>
+		/// <summary>Call the Delete method to remove the files/directories.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void backgroundWorker_Deletion_DoWork(object sender, DoWorkEventArgs e)
@@ -276,8 +256,7 @@ namespace FilExile.Dialogs
 		/// <param name="e"></param>
 		private void backgroundWorker_Deletion_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
-			// Re-enable the controls, reset the form
-			ChangeControlStates(true);
+			// Reset the form
 			progressBar.Visible = false;
 
 			// Remove the now empty directory
@@ -291,9 +270,7 @@ namespace FilExile.Dialogs
 			
 		}
 
-		/// <summary>
-		/// Indicates that the drag over event will be accepted
-		/// </summary>
+		/// <summary>Indicates that the drag over event will be accepted.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void Main_DragOver(object sender, DragEventArgs e)
@@ -301,24 +278,22 @@ namespace FilExile.Dialogs
 			e.Effect = DragDropEffects.Copy;
 		}
 
-		/// <summary>
-		/// Handles the DragDrop event
-		/// </summary>
+		/// <summary>Handles the DragDrop event.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void Main_DragDrop(object sender, DragEventArgs e)
 		{
-			//Clear anything that might be in the target field
-			field_target.Text = "";
+			// Clear anything that might be in the target field
+			field_target.Text = string.Empty;
 
-			//Grab the filenames from the drop
+			// Grab the filenames from the drop
 			string[] filenames = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-			//If the user tries to drop multiple items, let them know we will only process one
+			// If the user tries to drop multiple items, let them know we will only process one
 			if (filenames.Length > 1)
 				MessageBox.Show(SharedResources.Properties.Resources.MultiFileError, SharedResources.Properties.Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-			//Set the target to the first filename
+			// Set the target to the first filename
 			field_target.Text = filenames[0];
 		}
 	}

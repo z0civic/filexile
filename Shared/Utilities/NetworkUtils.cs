@@ -7,9 +7,7 @@ using SharedResources.Properties;
 
 namespace Shared
 {
-    /// <summary>
-    /// Contains a set of static utility methods for network calls
-    /// </summary>
+    /// <summary>Contains a set of static utility methods for network calls</summary>
     internal static class NetworkUtils
     {
         // ------------------------------------------------------------------------------------

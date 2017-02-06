@@ -8,9 +8,7 @@ namespace FilExile.Dialogs
 	{
 		#region Constructor
 
-		/// <summary>
-		/// Default constructor
-		/// </summary>
+		/// <summary>Default constructor</summary>
 		public RobocopyDlg()
 		{
 			InitializeComponent();
@@ -30,9 +28,7 @@ namespace FilExile.Dialogs
 
 		#region Events
 
-		/// <summary>
-		/// Sets the lables, etc. based on resources
-		/// </summary>
+		/// <summary>Sets the lables, etc. based on resources.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void RobocopyDlg_Load(object sender, EventArgs e)
@@ -44,9 +40,7 @@ namespace FilExile.Dialogs
 			btn_Close.Text = SharedResources.Properties.Resources.Close;
 		}
 
-		/// <summary>
-		/// Sets the dialog result and closes the dialog
-		/// </summary>
+		/// <summary>Sets the dialog result and closes the dialog.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void btn_Ignore_Click(object sender, EventArgs e)
@@ -55,9 +49,7 @@ namespace FilExile.Dialogs
 			Close();
 		}
 
-		/// <summary>
-		/// Sets the dialog results and closes the dialog
-		/// </summary>
+		/// <summary>Sets the dialog results and closes the dialog.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void btn_Close_Click(object sender, EventArgs e)
@@ -71,16 +63,18 @@ namespace FilExile.Dialogs
 			NetworkUtils.LaunchUrl(CommonStrings.RobocopyUrl);
 		}
 
-		/// <summary>
-		/// Save any changes to the user.config
-		/// </summary>
+		/// <summary>Save any changes to the user.config.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void RobocopyDlg_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			Properties.Settings.Default.Save();
 		}
+
+		#endregion
+
 	}
+
 	#endregion
-	#endregion
+
 }

@@ -1,6 +1,5 @@
 ﻿using Shared;
 using System;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using FilExile.Dialogs;
 
@@ -31,9 +30,7 @@ namespace FilExile
 
 		#region Public methods
 
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
+		/// <summary>The main entry point for the application.</summary>
 		[STAThread]
         public static void Main(string[] args)
         {
@@ -71,7 +68,7 @@ namespace FilExile
                 // Otherwise, launch the FilExile GUI
                 else
                 {
-                    Application.Run(new Dialogs.Main());
+                    Application.Run(new Main());
                 }
             }
 

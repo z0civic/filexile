@@ -2,9 +2,7 @@
 
 namespace Shared
 {
-    /// <summary>
-    /// Contains a set of static utility methods for string manipulation
-    /// </summary>
+    /// <summary>Contains a set of static utility methods for string manipulation</summary>
     internal static class StringUtils
     {
         #region Public methods

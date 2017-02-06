@@ -4,9 +4,9 @@ using System.IO;
 
 namespace Shared
 {
-    internal static class CommandLineInterface
+	/// <summary>Class for running FilExile operations from the CLI rather than the GUI</summary>
+	internal static class CommandLineInterface
     {
-        /// <summary>Class for running FilExile operations from the CLI rather than the GUI</summary>
         // ------------------------------------------------------------------------------------
 
         #region Fields

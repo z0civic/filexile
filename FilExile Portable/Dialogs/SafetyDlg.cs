@@ -6,10 +6,8 @@ namespace FilExile.Dialogs
 	public partial class SafetyDlg : Form
 	{
 		#region Constructor
-
-		/// <summary>
-		/// Default constructor
-		/// </summary>
+		
+		/// <summary>Default constructor</summary>
 		public SafetyDlg()
 		{
 			InitializeComponent();
@@ -25,9 +23,7 @@ namespace FilExile.Dialogs
 
 		#region Events
 
-		/// <summary>
-		/// Sets the labels, etc. based on resources
-		/// </summary>
+		/// <summary>Sets the labels, etc. based on resources.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void SafetyDlg_Load(object sender, EventArgs e)
@@ -38,9 +34,7 @@ namespace FilExile.Dialogs
 			label_Continue.Text = SharedResources.Properties.Resources.Continue;
 		}
 
-		/// <summary>
-		/// Saves the option and closes the dialog
-		/// </summary>
+		/// <summary>Sets the DialogResult and closes the dialog.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void button_No_Click(object sender, EventArgs e)
@@ -49,9 +43,7 @@ namespace FilExile.Dialogs
 			Close();
 		}
 
-		/// <summary>
-		/// Saves the option and closes the dialog
-		/// </summary>
+		/// <summary>Sets the DialogResult and closes the dialog.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void button_Yes_Click(object sender, EventArgs e)
@@ -59,7 +51,11 @@ namespace FilExile.Dialogs
 			DialogResult = DialogResult.Yes;
 			Close();
 		}
+
+		#endregion
+
 	}
+
 	#endregion
-	#endregion
+
 }

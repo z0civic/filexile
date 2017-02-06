@@ -20,7 +20,7 @@ namespace Shared
 
         #region Fields
 
-        private readonly string[] _args;
+        private readonly string[] m_args;
 
         #endregion
 
@@ -32,7 +32,7 @@ namespace Shared
         /// <param name="args">Command line arguments</param>
         public CommandLineArgs(string[] args)
         {
-			_args = args;
+			m_args = args;
         }
 
         #endregion
@@ -52,12 +52,12 @@ namespace Shared
         public override string ToString()
         {
             //Check if we got any command line arguments
-            if ((_args == null) || _args.Length == 0)
+            if ((m_args == null) || m_args.Length == 0)
                 return "Not set";
 
             var result = new StringBuilder();
 
-            foreach (var arg in _args)
+            foreach (var arg in m_args)
             {
                 result.Append(arg);
                 result.Append(" ");
@@ -97,15 +97,15 @@ namespace Shared
             var pos = IndexOfFlag(flag);
 		    if (pos < 0) return;
 		    pos++;
-		    if ((pos >= _args.Length) || IsAFlag(_args[pos])) return;
-		    argument1 = _args[pos].Trim();
+		    if ((pos >= m_args.Length) || IsAFlag(m_args[pos])) return;
+		    argument1 = m_args[pos].Trim();
 		    pos++;
-		    if ((pos >= _args.Length) || IsAFlag(_args[pos])) return;
-		    argument2 = _args[pos].Trim();
+		    if ((pos >= m_args.Length) || IsAFlag(m_args[pos])) return;
+		    argument2 = m_args[pos].Trim();
 		    pos++;
-		    if ((pos < _args.Length) && !IsAFlag(_args[pos]))
+		    if ((pos < m_args.Length) && !IsAFlag(m_args[pos]))
 		    {
-			    argument3 = _args[pos].Trim();
+			    argument3 = m_args[pos].Trim();
 		    }
         }
 
@@ -132,10 +132,10 @@ namespace Shared
             if ((flag.Length > 1) && ((flag[0] == '/') || (flag[0] == '-')))
                 flag = flag.Substring(1);
 
-	        if (_args == null) return retval;
-	        for (var i = 0; i < _args.Length; i++)
+	        if (m_args == null) return retval;
+	        for (var i = 0; i < m_args.Length; i++)
 	        {
-		        if (!IsFlag(_args[i], flag)) continue;
+		        if (!IsFlag(m_args[i], flag)) continue;
 		        retval = i;
 		        break;
 	        }

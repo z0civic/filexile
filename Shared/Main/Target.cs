@@ -6,17 +6,15 @@ namespace Shared
 {
     internal sealed class Target
     {
-        /// <summary>
-        /// Class for hodling the "target" to be deleted. 
-        /// </summary>
+        /// <summary>Class for hodling the "target" to be deleted.</summary>
         // ------------------------------------------------------------------------------------
 
         #region Fields
 
         public string Path = string.Empty;
         // Directories considered system critical and probably shouldn't be deleted without careful thought
-        private readonly string[] _criticalDirectories = { "*:\\", "*:\\Users", "*:\\Windows\\*", "*:\\Program*", 
-                                                 "*:\\Users\\*\\AppData", "*:\\ProgramData", "*:\\Windows", "*:\\Documents" };
+        private readonly string[] m_criticalDirectories = { "*:\\", "*:\\Users", "*:\\Windows\\*", "*:\\Program*", 
+															"*:\\Users\\*\\AppData", "*:\\ProgramData", "*:\\Windows", "*:\\Documents" };
 
         #endregion
 
@@ -24,16 +22,12 @@ namespace Shared
 
         #region Constructors
 
-        /// <summary>
-        /// Default contructor
-        /// </summary>
+        /// <summary>Default contructor</summary>
         public Target()
         {
         }
 
-        /// <summary>
-        /// Constructor with full-qualified path
-        /// </summary>
+        /// <summary>Constructor with full-qualified path</summary>
         /// <param name="path">String to the fully-qualified path</param>
         public Target(string path)
         {
@@ -46,9 +40,7 @@ namespace Shared
 
         #region Properties
 
-        /// <summary> 
-        /// If the Target is a directory. 
-        /// </summary>
+        /// <summary>If the Target is a directory.</summary>
         public bool IsDirectory
         {
             get
@@ -65,16 +57,14 @@ namespace Shared
             }
         }
 
-        /// <summary> 
-        /// If the Target is a critical to system operation and deletion could be undesirable.
-        /// </summary>
+        /// <summary>If the Target is a critical to system operation and deletion could be undesirable.</summary>
         public bool IsCritical
         {
             get
             {
                 var retval = false;
 
-                foreach (var pattern in _criticalDirectories)
+                foreach (var pattern in m_criticalDirectories)
                 {
                     if (StringUtils.IsLike(Path, pattern))
                     {
@@ -86,19 +76,13 @@ namespace Shared
             }
         }
 
-        /// <summary>
-        /// If the Target exists, regardless of whether or not the Target is a directory or file
-        /// </summary>
+        /// <summary>If the Target exists, regardless of whether or not the Target is a directory or file.</summary>
         public bool Exists => IsDirectory ? Directory.Exists(Path) : File.Exists(Path);
 
-	    /// <summary>
-        /// Returns the number of files in a directory
-        /// </summary>
+	    /// <summary>Returns the number of files in a directory.</summary>
         public int NumberOfFiles => GetFiles(Path).Count;
 
-	    /// <summary>
-        /// Returns the parent directory of the path
-        /// </summary>
+	    /// <summary>Returns the parent directory of the path.</summary>
         public string ParentDirectory
         {
             get
@@ -116,9 +100,7 @@ namespace Shared
             }
         }
 
-        /// <summary>
-        /// Returns the file name of the path
-        /// </summary>
+        /// <summary>Returns the file name from the path.</summary>
         public string FileName
         {
             get

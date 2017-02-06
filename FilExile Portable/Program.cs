@@ -11,7 +11,7 @@ namespace FilExile
 		/// FilExile Portable is a simple file and directory deletion tool that utilizes Windows'
 		/// "Robocopy" to help delete stubborn files and directories that otherwise can't
 		/// be removed by normal methods. FilExile Portable does not have all the features
-		/// that FilExile has.
+		/// of the full version of FilExile.
 		/// </summary>
 		// ------------------------------------------------------------------------------------
 
@@ -24,9 +24,8 @@ namespace FilExile
 		// ------------------------------------------------------------------------------------
 
 		#region Public methods
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
+
+		/// <summary>The main entry point for the application.</summary>
 		[STAThread]
         public static void Main(string[] args)
         {
@@ -48,6 +47,7 @@ namespace FilExile
 				}
 			}
 
+			// If any command line arguments are passed, prepare them for parsing
 			if (args.Length > 0)
 	        {
 		        _cla = new CommandLineArgs(args);
@@ -57,9 +57,10 @@ namespace FilExile
 		        else
 			        CommandLineInterface.Run(args[0], _cla);
 	        }
-	        else
-	        {
-		        Application.Run(new Dialogs.Main());
+			// Otherwise, launch the FilExile GUI
+			else
+			{
+		        Application.Run(new Main());
 	        }
         }
 

@@ -112,11 +112,11 @@ namespace Shared
 				// Delete the temporary directory/directories created
 	            if (Directory.Exists(emptyDir))
 	            {
-		            Directory.Delete(emptyDir);
+		            Directory.Delete(emptyDir, true);
 	            }
 				if (Directory.Exists(secondEmptyDir))
-	            {
-		            Directory.Delete(secondEmptyDir);
+				{
+		            Directory.Delete(secondEmptyDir, true);
 	            }
             }
             else
@@ -157,7 +157,7 @@ namespace Shared
 
             if (!string.IsNullOrEmpty(log.LogTo) && log.Enabled)
             {
-                retVal += @" /TEE /V /LOG+:" + log.LogTo + "\"";
+                retVal += @" /TEE /V /TS /LOG+:" + log.LogTo + "\"";
             }
 
             return retVal;
