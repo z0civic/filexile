@@ -1,5 +1,6 @@
 ﻿using Shared;
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using FilExile.Dialogs;
 
@@ -85,9 +86,9 @@ namespace FilExile
         #region Private methods
 
         // Import kernel32.dll to attach a console
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-        private static extern bool AttachConsole(int dwProcessId);
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
+		[DllImport("kernel32.dll")]
+		private static extern bool AttachConsole(int dwProcessId);
+        [DllImport("kernel32.dll", SetLastError = true)]
         private static extern int FreeConsole();
         private const int AttachParentProcess = -1;
 

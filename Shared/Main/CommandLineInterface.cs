@@ -102,9 +102,7 @@ namespace Shared
             }
         }
 
-        /// <summary>
-        /// Displays the command line usage information
-        /// </summary>
+        /// <summary>Displays the command line usage information.</summary>
         public static void DisplayHelp()
         {
             Console.WriteLine(SharedResources.Properties.Resources.Help);
@@ -138,9 +136,7 @@ namespace Shared
             }
         }
 
-		/// <summary>
-		/// Deletes the original target directory (if it's still there)
-		/// </summary>
+		/// <summary>Deletes the original target directory (if it's still there).</summary>
 		/// <param name="target">The original <see cref="Target"/></param>
 	    private static void CleanupDirectory(Target target)
 	    {
@@ -150,9 +146,7 @@ namespace Shared
 			}
 		}
 
-        /// <summary>
-        /// Parses the CommandLineArgs and assigns their arguments to variables
-        /// </summary>
+        /// <summary>Parses the CommandLineArgs and assigns their arguments to variables.</summary>
         /// <param name="cla">CommandLineArgs</param>
         private static void ParseArgs(CommandLineArgs cla)
         {
@@ -200,15 +194,13 @@ namespace Shared
 	        _forceAction = cla.HasFlag("f");
         }
 
-        /// <summary>
-        /// Attempts to run the custom command specified by the user
-        /// </summary>
+        /// <summary>Attempts to run the custom command specified by the user.</summary>
         private static void RunCommand()
         {
             // Try to run the user's custom command
             try
             {
-                Process.Start("CMD.exe", _command);
+                Process.Start(_command);
             }
             // If it fails, write the exception, regardless of quiet mode
             catch (Exception ex)

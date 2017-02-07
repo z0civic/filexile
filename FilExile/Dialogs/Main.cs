@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace FilExile.Dialogs
@@ -135,7 +136,10 @@ namespace FilExile.Dialogs
         /// Sets up the Multithreading and Logging structs based on the control configurations and begins the deletion operation
         /// </summary>
         private void RunDeletion()
-        {
+	    {
+		    if (ShowOutput)
+			    AllocConsole();
+
             var mt = new DeletionOps.MultithreadingSetup(MultiThreadingEnabled, ThreadCount);
             var log = new DeletionOps.Logging(LoggingEnabled, LogTo);
             DeletionOps.Delete(m_target, mt, log, ShowOutput);
@@ -482,6 +486,12 @@ namespace FilExile.Dialogs
 		{
 			TopMost = AlwaysOnTop;
 		}
+
+		[DllImport("kernel32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		static extern bool AllocConsole();
 	}
-    #endregion
+    
+	#endregion
+
 }

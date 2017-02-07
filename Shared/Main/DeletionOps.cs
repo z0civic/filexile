@@ -6,16 +6,12 @@ namespace Shared
 {
     internal static class DeletionOps
     {
-        /// <summary>
-        /// Class for handling deletion operations within FilExile whether from the GUI or CLI
-        /// </summary>
+        /// <summary>Class for handling deletion operations within FilExile whether from the GUI or CLI.</summary>
         // ------------------------------------------------------------------------------------
 
         #region Structs
 
-        /// <summary>
-        /// Struct for holding multithreading configuration information (enabled, numThreads)
-        /// </summary>
+        /// <summary>Struct for holding multithreading configuration information (enabled, numThreads).</summary>
         public struct MultithreadingSetup
         {
             public readonly bool ThreadingEnabled;
@@ -27,10 +23,8 @@ namespace Shared
                 NumThreads = numThreads;
             }
         }
-
-        /// <summary>
-        /// Struct for holding logging configuration information (enabled, logfile)
-        /// </summary>
+		
+        /// <summary>Struct for holding logging configuration information (enabled, logfile). </summary>
         public struct Logging
         {
             public readonly bool Enabled;
@@ -59,9 +53,7 @@ namespace Shared
 
 		#region Public methods
 
-		/// <summary>
-		/// Handles the deletion of the passed target
-		/// </summary>
+		/// <summary>Handles the deletion of the passed target</summary>
 		/// <param name="target">The file or directory to be deleted</param>
 		/// <param name="mt">Multithreading configuration</param>
 		/// <param name="log">Logging configuration</param>
@@ -163,9 +155,7 @@ namespace Shared
             return retVal;
         }
 
-        /// <summary>
-        /// Prepares Robocopy arguments to forcibly move filename from the source to the destination
-        /// </summary>
+        /// <summary>Prepares Robocopy arguments to forcibly move filename from the source to the destination.</summary>
         /// <param name="source">Source path</param>
         /// <param name="destination">Destination path</param>
         /// <param name="filename">Name of file to move</param>
@@ -176,9 +166,7 @@ namespace Shared
             return retval;
         }
 
-	    /// <summary>
-	    /// Creates a new Robocopy process and runs the passed arguements
-	    /// </summary>
+	    /// <summary>Creates a new Robocopy process and runs the passed arguements.</summary>
 	    /// <param name="arguments">Command line arguments to pass to the process</param>
 	    /// <param name="output">Whether or not to display output</param>
 	    private static void RunRobocopy(string arguments, bool output)
@@ -210,9 +198,7 @@ namespace Shared
             }
         }
 
-        /// <summary>
-        /// Redirects the standard output to the allocated console for viewing
-        /// </summary>
+        /// <summary>Redirects the standard output to the allocated console for viewing.</summary>
         /// <param name="sender"></param>
         /// <param name="outLine"></param>
         private static void OutputHandler(object sender, DataReceivedEventArgs outLine)
